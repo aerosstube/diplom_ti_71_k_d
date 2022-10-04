@@ -5,6 +5,9 @@ const authRouter: Router = Router();
 
 authRouter
     .post('/login', AuthAppController.userLogin)
+    .post('/registration', AuthAppController.userRegistration)
     .delete('/logout', AuthAppController.userLogout)
     .get('/refresh', AuthAppController.userRefresh);
+
+
 export {authRouter};

@@ -1,7 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { group_students, group_studentsId } from './group_students';
-import type { group_teachers, group_teachersCreationAttributes, group_teachersId } from './group_teachers';
+import type { group_teachers, group_teachersCreationAttributes} from './group_teachers';
 import type { groups, groupsId } from './groups';
 import type { marks, marksId } from './marks';
 import type { token, tokenId } from './token';
@@ -49,7 +49,6 @@ export class users extends Model<usersAttributes, usersCreationAttributes> imple
   // users hasOne group_teachers via user_id
   group_teacher!: group_teachers;
   getGroup_teacher!: Sequelize.HasOneGetAssociationMixin<group_teachers>;
-  setGroup_teacher!: Sequelize.HasOneSetAssociationMixin<group_teachers, group_teachersId>;
   createGroup_teacher!: Sequelize.HasOneCreateAssociationMixin<group_teachers>;
   // users hasMany groups via user_id
   groups!: groups[];

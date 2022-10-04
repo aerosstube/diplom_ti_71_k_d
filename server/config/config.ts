@@ -13,5 +13,6 @@ export const
         host: 'localhost',
         name: 'degree',
         user: 'postgres',
-        password: 'root'
+        password: 'root',
+        dialect: 'postgres'
     }
