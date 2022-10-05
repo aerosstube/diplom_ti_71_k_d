@@ -1,23 +1,23 @@
-import express from 'express';
-import {application} from "../config/config";
-import cors from 'cors';
-import {routerSchoolPortal} from "./API/api.version-1/routers/app-router/init-router";
-import {SequelizeConnect} from "./services/database-connect";
-import {Sequelize} from "sequelize";
 import bodyParser from "body-parser";
+import cors from "cors";
+import express from "express";
+import {application} from "../config/config";
+import {routerApp} from "./routers/init-router";
+import cookieParser from 'cookie-parser';
+import {SequelizeConnect} from "./services/database-connect";
 
-const app = express();
+export const app = express();
 
-export async function run() {
+export const run = async () => {
     await SequelizeConnect.authenticate();
     await SequelizeConnect.sync();
 
     app
         .use(cors())
         .use(bodyParser.json())
-        .use(express.json())
-        .use('/api', routerSchoolPortal)
+        .use(cookieParser())
+        .use('/api', routerApp)
         .listen(application.port, () => {
-            console.log( `Listening on PORT = ${application.port}`)
-        });
+            console.log(`Server listening on port = ${application.port}`)
+        })
 }
