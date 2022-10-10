@@ -1,13 +1,17 @@
-import {NextFunction, Request, Response} from "express";
-import {AuthDatabaseService} from "../services/auth-services/auth.database.service";
-import {users} from "../../models/init-models";
+import {NextFunction, Request, Response} from 'express';
+import {Transaction} from 'sequelize';
+import {AuthDatabaseService} from '../services/auth-services/auth.database.service';
+import {SequelizeConnect} from '../services/database-connect';
 
 export class AuthController {
     static async userLogin(req: Request, res: Response, next: NextFunction) {
+        const transaction: Transaction = await SequelizeConnect.transaction();
         try {
-            res.json(await AuthDatabaseService.getAllUsers());
+            res.json(await AuthDatabaseService.getAllUsers(transaction));
+            await transaction.commit();
         } catch (err) {
-            console.log(err)
+            await transaction.rollback();
+            next(err);
         }
     }
 

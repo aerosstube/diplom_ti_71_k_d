@@ -1,9 +1,9 @@
-import {users} from "../../../models/users";
+import {Transaction} from 'sequelize';
+import {users} from '../../../models/init-models';
 
 export class AuthDatabaseService {
 
-    static async getAllUsers(): Promise<users[]> {
-        console.log(users.findAll())
-        return await users.findAll();
-    }
+	static async getAllUsers(transaction: Transaction): Promise<users[]> {
+		return await users.findAll({transaction});
+	}
 }
