@@ -7,12 +7,13 @@ export class AuthController {
     static async userLogin(req: Request, res: Response, next: NextFunction) {
         const transaction: Transaction = await SequelizeConnect.transaction();
         try {
-            res.json(await AuthDatabaseService.getAllUsers(transaction));
+            let user = 123;
             await transaction.commit();
         } catch (err) {
             await transaction.rollback();
             next(err);
         }
+
     }
 
     static async userLogout(req: Request, res: Response, next: NextFunction) {
