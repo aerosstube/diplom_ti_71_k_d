@@ -18,7 +18,7 @@ export class ApiError extends Error {
 		return new ApiError(401, 'Пользователь не авторизован!');
 	}
 
-	static ValidationError(error: Array<Error>) {
+	static ValidationError(error: Array<Error> = []) {
 		return new ApiError(400, 'Ошибка валидации', error);
 	}
 }

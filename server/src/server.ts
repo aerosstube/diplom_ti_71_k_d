@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import {application} from '../config/config';
 import {initModels} from '../models/init-models';
+import {ErrorMiddleware} from './middlewares/error-middleware';
 import {routerApp} from './routers/init-router';
 import {SequelizeConnect} from './services/database-connect';
 
@@ -18,6 +19,7 @@ export const run = async () => {
 		.use(express.json())
 		.use(cookieParser())
 		.use('/api', routerApp)
+		.use(ErrorMiddleware)
 		.listen(application.port, () => {
 			console.log(`Server listening on port = ${application.port}`);
 		});
