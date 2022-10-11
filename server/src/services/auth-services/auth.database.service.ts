@@ -1,8 +1,15 @@
 import {Transaction} from 'sequelize';
-import {users} from '../../../models/init-models';
-import {ApiError} from '../../errors/api.error';
+import {token} from '../../../models/init-models';
+import {SaveTokens} from './auth.business.service';
 
 export class AuthDatabaseService {
 
+	static async createToken(saveToken: SaveTokens, transaction: Transaction): Promise<token> {
+		return await token.create({
+			user_device_id: 0,
+			user_id: saveToken.userId,
+			refresh_token: saveToken.refreshToken
+		}, {transaction});
+	}
 
 }
