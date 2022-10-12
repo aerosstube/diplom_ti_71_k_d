@@ -1,8 +1,12 @@
 import {compare} from 'bcryptjs';
 import {Transaction} from 'sequelize';
+import {application} from '../../../config/config';
 import {users} from '../../../models/users';
 import {ApiError} from '../../errors/api.error';
 import {UserService} from '../user-services/user.service';
+import * as jwt from 'jsonwebtoken';
+import {SaveTokens} from './auth.business.service';
+import {AuthDatabaseService} from './auth.database.service';
 
 export interface AuthUser {
 	userId: number;
@@ -16,6 +20,7 @@ export interface JwtTokens {
 	refreshToken: string;
 	accessToken: string;
 }
+
 
 export class AuthService {
 
@@ -33,5 +38,16 @@ export class AuthService {
 			second_name: user.second_name,
 			middle_name: user.middle_name,
 		};
+	}
+
+	static async generateToken(payload: AuthUser, refreshToken = null): Promise<JwtTokens> {
+		return {
+			refreshToken: (refreshToken) ? refreshToken : jwt.sign(payload, application.refreshToken, {expiresIn: '30d'}),
+			accessToken: jwt.sign(payload, application.accessToken, {expiresIn: '15m'}),
+		}
+	}
+
+	static async saveToken(saveToken: SaveTokens, transaction: Transaction): Promise<void> {
+		await AuthDatabaseService.createToken(saveToken, transaction);
 	}
 }

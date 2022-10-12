@@ -7,7 +7,7 @@ export interface tokenAttributes {
   id: number;
   refresh_token: string;
   user_id: number;
-  user_device_id: number;
+  user_device_id?: number;
 }
 
 export type tokenPk = 'id';
@@ -19,7 +19,7 @@ export class token extends Model<tokenAttributes, tokenCreationAttributes> imple
   id!: number;
   refresh_token!: string;
   user_id!: number;
-  user_device_id!: number;
+  user_device_id?: number;
 
   // token belongsTo user_devices via user_device_id
   user_device!: user_devices;
@@ -54,7 +54,7 @@ export class token extends Model<tokenAttributes, tokenCreationAttributes> imple
       },
       user_device_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'user_devices',
           key: 'id'

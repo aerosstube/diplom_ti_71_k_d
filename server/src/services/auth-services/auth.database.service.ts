@@ -1,15 +1,16 @@
 import {Transaction} from 'sequelize';
-import {token} from '../../../models/init-models';
+import {token} from '../../../models/token';
 import {SaveTokens} from './auth.business.service';
 
 export class AuthDatabaseService {
 
 	static async createToken(saveToken: SaveTokens, transaction: Transaction): Promise<token> {
 		return await token.create({
-			user_device_id: 0,
 			user_id: saveToken.userId,
 			refresh_token: saveToken.refreshToken
 		}, {transaction});
 	}
+
+
 
 }
