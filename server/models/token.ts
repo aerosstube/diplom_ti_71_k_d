@@ -7,7 +7,8 @@ export interface tokenAttributes {
   id: number;
   refresh_token: string;
   user_id: number;
-  user_device_id?: number;
+  user_device_id: number;
+  date_expired: Date;
 }
 
 export type tokenPk = 'id';
@@ -19,7 +20,8 @@ export class token extends Model<tokenAttributes, tokenCreationAttributes> imple
   id!: number;
   refresh_token!: string;
   user_id!: number;
-  user_device_id?: number;
+  user_device_id!: number;
+  date_expired!: Date;
 
   // token belongsTo user_devices via user_device_id
   user_device!: user_devices;
@@ -41,7 +43,7 @@ export class token extends Model<tokenAttributes, tokenCreationAttributes> imple
         primaryKey: true
       },
       refresh_token: {
-        type: DataTypes.STRING(256),
+        type: DataTypes.STRING(1000),
         allowNull: false
       },
       user_id: {
@@ -54,11 +56,15 @@ export class token extends Model<tokenAttributes, tokenCreationAttributes> imple
       },
       user_device_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
           model: 'user_devices',
           key: 'id'
         }
+      },
+      date_expired: {
+        type: DataTypes.DATE,
+        allowNull: false
       }
     }, {
       sequelize,

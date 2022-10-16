@@ -4,17 +4,19 @@ import type {token, tokenId} from './token';
 
 export interface user_devicesAttributes {
   id: number;
-  device: string;
+  device_source?: string;
+  device_ip?: string;
 }
 
 export type user_devicesPk = 'id';
 export type user_devicesId = user_devices[user_devicesPk];
-export type user_devicesOptionalAttributes = 'id';
+export type user_devicesOptionalAttributes = 'id' | 'device_source' | 'device_ip';
 export type user_devicesCreationAttributes = Optional<user_devicesAttributes, user_devicesOptionalAttributes>;
 
 export class user_devices extends Model<user_devicesAttributes, user_devicesCreationAttributes> implements user_devicesAttributes {
   id!: number;
-  device!: string;
+  device_source?: string;
+  device_ip?: string;
 
   // user_devices hasMany token via user_device_id
   tokens!: token[];
@@ -38,9 +40,13 @@ export class user_devices extends Model<user_devicesAttributes, user_devicesCrea
         primaryKey: true,
         unique: 'user_device_id_key'
       },
-      device: {
+      device_source: {
         type: DataTypes.STRING(256),
-        allowNull: false
+        allowNull: true
+      },
+      device_ip: {
+        type: DataTypes.STRING(256),
+        allowNull: true
       }
     }, {
       sequelize,
