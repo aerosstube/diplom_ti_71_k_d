@@ -44,7 +44,7 @@ export class AuthService {
 
 	static async generateToken(payload: AuthUser, refreshToken = null): Promise<JwtTokens> {
 		return {
-			refreshToken: (refreshToken) ? refreshToken : jwt.sign(payload, application.refreshToken, {expiresIn: '10s'}),
+			refreshToken: (refreshToken) ? refreshToken : jwt.sign(payload, application.refreshToken, {expiresIn: '30d'}),
 			accessToken: jwt.sign(payload, application.accessToken, {expiresIn: '15m'}),
 		};
 	}

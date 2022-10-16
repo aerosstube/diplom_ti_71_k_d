@@ -21,8 +21,12 @@ export class AuthController {
 			};
 
 			const tokens: JwtTokens = await AuthBusinessService.userLogin(authOptions, transaction);
+			res.cookie('refreshToken', tokens.refreshToken, {maxAge: 30 * 24 * 3600 * 1000, httpOnly: true});
 
-			res.json(tokens);
+
+			res.json({
+				tokens: tokens
+			});
 			await transaction.commit();
 		} catch (err) {
 			await transaction.rollback();
