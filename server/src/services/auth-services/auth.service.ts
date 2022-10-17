@@ -48,7 +48,6 @@ export class AuthService {
 				userAgent: saveToken.userAgent,
 				deviceIp: saveToken.deviceIp
 			};
-
 			let deviceData: user_devices | null = await AuthDatabaseService.findUserDeviceByUA(deviceInfo);
 			if (!deviceData) {
 				deviceData = await AuthDatabaseService.createUserDevice({
@@ -65,6 +64,7 @@ export class AuthService {
 			tokenData.refresh_token = saveToken.refreshToken;
 			await tokenData.save();
 		} catch (err) {
+			console.log(err);
 			throw ApiError.BadRequest('Ошибка авторизации!');
 		}
 	}
@@ -107,11 +107,21 @@ export class AuthService {
 		}
 	}
 
-	static async deleteToken(tokenData: token, transaction: Transaction): Promise<void> {
+	static async deleteToken(refreshToken: string, transaction: Transaction): Promise<token> {
+		const tokenData = await AuthDatabaseService.findToken(refreshToken);
+		if (tokenData === null)
+			throw ApiError.UnauthorizedError();
+
 		await tokenData.destroy({transaction});
+
+		return tokenData;
 	}
 
-	static async deleteUserDevice(deviceData: user_devices, transaction: Transaction): Promise<void> {
+	static async deleteUserDevice(tokenData: token, transaction: Transaction): Promise<void> {
+		const deviceData = await AuthDatabaseService.findDeviceById(tokenData.user_device_id);
+		if (deviceData === null)
+			throw ApiError.UnauthorizedError();
+
 		await deviceData.destroy({transaction});
 	}
 }

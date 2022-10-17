@@ -39,7 +39,9 @@ export class AuthController {
 			const {cookies} = req;
 
 			await AuthBusinessService.userLogout(cookies.refreshToken, transaction);
+			res.clearCookie('refreshToken');
 			await transaction.commit();
+			res.json('Все удалено!');
 		} catch (err) {
 			await transaction.rollback();
 			next(err);

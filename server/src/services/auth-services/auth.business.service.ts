@@ -54,16 +54,8 @@ export class AuthBusinessService {
 	}
 
 	static async userLogout(refreshToken: string, transaction: Transaction): Promise<void> {
-		const tokenData = await AuthDatabaseService.findToken(refreshToken);
-		if (!tokenData)
-			throw ApiError.UnauthorizedError();
-
-		const deviceData = await AuthDatabaseService.findDeviceById(tokenData.user_device_id);
-		if (!deviceData)
-			throw ApiError.UnauthorizedError();
-
-		await AuthService.deleteToken(tokenData, transaction);
-		await AuthService.deleteUserDevice(deviceData, transaction);
+		const tokenData = await AuthService.deleteToken(refreshToken, transaction);
+		await AuthService.deleteUserDevice(tokenData, transaction);
 	}
 
 	static async userRefreshToken(refreshToken: string): Promise<JwtTokens> {
