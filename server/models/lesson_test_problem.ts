@@ -7,9 +7,9 @@ export interface lesson_test_problemAttributes {
   question_id: number;
 }
 
-export type lesson_test_problemPk = 'id';
+export type lesson_test_problemPk = "id";
 export type lesson_test_problemId = lesson_test_problem[lesson_test_problemPk];
-export type lesson_test_problemOptionalAttributes = 'id';
+export type lesson_test_problemOptionalAttributes = "id";
 export type lesson_test_problemCreationAttributes = Optional<lesson_test_problemAttributes, lesson_test_problemOptionalAttributes>;
 
 export class lesson_test_problem extends Model<lesson_test_problemAttributes, lesson_test_problemCreationAttributes> implements lesson_test_problemAttributes {
@@ -31,30 +31,30 @@ export class lesson_test_problem extends Model<lesson_test_problemAttributes, le
 
   static initModel(sequelize: Sequelize.Sequelize): typeof lesson_test_problem {
     return lesson_test_problem.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    question_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'lesson_test_problem',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "lesson_test_problem_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
       },
-      question_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      }
-    }, {
-      sequelize,
-      tableName: 'lesson_test_problem',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'lesson_test_problem_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    ]
+  });
   }
 }

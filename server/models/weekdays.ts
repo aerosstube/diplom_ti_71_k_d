@@ -7,9 +7,9 @@ export interface weekdaysAttributes {
   name: string;
 }
 
-export type weekdaysPk = 'id';
+export type weekdaysPk = "id";
 export type weekdaysId = weekdays[weekdaysPk];
-export type weekdaysOptionalAttributes = 'id';
+export type weekdaysOptionalAttributes = "id";
 export type weekdaysCreationAttributes = Optional<weekdaysAttributes, weekdaysOptionalAttributes>;
 
 export class weekdays extends Model<weekdaysAttributes, weekdaysCreationAttributes> implements weekdaysAttributes {
@@ -31,30 +31,30 @@ export class weekdays extends Model<weekdaysAttributes, weekdaysCreationAttribut
 
   static initModel(sequelize: Sequelize.Sequelize): typeof weekdays {
     return weekdays.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'weekdays',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "weekdays_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
       },
-      name: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      }
-    }, {
-      sequelize,
-      tableName: 'weekdays',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'weekdays_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    ]
+  });
   }
 }

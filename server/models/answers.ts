@@ -9,9 +9,9 @@ export interface answersAttributes {
   is_right: boolean;
 }
 
-export type answersPk = 'id';
+export type answersPk = "id";
 export type answersId = answers[answersPk];
-export type answersOptionalAttributes = 'id';
+export type answersOptionalAttributes = "id";
 export type answersCreationAttributes = Optional<answersAttributes, answersOptionalAttributes>;
 
 export class answers extends Model<answersAttributes, answersCreationAttributes> implements answersAttributes {
@@ -28,43 +28,43 @@ export class answers extends Model<answersAttributes, answersCreationAttributes>
 
   static initModel(sequelize: Sequelize.Sequelize): typeof answers {
     return answers.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      answer: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      },
-      question_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'questions',
-          key: 'id'
-        }
-      },
-      is_right: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    answer: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    question_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'questions',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'answers',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'answers_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    },
+    is_right: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    }
+  }, {
+    sequelize,
+    tableName: 'answers',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "answers_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

@@ -23,9 +23,9 @@ export interface scheduleAttributes {
   mark_id: number;
 }
 
-export type schedulePk = 'id';
+export type schedulePk = "id";
 export type scheduleId = schedule[schedulePk];
-export type scheduleOptionalAttributes = 'id' | 'lesson_id';
+export type scheduleOptionalAttributes = "id" | "lesson_id";
 export type scheduleCreationAttributes = Optional<scheduleAttributes, scheduleOptionalAttributes>;
 
 export class schedule extends Model<scheduleAttributes, scheduleCreationAttributes> implements scheduleAttributes {
@@ -85,102 +85,102 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
 
   static initModel(sequelize: Sequelize.Sequelize): typeof schedule {
     return schedule.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      start_time: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      },
-      group_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'groups',
-          key: 'id'
-        }
-      },
-      weekday_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'weekdays',
-          key: 'id'
-        }
-      },
-      audience_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'audiences',
-          key: 'id'
-        }
-      },
-      two_our_class_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'two_our_class',
-          key: 'id'
-        }
-      },
-      group_teacher_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'groups',
-          key: 'id'
-        }
-      },
-      end_time: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      },
-      teacher_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'group_teachers',
-          key: 'user_id'
-        }
-      },
-      date_of_class: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      },
-      lesson_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'lessons',
-          key: 'id'
-        }
-      },
-      mark_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'marks',
-          key: 'id'
-        }
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    start_time: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    group_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'groups',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'schedule',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'schedule_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    },
+    weekday_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'weekdays',
+        key: 'id'
+      }
+    },
+    audience_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'audiences',
+        key: 'id'
+      }
+    },
+    two_our_class_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'two_our_class',
+        key: 'id'
+      }
+    },
+    group_teacher_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'groups',
+        key: 'id'
+      }
+    },
+    end_time: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    teacher_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'group_teachers',
+        key: 'user_id'
+      }
+    },
+    date_of_class: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    lesson_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'lessons',
+        key: 'id'
+      }
+    },
+    mark_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'marks',
+        key: 'id'
+      }
+    }
+  }, {
+    sequelize,
+    tableName: 'schedule',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "schedule_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

@@ -11,9 +11,9 @@ export interface group_teachersAttributes {
   id: number;
 }
 
-export type group_teachersPk = 'id';
+export type group_teachersPk = "id";
 export type group_teachersId = group_teachers[group_teachersPk];
-export type group_teachersOptionalAttributes = 'id';
+export type group_teachersOptionalAttributes = "id";
 export type group_teachersCreationAttributes = Optional<group_teachersAttributes, group_teachersOptionalAttributes>;
 
 export class group_teachers extends Model<group_teachersAttributes, group_teachersCreationAttributes> implements group_teachersAttributes {
@@ -47,62 +47,62 @@ export class group_teachers extends Model<group_teachersAttributes, group_teache
 
   static initModel(sequelize: Sequelize.Sequelize): typeof group_teachers {
     return group_teachers.init({
-      group_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'groups',
-          key: 'id'
-        }
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
-        unique: 'group_teachers_user_id_key'
-      },
-      course_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        unique: 'group_teachers_id_key'
+    group_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'groups',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'group_teachers',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'group_teachers_id_key',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-        {
-          name: 'group_teachers_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-        {
-          name: 'group_teachers_user_id_key',
-          unique: true,
-          fields: [
-            {name: 'user_id'},
-          ]
-        },
-      ]
-    });
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      },
+      unique: "group_teachers_user_id_key"
+    },
+    course_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      unique: "group_teachers_id_key"
+    }
+  }, {
+    sequelize,
+    tableName: 'group_teachers',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "group_teachers_id_key",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+      {
+        name: "group_teachers_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+      {
+        name: "group_teachers_user_id_key",
+        unique: true,
+        fields: [
+          { name: "user_id" },
+        ]
+      },
+    ]
+  });
   }
 }

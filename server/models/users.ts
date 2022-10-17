@@ -18,9 +18,9 @@ export interface usersAttributes {
   'e-mail'?: string;
 }
 
-export type usersPk = 'id';
+export type usersPk = "id";
 export type usersId = users[usersPk];
-export type usersOptionalAttributes = 'id' | 'middle_name' | 'mobile_phone' | 'e-mail';
+export type usersOptionalAttributes = "id" | "middle_name" | "mobile_phone" | "e-mail";
 export type usersCreationAttributes = Optional<usersAttributes, usersOptionalAttributes>;
 
 export class users extends Model<usersAttributes, usersCreationAttributes> implements usersAttributes {
@@ -90,82 +90,82 @@ export class users extends Model<usersAttributes, usersCreationAttributes> imple
 
   static initModel(sequelize: Sequelize.Sequelize): typeof users {
     return users.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    login: {
+      type: DataTypes.STRING(64),
+      allowNull: false,
+      unique: "users_login_key"
+    },
+    password: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    first_name: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    second_name: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    middle_name: {
+      type: DataTypes.STRING(256),
+      allowNull: true
+    },
+    date_birthday: {
+      type: DataTypes.STRING(10),
+      allowNull: false
+    },
+    mobile_phone: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+      unique: "users_mobile_phone_key"
+    },
+    'e-mail': {
+      type: DataTypes.STRING(256),
+      allowNull: true,
+      unique: "users_e-mail_key"
+    }
+  }, {
+    sequelize,
+    tableName: 'users',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "users_e-mail_key",
+        unique: true,
+        fields: [
+          { name: "e-mail" },
+        ]
       },
-      login: {
-        type: DataTypes.STRING(64),
-        allowNull: false,
-        unique: 'users_login_key'
+      {
+        name: "users_login_key",
+        unique: true,
+        fields: [
+          { name: "login" },
+        ]
       },
-      password: {
-        type: DataTypes.STRING(256),
-        allowNull: false
+      {
+        name: "users_mobile_phone_key",
+        unique: true,
+        fields: [
+          { name: "mobile_phone" },
+        ]
       },
-      first_name: {
-        type: DataTypes.STRING(256),
-        allowNull: false
+      {
+        name: "users_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
       },
-      second_name: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      },
-      middle_name: {
-        type: DataTypes.STRING(256),
-        allowNull: true
-      },
-      date_birthday: {
-        type: DataTypes.STRING(10),
-        allowNull: false
-      },
-      mobile_phone: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
-        unique: 'users_mobile_phone_key'
-      },
-      'e-mail': {
-        type: DataTypes.STRING(256),
-        allowNull: true,
-        unique: 'users_e-mail_key'
-      }
-    }, {
-      sequelize,
-      tableName: 'users',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'users_e-mail_key',
-          unique: true,
-          fields: [
-            {name: 'e-mail'},
-          ]
-        },
-        {
-          name: 'users_login_key',
-          unique: true,
-          fields: [
-            {name: 'login'},
-          ]
-        },
-        {
-          name: 'users_mobile_phone_key',
-          unique: true,
-          fields: [
-            {name: 'mobile_phone'},
-          ]
-        },
-        {
-          name: 'users_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    ]
+  });
   }
 }

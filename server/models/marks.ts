@@ -9,9 +9,9 @@ export interface marksAttributes {
   user_id: number;
 }
 
-export type marksPk = 'id';
+export type marksPk = "id";
 export type marksId = marks[marksPk];
-export type marksOptionalAttributes = 'id';
+export type marksOptionalAttributes = "id";
 export type marksCreationAttributes = Optional<marksAttributes, marksOptionalAttributes>;
 
 export class marks extends Model<marksAttributes, marksCreationAttributes> implements marksAttributes {
@@ -39,38 +39,38 @@ export class marks extends Model<marksAttributes, marksCreationAttributes> imple
 
   static initModel(sequelize: Sequelize.Sequelize): typeof marks {
     return marks.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      mark: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id'
-        }
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    mark: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'marks',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'marks_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    }
+  }, {
+    sequelize,
+    tableName: 'marks',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "marks_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

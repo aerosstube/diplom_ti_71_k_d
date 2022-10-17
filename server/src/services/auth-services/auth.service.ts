@@ -7,8 +7,8 @@ import {user_devices} from '../../../models/user_devices';
 import {users} from '../../../models/users';
 import {ApiError} from '../../errors/api.error';
 import {UserService} from '../user-services/user.service';
-import {SaveTokens} from './auth.business.service';
-import {AuthDatabaseService} from './auth.database.service';
+import {SaveTokens, TokenOptions} from './auth.business.service';
+import {AuthDatabaseService, DeviceInfo} from './auth.database.service';
 
 export interface AuthUser {
 	userId: number;
@@ -42,7 +42,34 @@ export class AuthService {
 		};
 	}
 
-	static async generateToken(payload: AuthUser, refreshToken = null): Promise<JwtTokens> {
+	static async saveToken(saveToken: SaveTokens, transaction: Transaction): Promise<void> {
+		try {
+			const deviceInfo: DeviceInfo = {
+				userAgent: saveToken.userAgent,
+				deviceIp: saveToken.deviceIp
+			};
+
+			let deviceData: user_devices | null = await AuthDatabaseService.findUserDeviceByUA(deviceInfo);
+			if (!deviceData) {
+				deviceData = await AuthDatabaseService.createUserDevice({
+					device_ip: saveToken.deviceIp,
+					user_agent: saveToken.userAgent
+				}, transaction);
+			}
+
+			let tokenData: token | null = await AuthDatabaseService.findTokenByUserId(saveToken);
+
+			if (!tokenData)
+				tokenData = await AuthDatabaseService.createToken(saveToken, transaction, deviceData.id);
+
+			tokenData.refresh_token = saveToken.refreshToken;
+			await tokenData.save();
+		} catch (err) {
+			throw ApiError.BadRequest('Ошибка авторизации!');
+		}
+	}
+
+	static async generateToken(payload: AuthUser, refreshToken: string | null = null): Promise<JwtTokens> {
 		return {
 			refreshToken: (refreshToken) ? refreshToken : jwt.sign(payload, application.refreshToken, {expiresIn: '30d'}),
 			accessToken: jwt.sign(payload, application.accessToken, {expiresIn: '15m'}),
@@ -50,22 +77,14 @@ export class AuthService {
 	}
 
 
-	static async saveToken(saveToken: SaveTokens, transaction: Transaction): Promise<void> {
-		let deviceData: user_devices | null = await AuthDatabaseService.findUserDevice(saveToken);
-		if (!deviceData) {
-			deviceData = await AuthDatabaseService.createUserDevice({
-				device_ip: saveToken.deviceIp,
-				device_source: saveToken.userAgent
-			}, transaction);
+	static validateRefreshToken(refreshToken: string): TokenOptions {
+		try {
+			const payload = jwt.verify(refreshToken, application.refreshToken);
+			// @ts-ignore
+			return Object.assign(payload);
+		} catch (e) {
+			throw ApiError.UnauthorizedError();
 		}
-
-		let tokenData: token | null = await AuthDatabaseService.findToken(saveToken);
-
-		if (!tokenData)
-			tokenData = await AuthDatabaseService.createToken(saveToken, transaction, deviceData.id);
-
-		tokenData.refresh_token = saveToken.refreshToken;
-		await tokenData.save();
 	}
 
 	static async destroyExpiredTokens(): Promise<void> {
@@ -84,12 +103,15 @@ export class AuthService {
 
 				if (device)
 					await device.destroy();
-
-
 			}
-
 		}
+	}
 
+	static async deleteToken(tokenData: token, transaction: Transaction): Promise<void> {
+		await tokenData.destroy({transaction});
+	}
 
+	static async deleteUserDevice(deviceData: user_devices, transaction: Transaction): Promise<void> {
+		await deviceData.destroy({transaction});
 	}
 }

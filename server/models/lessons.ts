@@ -12,9 +12,9 @@ export interface lessonsAttributes {
   lesson_problem_id: number;
 }
 
-export type lessonsPk = 'id';
+export type lessonsPk = "id";
 export type lessonsId = lessons[lessonsPk];
-export type lessonsOptionalAttributes = 'id' | 'two_our_class_id';
+export type lessonsOptionalAttributes = "id" | "two_our_class_id";
 export type lessonsCreationAttributes = Optional<lessonsAttributes, lessonsOptionalAttributes>;
 
 export class lessons extends Model<lessonsAttributes, lessonsCreationAttributes> implements lessonsAttributes {
@@ -49,50 +49,50 @@ export class lessons extends Model<lessonsAttributes, lessonsCreationAttributes>
 
   static initModel(sequelize: Sequelize.Sequelize): typeof lessons {
     return lessons.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      title: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      },
-      minutes: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      two_our_class_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'two_our_class',
-          key: 'id'
-        }
-      },
-      lesson_problem_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'lesson_problem',
-          key: 'id'
-        }
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    title: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    },
+    minutes: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    two_our_class_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'two_our_class',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'lessons',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'lessons_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    },
+    lesson_problem_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'lesson_problem',
+        key: 'id'
+      }
+    }
+  }, {
+    sequelize,
+    tableName: 'lessons',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "lessons_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

@@ -2,8 +2,8 @@ import * as Sequelize from 'sequelize';
 import {DataTypes, Model, Optional} from 'sequelize';
 import type {lesson_problem_type, lesson_problem_typeId} from './lesson_problem_type';
 import type {
-  lesson_standart_problem_content,
-  lesson_standart_problem_contentId
+	lesson_standart_problem_content,
+	lesson_standart_problem_contentId
 } from './lesson_standart_problem_content';
 import type {lesson_test_problem, lesson_test_problemId} from './lesson_test_problem';
 import type {lessons, lessonsId} from './lessons';
@@ -15,9 +15,9 @@ export interface lesson_problemAttributes {
   lesson_test_problem_id?: number;
 }
 
-export type lesson_problemPk = 'id';
+export type lesson_problemPk = "id";
 export type lesson_problemId = lesson_problem[lesson_problemPk];
-export type lesson_problemOptionalAttributes = 'id' | 'lesson_problem_content_id' | 'lesson_test_problem_id';
+export type lesson_problemOptionalAttributes = "id" | "lesson_problem_content_id" | "lesson_test_problem_id";
 export type lesson_problemCreationAttributes = Optional<lesson_problemAttributes, lesson_problemOptionalAttributes>;
 
 export class lesson_problem extends Model<lesson_problemAttributes, lesson_problemCreationAttributes> implements lesson_problemAttributes {
@@ -56,50 +56,50 @@ export class lesson_problem extends Model<lesson_problemAttributes, lesson_probl
 
   static initModel(sequelize: Sequelize.Sequelize): typeof lesson_problem {
     return lesson_problem.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      lesson_problem_type_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'lesson_problem_type',
-          key: 'id'
-        }
-      },
-      lesson_problem_content_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'lesson_standart_problem_content',
-          key: 'id'
-        }
-      },
-      lesson_test_problem_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'lesson_test_problem',
-          key: 'id'
-        }
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    lesson_problem_type_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'lesson_problem_type',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'lesson_problem',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'lesson_problem_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    },
+    lesson_problem_content_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'lesson_standart_problem_content',
+        key: 'id'
+      }
+    },
+    lesson_test_problem_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'lesson_test_problem',
+        key: 'id'
+      }
+    }
+  }, {
+    sequelize,
+    tableName: 'lesson_problem',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "lesson_problem_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

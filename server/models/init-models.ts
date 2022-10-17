@@ -16,8 +16,8 @@ import {lesson_problem as _lesson_problem} from './lesson_problem';
 import type {lesson_problem_typeAttributes, lesson_problem_typeCreationAttributes} from './lesson_problem_type';
 import {lesson_problem_type as _lesson_problem_type} from './lesson_problem_type';
 import type {
-  lesson_standart_problem_contentAttributes,
-  lesson_standart_problem_contentCreationAttributes
+	lesson_standart_problem_contentAttributes,
+	lesson_standart_problem_contentCreationAttributes
 } from './lesson_standart_problem_content';
 import {lesson_standart_problem_content as _lesson_standart_problem_content} from './lesson_standart_problem_content';
 import type {lesson_test_problemAttributes, lesson_test_problemCreationAttributes} from './lesson_test_problem';
@@ -131,58 +131,52 @@ export function initModels(sequelize: Sequelize) {
   const users = _users.initModel(sequelize);
   const weekdays = _weekdays.initModel(sequelize);
 
-  schedule.belongsTo(audiences, {as: 'audience', foreignKey: 'audience_id'});
-  audiences.hasMany(schedule, {as: 'schedules', foreignKey: 'audience_id'});
-  schedule.belongsTo(group_teachers, {as: 'teacher', foreignKey: 'teacher_id'});
-  group_teachers.hasMany(schedule, {as: 'schedules', foreignKey: 'teacher_id'});
-  courses_has_groups.belongsTo(groups, {as: 'group', foreignKey: 'group_id'});
-  groups.hasMany(courses_has_groups, {as: 'courses_has_groups', foreignKey: 'group_id'});
-  group_students.belongsTo(groups, {as: 'group', foreignKey: 'group_id'});
-  groups.hasMany(group_students, {as: 'group_students', foreignKey: 'group_id'});
-  group_teachers.belongsTo(groups, {as: 'group', foreignKey: 'group_id'});
-  groups.hasMany(group_teachers, {as: 'group_teachers', foreignKey: 'group_id'});
-  schedule.belongsTo(groups, {as: 'group', foreignKey: 'group_id'});
-  groups.hasMany(schedule, {as: 'schedules', foreignKey: 'group_id'});
-  schedule.belongsTo(groups, {as: 'group_teacher', foreignKey: 'group_teacher_id'});
-  groups.hasMany(schedule, {as: 'group_teacher_schedules', foreignKey: 'group_teacher_id'});
-  lessons.belongsTo(lesson_problem, {as: 'lesson_problem', foreignKey: 'lesson_problem_id'});
-  lesson_problem.hasMany(lessons, {as: 'lessons', foreignKey: 'lesson_problem_id'});
-  lesson_problem.belongsTo(lesson_problem_type, {as: 'lesson_problem_type', foreignKey: 'lesson_problem_type_id'});
-  lesson_problem_type.hasMany(lesson_problem, {as: 'lesson_problems', foreignKey: 'lesson_problem_type_id'});
-  lesson_problem.belongsTo(lesson_standart_problem_content, {
-    as: 'lesson_problem_content',
-    foreignKey: 'lesson_problem_content_id'
-  });
-  lesson_standart_problem_content.hasMany(lesson_problem, {
-    as: 'lesson_problems',
-    foreignKey: 'lesson_problem_content_id'
-  });
-  lesson_problem.belongsTo(lesson_test_problem, {as: 'lesson_test_problem', foreignKey: 'lesson_test_problem_id'});
-  lesson_test_problem.hasMany(lesson_problem, {as: 'lesson_problems', foreignKey: 'lesson_test_problem_id'});
-  schedule.belongsTo(lessons, {as: 'lesson', foreignKey: 'lesson_id'});
-  lessons.hasMany(schedule, {as: 'schedules', foreignKey: 'lesson_id'});
-  schedule.belongsTo(marks, {as: 'mark', foreignKey: 'mark_id'});
-  marks.hasMany(schedule, {as: 'schedules', foreignKey: 'mark_id'});
-  answers.belongsTo(questions, {as: 'question', foreignKey: 'question_id'});
-  questions.hasMany(answers, {as: 'answers', foreignKey: 'question_id'});
-  lessons.belongsTo(two_our_class, {as: 'two_our_class', foreignKey: 'two_our_class_id'});
-  two_our_class.hasMany(lessons, {as: 'lessons', foreignKey: 'two_our_class_id'});
-  schedule.belongsTo(two_our_class, {as: 'two_our_class', foreignKey: 'two_our_class_id'});
-  two_our_class.hasMany(schedule, {as: 'schedules', foreignKey: 'two_our_class_id'});
-  token.belongsTo(user_devices, {as: 'user_device', foreignKey: 'user_device_id'});
-  user_devices.hasMany(token, {as: 'tokens', foreignKey: 'user_device_id'});
-  group_students.belongsTo(users, {as: 'user', foreignKey: 'user_id'});
-  users.hasMany(group_students, {as: 'group_students', foreignKey: 'user_id'});
-  group_teachers.belongsTo(users, {as: 'user', foreignKey: 'user_id'});
-  users.hasOne(group_teachers, {as: 'group_teacher', foreignKey: 'user_id'});
-  groups.belongsTo(users, {as: 'user', foreignKey: 'user_id'});
-  users.hasMany(groups, {as: 'groups', foreignKey: 'user_id'});
-  marks.belongsTo(users, {as: 'user', foreignKey: 'user_id'});
-  users.hasMany(marks, {as: 'marks', foreignKey: 'user_id'});
-  token.belongsTo(users, {as: 'user', foreignKey: 'user_id'});
-  users.hasMany(token, {as: 'tokens', foreignKey: 'user_id'});
-  schedule.belongsTo(weekdays, {as: 'weekday', foreignKey: 'weekday_id'});
-  weekdays.hasMany(schedule, {as: 'schedules', foreignKey: 'weekday_id'});
+  schedule.belongsTo(audiences, { as: "audience", foreignKey: "audience_id"});
+  audiences.hasMany(schedule, { as: "schedules", foreignKey: "audience_id"});
+  schedule.belongsTo(group_teachers, { as: "teacher", foreignKey: "teacher_id"});
+  group_teachers.hasMany(schedule, { as: "schedules", foreignKey: "teacher_id"});
+  courses_has_groups.belongsTo(groups, { as: "group", foreignKey: "group_id"});
+  groups.hasMany(courses_has_groups, { as: "courses_has_groups", foreignKey: "group_id"});
+  group_students.belongsTo(groups, { as: "group", foreignKey: "group_id"});
+  groups.hasMany(group_students, { as: "group_students", foreignKey: "group_id"});
+  group_teachers.belongsTo(groups, { as: "group", foreignKey: "group_id"});
+  groups.hasMany(group_teachers, { as: "group_teachers", foreignKey: "group_id"});
+  schedule.belongsTo(groups, { as: "group", foreignKey: "group_id"});
+  groups.hasMany(schedule, { as: "schedules", foreignKey: "group_id"});
+  schedule.belongsTo(groups, { as: "group_teacher", foreignKey: "group_teacher_id"});
+  groups.hasMany(schedule, { as: "group_teacher_schedules", foreignKey: "group_teacher_id"});
+  lessons.belongsTo(lesson_problem, { as: "lesson_problem", foreignKey: "lesson_problem_id"});
+  lesson_problem.hasMany(lessons, { as: "lessons", foreignKey: "lesson_problem_id"});
+  lesson_problem.belongsTo(lesson_problem_type, { as: "lesson_problem_type", foreignKey: "lesson_problem_type_id"});
+  lesson_problem_type.hasMany(lesson_problem, { as: "lesson_problems", foreignKey: "lesson_problem_type_id"});
+  lesson_problem.belongsTo(lesson_standart_problem_content, { as: "lesson_problem_content", foreignKey: "lesson_problem_content_id"});
+  lesson_standart_problem_content.hasMany(lesson_problem, { as: "lesson_problems", foreignKey: "lesson_problem_content_id"});
+  lesson_problem.belongsTo(lesson_test_problem, { as: "lesson_test_problem", foreignKey: "lesson_test_problem_id"});
+  lesson_test_problem.hasMany(lesson_problem, { as: "lesson_problems", foreignKey: "lesson_test_problem_id"});
+  schedule.belongsTo(lessons, { as: "lesson", foreignKey: "lesson_id"});
+  lessons.hasMany(schedule, { as: "schedules", foreignKey: "lesson_id"});
+  schedule.belongsTo(marks, { as: "mark", foreignKey: "mark_id"});
+  marks.hasMany(schedule, { as: "schedules", foreignKey: "mark_id"});
+  answers.belongsTo(questions, { as: "question", foreignKey: "question_id"});
+  questions.hasMany(answers, { as: "answers", foreignKey: "question_id"});
+  lessons.belongsTo(two_our_class, { as: "two_our_class", foreignKey: "two_our_class_id"});
+  two_our_class.hasMany(lessons, { as: "lessons", foreignKey: "two_our_class_id"});
+  schedule.belongsTo(two_our_class, { as: "two_our_class", foreignKey: "two_our_class_id"});
+  two_our_class.hasMany(schedule, { as: "schedules", foreignKey: "two_our_class_id"});
+  token.belongsTo(user_devices, { as: "user_device", foreignKey: "user_device_id"});
+  user_devices.hasMany(token, { as: "tokens", foreignKey: "user_device_id"});
+  group_students.belongsTo(users, { as: "user", foreignKey: "user_id"});
+  users.hasMany(group_students, { as: "group_students", foreignKey: "user_id"});
+  group_teachers.belongsTo(users, { as: "user", foreignKey: "user_id"});
+  users.hasOne(group_teachers, { as: "group_teacher", foreignKey: "user_id"});
+  groups.belongsTo(users, { as: "user", foreignKey: "user_id"});
+  users.hasMany(groups, { as: "groups", foreignKey: "user_id"});
+  marks.belongsTo(users, { as: "user", foreignKey: "user_id"});
+  users.hasMany(marks, { as: "marks", foreignKey: "user_id"});
+  token.belongsTo(users, { as: "user", foreignKey: "user_id"});
+  users.hasMany(token, { as: "tokens", foreignKey: "user_id"});
+  schedule.belongsTo(weekdays, { as: "weekday", foreignKey: "weekday_id"});
+  weekdays.hasMany(schedule, { as: "schedules", foreignKey: "weekday_id"});
 
   return {
     answers: answers,

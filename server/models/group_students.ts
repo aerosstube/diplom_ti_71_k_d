@@ -9,9 +9,9 @@ export interface group_studentsAttributes {
   group_id: number;
 }
 
-export type group_studentsPk = 'id';
+export type group_studentsPk = "id";
 export type group_studentsId = group_students[group_studentsPk];
-export type group_studentsOptionalAttributes = 'id';
+export type group_studentsOptionalAttributes = "id";
 export type group_studentsCreationAttributes = Optional<group_studentsAttributes, group_studentsOptionalAttributes>;
 
 export class group_students extends Model<group_studentsAttributes, group_studentsCreationAttributes> implements group_studentsAttributes {
@@ -32,42 +32,42 @@ export class group_students extends Model<group_studentsAttributes, group_studen
 
   static initModel(sequelize: Sequelize.Sequelize): typeof group_students {
     return group_students.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id'
-        }
-      },
-      group_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'groups',
-          key: 'id'
-        }
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'group_students',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'group_students_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    },
+    group_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'groups',
+        key: 'id'
+      }
+    }
+  }, {
+    sequelize,
+    tableName: 'group_students',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "group_students_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

@@ -7,9 +7,9 @@ export interface audiencesAttributes {
   number_audience: number;
 }
 
-export type audiencesPk = 'id';
+export type audiencesPk = "id";
 export type audiencesId = audiences[audiencesPk];
-export type audiencesOptionalAttributes = 'id';
+export type audiencesOptionalAttributes = "id";
 export type audiencesCreationAttributes = Optional<audiencesAttributes, audiencesOptionalAttributes>;
 
 export class audiences extends Model<audiencesAttributes, audiencesCreationAttributes> implements audiencesAttributes {
@@ -31,30 +31,30 @@ export class audiences extends Model<audiencesAttributes, audiencesCreationAttri
 
   static initModel(sequelize: Sequelize.Sequelize): typeof audiences {
     return audiences.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    number_audience: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'audiences',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "audiences_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
       },
-      number_audience: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      }
-    }, {
-      sequelize,
-      tableName: 'audiences',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'audiences_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    ]
+  });
   }
 }

@@ -8,8 +8,8 @@ export interface SaveDevice {
 }
 
 export interface DeviceInfo {
-	device_source?: string;
-	device_ip?: string;
+	userAgent?: string;
+	deviceIp?: string;
 }
 
 export class AuthDatabaseService {
@@ -25,7 +25,14 @@ export class AuthDatabaseService {
 		});
 	}
 
-	static async findToken(saveToken: SaveTokens): Promise<token | null> {
+	static async createUserDevice(deviceInfo: { device_ip: string | undefined; user_agent: string | undefined }, transaction: Transaction): Promise<user_devices> {
+		return await user_devices.create({
+			device_ip: deviceInfo.device_ip,
+			user_agent: deviceInfo.user_agent
+		}, {transaction});
+	}
+
+	static async findTokenByUserId(saveToken: SaveTokens): Promise<token | null> {
 		return await token.findOne({
 			where: {
 				user_id: saveToken.userId,
@@ -33,11 +40,19 @@ export class AuthDatabaseService {
 		});
 	}
 
-	static async findUserDevice(saveToken: SaveTokens): Promise<user_devices | null> {
+	static async findToken(refreshToken: string): Promise<token | null> {
+		return await token.findOne({
+			where: {
+				refresh_token: refreshToken
+			}
+		});
+	}
+
+	static async findUserDeviceByUA(deviceInfo: DeviceInfo): Promise<user_devices | null> {
 		return await user_devices.findOne({
 			where: {
-				device_ip: saveToken.deviceIp,
-				device_source: saveToken.userAgent
+				device_ip: deviceInfo.deviceIp,
+				user_agent: deviceInfo.userAgent
 			}
 		});
 	}
@@ -52,10 +67,11 @@ export class AuthDatabaseService {
 		});
 	}
 
-	static async createUserDevice(deviceInfo: DeviceInfo, transaction: Transaction): Promise<user_devices> {
-		return await user_devices.create({
-			device_ip: deviceInfo.device_ip,
-			device_source: deviceInfo.device_source
-		}, {transaction});
+	static async findDeviceById(user_device_id: number): Promise<user_devices | null> {
+		return await user_devices.findOne({
+			where: {
+				id: user_device_id
+			}
+		});
 	}
 }

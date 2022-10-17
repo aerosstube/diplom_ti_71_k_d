@@ -15,14 +15,13 @@ export class AuthController {
 
 			const authOptions: AuthOptions = {
 				deviceIp: deviceIp,
-				userAgent: useragent?.source,
+				userAgent: JSON.stringify(useragent).toString(),
 				password: user.password,
 				login: user.login
 			};
 
 			const tokens: JwtTokens = await AuthBusinessService.userLogin(authOptions, transaction);
 			res.cookie('refreshToken', tokens.refreshToken, {maxAge: 30 * 24 * 3600 * 1000, httpOnly: true});
-
 
 			res.json({
 				tokens: tokens
@@ -32,14 +31,31 @@ export class AuthController {
 			await transaction.rollback();
 			next(err);
 		}
-
 	}
 
 	static async userLogout(req: Request, res: Response, next: NextFunction) {
+		const transaction = await SequelizeConnect.transaction();
+		try {
+			const {cookies} = req;
 
+			await AuthBusinessService.userLogout(cookies.refreshToken, transaction);
+			await transaction.commit();
+		} catch (err) {
+			await transaction.rollback();
+			next(err);
+		}
 	}
 
 	static async userRefresh(req: Request, res: Response, next: NextFunction) {
+		try {
+			const {cookies} = req;
+			const tokens: JwtTokens = await AuthBusinessService.userRefreshToken(cookies.refreshToken);
 
+			res.json({
+				tokens: tokens
+			});
+		} catch (err) {
+			next(err);
+		}
 	}
 }

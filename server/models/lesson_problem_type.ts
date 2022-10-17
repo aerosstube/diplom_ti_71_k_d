@@ -7,9 +7,9 @@ export interface lesson_problem_typeAttributes {
   name: string;
 }
 
-export type lesson_problem_typePk = 'id';
+export type lesson_problem_typePk = "id";
 export type lesson_problem_typeId = lesson_problem_type[lesson_problem_typePk];
-export type lesson_problem_typeOptionalAttributes = 'id';
+export type lesson_problem_typeOptionalAttributes = "id";
 export type lesson_problem_typeCreationAttributes = Optional<lesson_problem_typeAttributes, lesson_problem_typeOptionalAttributes>;
 
 export class lesson_problem_type extends Model<lesson_problem_typeAttributes, lesson_problem_typeCreationAttributes> implements lesson_problem_typeAttributes {
@@ -31,38 +31,38 @@ export class lesson_problem_type extends Model<lesson_problem_typeAttributes, le
 
   static initModel(sequelize: Sequelize.Sequelize): typeof lesson_problem_type {
     return lesson_problem_type.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        unique: 'lesson_problem_type_id_key'
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      unique: "lesson_problem_type_id_key"
+    },
+    name: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'lesson_problem_type',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "lesson_problem_type_id_key",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
       },
-      name: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-      }
-    }, {
-      sequelize,
-      tableName: 'lesson_problem_type',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'lesson_problem_type_id_key',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-        {
-          name: 'lesson_problem_type_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+      {
+        name: "lesson_problem_type_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

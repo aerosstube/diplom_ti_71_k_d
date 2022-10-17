@@ -9,9 +9,9 @@ export interface lesson_standart_problem_contentAttributes {
   context: string;
 }
 
-export type lesson_standart_problem_contentPk = 'id';
+export type lesson_standart_problem_contentPk = "id";
 export type lesson_standart_problem_contentId = lesson_standart_problem_content[lesson_standart_problem_contentPk];
-export type lesson_standart_problem_contentOptionalAttributes = 'id' | 'video_url' | 'photo_url';
+export type lesson_standart_problem_contentOptionalAttributes = "id" | "video_url" | "photo_url";
 export type lesson_standart_problem_contentCreationAttributes = Optional<lesson_standart_problem_contentAttributes, lesson_standart_problem_contentOptionalAttributes>;
 
 export class lesson_standart_problem_content extends Model<lesson_standart_problem_contentAttributes, lesson_standart_problem_contentCreationAttributes> implements lesson_standart_problem_contentAttributes {
@@ -35,38 +35,38 @@ export class lesson_standart_problem_content extends Model<lesson_standart_probl
 
   static initModel(sequelize: Sequelize.Sequelize): typeof lesson_standart_problem_content {
     return lesson_standart_problem_content.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    video_url: {
+      type: DataTypes.STRING(256),
+      allowNull: true
+    },
+    photo_url: {
+      type: DataTypes.STRING(256),
+      allowNull: true
+    },
+    context: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'lesson_standart_problem_content',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "lesson_problem_content_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
       },
-      video_url: {
-        type: DataTypes.STRING(256),
-        allowNull: true
-      },
-      photo_url: {
-        type: DataTypes.STRING(256),
-        allowNull: true
-      },
-      context: {
-        type: DataTypes.TEXT,
-        allowNull: false
-      }
-    }, {
-      sequelize,
-      tableName: 'lesson_standart_problem_content',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'lesson_problem_content_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    ]
+  });
   }
 }

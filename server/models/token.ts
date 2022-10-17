@@ -11,9 +11,9 @@ export interface tokenAttributes {
   date_expired: Date;
 }
 
-export type tokenPk = 'id';
+export type tokenPk = "id";
 export type tokenId = token[tokenPk];
-export type tokenOptionalAttributes = 'id';
+export type tokenOptionalAttributes = "id";
 export type tokenCreationAttributes = Optional<tokenAttributes, tokenOptionalAttributes>;
 
 export class token extends Model<tokenAttributes, tokenCreationAttributes> implements tokenAttributes {
@@ -36,50 +36,50 @@ export class token extends Model<tokenAttributes, tokenCreationAttributes> imple
 
   static initModel(sequelize: Sequelize.Sequelize): typeof token {
     return token.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      refresh_token: {
-        type: DataTypes.STRING(1000),
-        allowNull: false
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id'
-        }
-      },
-      user_device_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'user_devices',
-          key: 'id'
-        }
-      },
-      date_expired: {
-        type: DataTypes.DATE,
-        allowNull: false
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    refresh_token: {
+      type: DataTypes.STRING(1000),
+      allowNull: false
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'token',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'token_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    },
+    user_device_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'user_devices',
+        key: 'id'
+      }
+    },
+    date_expired: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'token',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "token_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }

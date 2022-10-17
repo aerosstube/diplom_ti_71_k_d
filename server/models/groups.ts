@@ -12,9 +12,9 @@ export interface groupsAttributes {
   name: string;
 }
 
-export type groupsPk = 'id';
+export type groupsPk = "id";
 export type groupsId = groups[groupsPk];
-export type groupsOptionalAttributes = 'id';
+export type groupsOptionalAttributes = "id";
 export type groupsCreationAttributes = Optional<groupsAttributes, groupsOptionalAttributes>;
 
 export class groups extends Model<groupsAttributes, groupsCreationAttributes> implements groupsAttributes {
@@ -90,38 +90,38 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
 
   static initModel(sequelize: Sequelize.Sequelize): typeof groups {
     return groups.init({
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id'
-        }
-      },
-      name: {
-        type: DataTypes.STRING(256),
-        allowNull: false
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
       }
-    }, {
-      sequelize,
-      tableName: 'groups',
-      schema: 'public',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'groups_pkey',
-          unique: true,
-          fields: [
-            {name: 'id'},
-          ]
-        },
-      ]
-    });
+    },
+    name: {
+      type: DataTypes.STRING(256),
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    tableName: 'groups',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
+      {
+        name: "groups_pkey",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+    ]
+  });
   }
 }
