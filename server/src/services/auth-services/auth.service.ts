@@ -7,7 +7,7 @@ import {user_devices} from '../../../models/user_devices';
 import {users} from '../../../models/users';
 import {ApiError} from '../../errors/api.error';
 import {UserService} from '../user-services/user.service';
-import {SaveTokens, TokenOptions} from './auth.business.service';
+import {AuthOptions, SaveTokens, TokenOptions} from './auth.business.service';
 import {AuthDatabaseService, DeviceInfo} from './auth.database.service';
 
 export interface AuthUser {
@@ -16,6 +16,7 @@ export interface AuthUser {
 	first_name: string;
 	second_name: string;
 	middle_name?: string;
+	dateOfBirthday?: Date;
 }
 
 export interface JwtTokens {
@@ -76,6 +77,32 @@ export class AuthService {
 		};
 	}
 
+	static async saveTokenToDatabase(authOptions: AuthOptions, user: AuthUser, tokens: JwtTokens, transaction: Transaction) {
+		const dateExpired: Date = new Date();
+		dateExpired.setDaconst dateExpired: Date = new Date();
+		dateExpired.setDate(dateExpired.getDate() + 30);
+
+		const saveToken: SaveTokens = {
+			userId: user.userId,
+			refreshToken: tokens.refreshToken,
+			userAgent: authOptions.userAgent,
+			dateExpired: dateExpired,
+			deviceIp: authOptions.deviceIp,
+		};
+
+		await AuthService.saveToken(saveToken, transaction);te(dateExpired.getDate() + 30);
+
+		const saveToken: SaveTokens = {
+			userId: user.userId,
+			refreshToken: tokens.refreshToken,
+			userAgent: authOptions.userAgent,
+			dateExpired: dateExpired,
+			deviceIp: authOptions.deviceIp,
+		};
+
+		await AuthService.saveToken(saveToken, transaction);
+	}
+
 
 	static validateRefreshToken(refreshToken: string): TokenOptions {
 		try {
@@ -123,5 +150,17 @@ export class AuthService {
 			throw ApiError.UnauthorizedError();
 
 		await deviceData.destroy({transaction});
+	}
+
+	static async createUser(authOptions: AuthOptions, authUser: AuthUser,transaction: Transaction): Promise<users> {
+		return await users.create({
+			login: authOptions.login,
+			password: authOptions.password,
+			first_name: authUser.first_name,
+			second_name: authUser.second_name,
+			middle_name: authUser.middle_name,
+			// @ts-ignore
+			date_birthday: authUser.dateOfBirthday
+		});
 	}
 }

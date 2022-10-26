@@ -35,18 +35,7 @@ export class AuthBusinessService {
 		const user: AuthUser = await AuthService.checkUser(authOptions.login, authOptions.password, transaction);
 		const tokens: JwtTokens = await AuthService.generateToken(user);
 
-		const dateExpired: Date = new Date();
-		dateExpired.setDate(dateExpired.getDate() + 30);
 
-		const saveToken: SaveTokens = {
-			userId: user.userId,
-			refreshToken: tokens.refreshToken,
-			userAgent: authOptions.userAgent,
-			dateExpired: dateExpired,
-			deviceIp: authOptions.deviceIp,
-		};
-
-		await AuthService.saveToken(saveToken, transaction);
 
 		return {
 			...tokens
@@ -72,5 +61,12 @@ export class AuthBusinessService {
 			userId: user.userId,
 			middle_name: user.middle_name
 		}, refreshToken);
+	}
+
+	static async userRegistration(authOptions: AuthOptions, authUser: AuthUser, transaction: Transaction): Promise<void> {
+		const user = await AuthService.createUser(authOptions, authUser, transaction);
+		const tokens: JwtTokens = await AuthService.generateToken(authUser);
+
+
 	}
 }
