@@ -4,7 +4,6 @@ import {AuthBusinessService, AuthOptions} from '../services/auth-services/auth.b
 import {JwtTokens} from '../services/auth-services/auth.service';
 import {SequelizeConnect} from '../services/database-connect';
 
-
 export class AuthController {
 	static async userLogin(req: Request, res: Response, next: NextFunction) {
 		const transaction: Transaction = await SequelizeConnect.transaction();
@@ -27,6 +26,27 @@ export class AuthController {
 				tokens: tokens
 			});
 			await transaction.commit();
+		} catch (err) {
+			await transaction.rollback();
+			next(err);
+		}
+	}
+
+	static async userRegistration(req: Request, res: Response, next: NextFunction) {
+		const transaction: Transaction = await SequelizeConnect.transaction();
+		try {
+			const {body:{user}, useragent, headers, socket} = req;
+
+			const deviceIp: string | undefined = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
+
+			const authOptions: AuthOptions = {
+				deviceIp: deviceIp,
+				userAgent: JSON.stringify(useragent).toString(),
+				password: user.password,
+				login: user.login
+			};
+
+			await  transaction.commit();
 		} catch (err) {
 			await transaction.rollback();
 			next(err);

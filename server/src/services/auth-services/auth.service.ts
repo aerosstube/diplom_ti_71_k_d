@@ -9,6 +9,7 @@ import {ApiError} from '../../errors/api.error';
 import {UserService} from '../user-services/user.service';
 import {AuthOptions, SaveTokens, TokenOptions} from './auth.business.service';
 import {AuthDatabaseService, DeviceInfo} from './auth.database.service';
+import {hash} from 'bcryptjs';
 
 export interface AuthUser {
 	userId: number;
@@ -16,14 +17,13 @@ export interface AuthUser {
 	first_name: string;
 	second_name: string;
 	middle_name?: string;
-	dateOfBirthday?: Date;
+	dateOfBirthday?: string;
 }
 
 export interface JwtTokens {
 	refreshToken: string;
 	accessToken: string;
 }
-
 
 export class AuthService {
 
@@ -79,18 +79,7 @@ export class AuthService {
 
 	static async saveTokenToDatabase(authOptions: AuthOptions, user: AuthUser, tokens: JwtTokens, transaction: Transaction) {
 		const dateExpired: Date = new Date();
-		dateExpired.setDaconst dateExpired: Date = new Date();
 		dateExpired.setDate(dateExpired.getDate() + 30);
-
-		const saveToken: SaveTokens = {
-			userId: user.userId,
-			refreshToken: tokens.refreshToken,
-			userAgent: authOptions.userAgent,
-			dateExpired: dateExpired,
-			deviceIp: authOptions.deviceIp,
-		};
-
-		await AuthService.saveToken(saveToken, transaction);te(dateExpired.getDate() + 30);
 
 		const saveToken: SaveTokens = {
 			userId: user.userId,
@@ -152,15 +141,27 @@ export class AuthService {
 		await deviceData.destroy({transaction});
 	}
 
-	static async createUser(authOptions: AuthOptions, authUser: AuthUser,transaction: Transaction): Promise<users> {
-		return await users.create({
+	static async createUser(authOptions: AuthOptions, authUser: AuthUser, transaction: Transaction): Promise<AuthUser> {
+		const hashedPassword = hash(authOptions.password, 4);
+
+		const user = await users.create({
 			login: authOptions.login,
-			password: authOptions.password,
 			first_name: authUser.first_name,
 			second_name: authUser.second_name,
 			middle_name: authUser.middle_name,
 			// @ts-ignore
 			date_birthday: authUser.dateOfBirthday
 		});
+
+
+
+		return {
+			dateOfBirthday: user.date_birthday,
+			first_name: user.first_name,
+			login: user.login,
+			middle_name: user.middle_name,
+			second_name: user.second_name,
+			userId: user.id
+		};
 	}
 }

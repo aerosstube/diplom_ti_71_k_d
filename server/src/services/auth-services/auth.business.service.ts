@@ -35,7 +35,7 @@ export class AuthBusinessService {
 		const user: AuthUser = await AuthService.checkUser(authOptions.login, authOptions.password, transaction);
 		const tokens: JwtTokens = await AuthService.generateToken(user);
 
-
+		await AuthService.saveTokenToDatabase(authOptions, user, tokens, transaction);
 
 		return {
 			...tokens
@@ -63,10 +63,16 @@ export class AuthBusinessService {
 		}, refreshToken);
 	}
 
-	static async userRegistration(authOptions: AuthOptions, authUser: AuthUser, transaction: Transaction): Promise<void> {
-		const user = await AuthService.createUser(authOptions, authUser, transaction);
+	static async userRegistration(authOptions: AuthOptions, authUser: AuthUser, transaction: Transaction): Promise<JwtTokens> {
+		const user: AuthUser = await AuthService.createUser(authOptions, authUser, transaction);
 		const tokens: JwtTokens = await AuthService.generateToken(authUser);
 
+		await AuthService.saveTokenToDatabase(authOptions, user, tokens, transaction);
+
+
+		return {
+			...tokens
+		}
 
 	}
 }
