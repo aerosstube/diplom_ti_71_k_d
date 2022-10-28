@@ -59,6 +59,8 @@ export class AuthBusinessService {
 	}
 
 	static async userLogout(refreshToken: string, transaction: Transaction): Promise<void> {
+		if (!refreshToken)
+			throw ApiError.UnauthorizedError();
 		const tokenData = await AuthService.deleteToken(refreshToken, transaction);
 		await AuthService.deleteUserDevice(tokenData, transaction);
 	}

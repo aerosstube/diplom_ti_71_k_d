@@ -118,7 +118,7 @@ export class AuthService {
 
 	static async deleteToken(refreshToken: string, transaction: Transaction): Promise<token> {
 		const tokenData = await AuthDatabaseService.findToken(refreshToken);
-		if (tokenData === null)
+		if (!tokenData)
 			throw ApiError.UnauthorizedError();
 
 		await tokenData.destroy({transaction});
