@@ -1,7 +1,15 @@
 import {Transaction} from 'sequelize';
 import {ApiError} from '../../errors/api.error';
+import {UserDatabaseService} from '../user-services/user.database.service';
 import {AuthDatabaseService} from './auth.database.service';
 import {AuthService, AuthUser, JwtTokens} from './auth.service';
+
+export interface RegistrationUserOptions extends Omit<AuthUser, 'userId'> {
+	password: string,
+	mobile_phone: string,
+	'e-mail': string,
+	dateOfBirthday: string,
+}
 
 export interface AuthOptions {
 	login: string;
@@ -32,10 +40,18 @@ export interface TokenOptions {
 export class AuthBusinessService {
 
 	static async userLogin(authOptions: AuthOptions, transaction: Transaction): Promise<JwtTokens> {
-		const user: AuthUser = await AuthService.checkUser(authOptions.login, authOptions.password, transaction);
+		const userDatabase = await AuthService.checkUser(authOptions.login, authOptions.password);
+		const user: AuthUser = {
+			dateOfBirthday: userDatabase.date_birthday,
+			first_name: userDatabase.first_name,
+			login: userDatabase.login,
+			middle_name: userDatabase.middle_name,
+			second_name: userDatabase.second_name,
+			userId: userDatabase.id,
+		};
 		const tokens: JwtTokens = await AuthService.generateToken(user);
 
-		await AuthService.saveTokenToDatabase(authOptions, user, tokens, transaction);
+		await AuthService.saveTokenToDatabase(authOptions, userDatabase, tokens, transaction);
 
 		return {
 			...tokens
@@ -63,16 +79,28 @@ export class AuthBusinessService {
 		}, refreshToken);
 	}
 
-	static async userRegistration(authOptions: AuthOptions, authUser: AuthUser, transaction: Transaction): Promise<JwtTokens> {
-		const user: AuthUser = await AuthService.createUser(authOptions, authUser, transaction);
+	static async userRegistration(registrationOptions: RegistrationUserOptions, authOptions: AuthOptions, transaction: Transaction): Promise<JwtTokens> {
+		let user = await UserDatabaseService.findUserByLogin(registrationOptions.login);
+		if (user)
+			throw ApiError.BadRequest('Пользователь с таким логином уже существует!');
+
+		user = await AuthService.createUser(registrationOptions, transaction);
+		const authUser: AuthUser = {
+			dateOfBirthday: user.date_birthday,
+			first_name: user.first_name,
+			login: user.login,
+			middle_name: user.middle_name,
+			second_name: user.second_name,
+			userId: user.id
+		};
+
 		const tokens: JwtTokens = await AuthService.generateToken(authUser);
 
 		await AuthService.saveTokenToDatabase(authOptions, user, tokens, transaction);
 
-
 		return {
 			...tokens
-		}
+		};
 
 	}
 }

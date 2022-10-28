@@ -1,6 +1,10 @@
 import {NextFunction, Request, Response} from 'express';
 import {Transaction} from 'sequelize';
-import {AuthBusinessService, AuthOptions} from '../services/auth-services/auth.business.service';
+import {
+	AuthBusinessService,
+	AuthOptions,
+	RegistrationUserOptions
+} from '../services/auth-services/auth.business.service';
 import {JwtTokens} from '../services/auth-services/auth.service';
 import {SequelizeConnect} from '../services/database-connect';
 
@@ -35,18 +39,33 @@ export class AuthController {
 	static async userRegistration(req: Request, res: Response, next: NextFunction) {
 		const transaction: Transaction = await SequelizeConnect.transaction();
 		try {
-			const {body:{user}, useragent, headers, socket} = req;
+			const {body: {user}, useragent, headers, socket} = req;
 
 			const deviceIp: string | undefined = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
-			const authOptions: AuthOptions = {
-				deviceIp: deviceIp,
-				userAgent: JSON.stringify(useragent).toString(),
+			const registrationOptions: RegistrationUserOptions = {
+				dateOfBirthday: user.dateOfBirthday,
+				first_name: user.firstName,
+				login: user.login,
 				password: user.password,
-				login: user.login
+				middle_name: user.middleName,
+				second_name: user.secondName,
+				mobile_phone: user.mobilePhone,
+				'e-mail': user.eMail
 			};
 
-			await  transaction.commit();
+			const authOptions: AuthOptions = {
+				deviceIp: deviceIp,
+				login: user.login,
+				password: user.password,
+				userAgent: JSON.stringify(useragent).toString()
+			};
+
+			const tokens: JwtTokens = await AuthBusinessService.userRegistration(registrationOptions, authOptions, transaction);
+			res.cookie('refreshToken', tokens.refreshToken, {maxAge: 30 * 24 * 3600 * 1000, httpOnly: true});
+
+			res.json(tokens);
+			await transaction.commit();
 		} catch (err) {
 			await transaction.rollback();
 			next(err);

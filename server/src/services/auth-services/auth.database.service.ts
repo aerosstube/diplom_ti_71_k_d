@@ -1,11 +1,8 @@
 import {Op, Transaction} from 'sequelize';
 import {token} from '../../../models/token';
 import {user_devices} from '../../../models/user_devices';
-import {SaveTokens} from './auth.business.service';
-
-export interface SaveDevice {
-	device: string;
-}
+import {users} from '../../../models/users';
+import {RegistrationUserOptions, SaveTokens} from './auth.business.service';
 
 export interface DeviceInfo {
 	userAgent?: string;
@@ -32,10 +29,24 @@ export class AuthDatabaseService {
 		}, {transaction});
 	}
 
-	static async findTokenByUserId(saveToken: SaveTokens): Promise<token | null> {
+	static async createUser(registrationOptions: RegistrationUserOptions, transaction: Transaction): Promise<users> {
+		return await users.create({
+			login: registrationOptions.login,
+			password: registrationOptions.password,
+			first_name: registrationOptions.first_name,
+			second_name: registrationOptions.second_name,
+			middle_name: registrationOptions.middle_name,
+			date_birthday: registrationOptions.dateOfBirthday,
+			'e-mail': registrationOptions['e-mail'],
+			mobile_phone: registrationOptions.mobile_phone,
+		}, {transaction});
+	}
+
+
+	static async findTokenByDeviceId(deviceId: number): Promise<token | null> {
 		return await token.findOne({
 			where: {
-				user_id: saveToken.userId,
+				user_device_id: deviceId,
 			}
 		});
 	}
@@ -74,6 +85,4 @@ export class AuthDatabaseService {
 			}
 		});
 	}
-
-
 }

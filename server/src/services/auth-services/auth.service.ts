@@ -1,4 +1,4 @@
-import {compare} from 'bcryptjs';
+import {compare, hash} from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import {Transaction} from 'sequelize';
 import {application} from '../../../config/config';
@@ -7,9 +7,8 @@ import {user_devices} from '../../../models/user_devices';
 import {users} from '../../../models/users';
 import {ApiError} from '../../errors/api.error';
 import {UserService} from '../user-services/user.service';
-import {AuthOptions, SaveTokens, TokenOptions} from './auth.business.service';
+import {AuthOptions, RegistrationUserOptions, SaveTokens, TokenOptions} from './auth.business.service';
 import {AuthDatabaseService, DeviceInfo} from './auth.database.service';
-import {hash} from 'bcryptjs';
 
 export interface AuthUser {
 	userId: number;
@@ -27,20 +26,14 @@ export interface JwtTokens {
 
 export class AuthService {
 
-	static async checkUser(login: string, password: string, transaction: Transaction): Promise<AuthUser> {
-		const user: users = await UserService.findByLogin(login, transaction);
+	static async checkUser(login: string, password: string): Promise<users> {
+		const user: users = await UserService.findByLogin(login);
 		const isPassword = await compare(password, user.password);
 
 		if (!isPassword)
 			throw ApiError.BadRequest('Ошибка авторизации!');
 
-		return {
-			userId: user.id,
-			login: user.login,
-			first_name: user.first_name,
-			second_name: user.second_name,
-			middle_name: user.middle_name,
-		};
+		return user;
 	}
 
 	static async saveToken(saveToken: SaveTokens, transaction: Transaction): Promise<void> {
@@ -49,6 +42,7 @@ export class AuthService {
 				userAgent: saveToken.userAgent,
 				deviceIp: saveToken.deviceIp
 			};
+
 			let deviceData: user_devices | null = await AuthDatabaseService.findUserDeviceByUA(deviceInfo);
 			if (!deviceData) {
 				deviceData = await AuthDatabaseService.createUserDevice({
@@ -57,7 +51,7 @@ export class AuthService {
 				}, transaction);
 			}
 
-			let tokenData: token | null = await AuthDatabaseService.findTokenByUserId(saveToken);
+			let tokenData: token | null = await AuthDatabaseService.findTokenByDeviceId(deviceData.id);
 
 			if (!tokenData)
 				tokenData = await AuthDatabaseService.createToken(saveToken, transaction, deviceData.id);
@@ -77,12 +71,12 @@ export class AuthService {
 		};
 	}
 
-	static async saveTokenToDatabase(authOptions: AuthOptions, user: AuthUser, tokens: JwtTokens, transaction: Transaction) {
+	static async saveTokenToDatabase(authOptions: AuthOptions, user: users, tokens: JwtTokens, transaction: Transaction) {
 		const dateExpired: Date = new Date();
 		dateExpired.setDate(dateExpired.getDate() + 30);
 
 		const saveToken: SaveTokens = {
-			userId: user.userId,
+			userId: user.id,
 			refreshToken: tokens.refreshToken,
 			userAgent: authOptions.userAgent,
 			dateExpired: dateExpired,
@@ -91,7 +85,6 @@ export class AuthService {
 
 		await AuthService.saveToken(saveToken, transaction);
 	}
-
 
 	static validateRefreshToken(refreshToken: string): TokenOptions {
 		try {
@@ -141,27 +134,8 @@ export class AuthService {
 		await deviceData.destroy({transaction});
 	}
 
-	static async createUser(authOptions: AuthOptions, authUser: AuthUser, transaction: Transaction): Promise<AuthUser> {
-		const hashedPassword = hash(authOptions.password, 4);
-
-		const user = await users.create({
-			login: authOptions.login,
-			first_name: authUser.first_name,
-			second_name: authUser.second_name,
-			middle_name: authUser.middle_name,
-			// @ts-ignore
-			date_birthday: authUser.dateOfBirthday
-		});
-
-
-
-		return {
-			dateOfBirthday: user.date_birthday,
-			first_name: user.first_name,
-			login: user.login,
-			middle_name: user.middle_name,
-			second_name: user.second_name,
-			userId: user.id
-		};
+	static async createUser(registrationOptions: RegistrationUserOptions, transaction: Transaction): Promise<users> {
+		registrationOptions.password = await hash(registrationOptions.password, 4);
+		return await AuthDatabaseService.createUser(registrationOptions, transaction);
 	}
 }
