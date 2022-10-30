@@ -1,22 +1,21 @@
-import {compare, hash} from 'bcryptjs';
+import {compare} from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import {Transaction} from 'sequelize';
-import {application} from '../../../config/config';
-import {token} from '../../../models/token';
-import {user_devices} from '../../../models/user_devices';
-import {users} from '../../../models/users';
+import {application} from '../../../../config/config';
+import {token} from '../../../../models/token';
+import {user_devices} from '../../../../models/user_devices';
+import {users} from '../../../../models/users';
 import {ApiError} from '../../errors/api.error';
 import {UserService} from '../user-services/user.service';
-import {AuthOptions, RegistrationUserOptions, SaveTokens, TokenOptions} from './auth.business.service';
+import {AuthOptions, SaveTokens, TokenOptions} from './auth.business.service';
 import {AuthDatabaseService, DeviceInfo} from './auth.database.service';
 
 export interface AuthUser {
 	userId: number;
 	login: string;
-	first_name: string;
-	second_name: string;
-	middle_name?: string;
+	fullName: string;
 	dateOfBirthday?: string;
+	role?: string;
 }
 
 export interface JwtTokens {
@@ -132,10 +131,5 @@ export class AuthService {
 			throw ApiError.UnauthorizedError();
 
 		await deviceData.destroy({transaction});
-	}
-
-	static async createUser(registrationOptions: RegistrationUserOptions, transaction: Transaction): Promise<users> {
-		registrationOptions.password = await hash(registrationOptions.password, 4);
-		return await AuthDatabaseService.createUser(registrationOptions, transaction);
 	}
 }

@@ -16,11 +16,12 @@ export interface usersAttributes {
 	date_birthday: string;
 	mobile_phone?: string;
 	'e-mail'?: string;
+	role: string;
 }
 
 export type usersPk = 'id';
 export type usersId = users[usersPk];
-export type usersOptionalAttributes = 'id' | 'middle_name' | 'mobile_phone' | 'e-mail';
+export type usersOptionalAttributes = 'id' | 'middle_name' | 'mobile_phone' | 'e-mail' | 'role';
 export type usersCreationAttributes = Optional<usersAttributes, usersOptionalAttributes>;
 
 export class users extends Model<usersAttributes, usersCreationAttributes> implements usersAttributes {
@@ -33,6 +34,7 @@ export class users extends Model<usersAttributes, usersCreationAttributes> imple
 	date_birthday!: string;
 	mobile_phone?: string;
 	'e-mail'?: string;
+	role!: string;
 
 	// users hasMany group_students via user_id
 	group_students!: group_students[];
@@ -130,6 +132,11 @@ export class users extends Model<usersAttributes, usersCreationAttributes> imple
 				type: DataTypes.STRING(256),
 				allowNull: true,
 				unique: 'users_e-mail_key'
+			},
+			role: {
+				type: DataTypes.STRING(32),
+				allowNull: false,
+				defaultValue: 'user'
 			}
 		}, {
 			sequelize,

@@ -45,13 +45,12 @@ export class AuthController {
 
 			const registrationOptions: RegistrationUserOptions = {
 				dateOfBirthday: user.dateOfBirthday,
-				first_name: user.firstName,
+				fullName: `${user.secondName} ${user.firstName} ${user.middleName} `,
 				login: user.login,
 				password: user.password,
-				middle_name: user.middleName,
-				second_name: user.secondName,
 				mobile_phone: user.mobilePhone,
-				'e-mail': user.eMail
+				'e-mail': user.eMail,
+				role: user.role
 			};
 
 			const authOptions: AuthOptions = {

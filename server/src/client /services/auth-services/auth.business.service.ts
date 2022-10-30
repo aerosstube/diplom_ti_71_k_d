@@ -1,6 +1,7 @@
 import {Transaction} from 'sequelize';
 import {ApiError} from '../../errors/api.error';
 import {UserDatabaseService} from '../user-services/user.database.service';
+import {UserService} from '../user-services/user.service';
 import {AuthDatabaseService} from './auth.database.service';
 import {AuthService, AuthUser, JwtTokens} from './auth.service';
 
@@ -14,7 +15,7 @@ export interface RegistrationUserOptions extends Omit<AuthUser, 'userId'> {
 export interface AuthOptions {
 	login: string;
 	password: string;
-	userAgent?: string;
+	userAgent: string;
 	deviceIp?: string;
 	dateExpired?: Date;
 }
@@ -23,7 +24,7 @@ export interface SaveTokens {
 	dateExpired: Date;
 	userId: number;
 	refreshToken: string;
-	userAgent?: string;
+	userAgent: string;
 	deviceIp?: string;
 }
 
@@ -43,10 +44,8 @@ export class AuthBusinessService {
 		const userDatabase = await AuthService.checkUser(authOptions.login, authOptions.password);
 		const user: AuthUser = {
 			dateOfBirthday: userDatabase.date_birthday,
-			first_name: userDatabase.first_name,
+			fullName: `${userDatabase.second_name} ${userDatabase.first_name} ${userDatabase.middle_name} `,
 			login: userDatabase.login,
-			middle_name: userDatabase.middle_name,
-			second_name: userDatabase.second_name,
 			userId: userDatabase.id,
 		};
 		const tokens: JwtTokens = await AuthService.generateToken(user);
@@ -73,11 +72,9 @@ export class AuthBusinessService {
 			throw ApiError.UnauthorizedError();
 
 		return AuthService.generateToken({
-			first_name: user.first_name,
+			fullName: `${user.second_name} ${user.first_name} ${user.middle_name} `,
 			login: user.login,
-			second_name: user.second_name,
 			userId: user.userId,
-			middle_name: user.middle_name
 		}, refreshToken);
 	}
 
@@ -86,13 +83,11 @@ export class AuthBusinessService {
 		if (user)
 			throw ApiError.BadRequest('Пользователь с таким логином уже существует!');
 
-		user = await AuthService.createUser(registrationOptions, transaction);
+		user = await UserService.createUser(registrationOptions, transaction);
 		const authUser: AuthUser = {
 			dateOfBirthday: user.date_birthday,
-			first_name: user.first_name,
+			fullName: `${user.second_name} ${user.first_name} ${user.middle_name} `,
 			login: user.login,
-			middle_name: user.middle_name,
-			second_name: user.second_name,
 			userId: user.id
 		};
 

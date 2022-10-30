@@ -1,11 +1,10 @@
 import {Op, Transaction} from 'sequelize';
-import {token} from '../../../models/token';
-import {user_devices} from '../../../models/user_devices';
-import {users} from '../../../models/users';
-import {RegistrationUserOptions, SaveTokens} from './auth.business.service';
+import {token} from '../../../../models/token';
+import {user_devices} from '../../../../models/user_devices';
+import {SaveTokens} from './auth.business.service';
 
 export interface DeviceInfo {
-	userAgent?: string;
+	userAgent: string;
 	deviceIp?: string;
 }
 
@@ -22,23 +21,10 @@ export class AuthDatabaseService {
 		});
 	}
 
-	static async createUserDevice(deviceInfo: { device_ip: string | undefined; user_agent: string | undefined }, transaction: Transaction): Promise<user_devices> {
+	static async createUserDevice(deviceInfo: { device_ip: string | undefined; user_agent: string }, transaction: Transaction): Promise<user_devices> {
 		return await user_devices.create({
 			device_ip: deviceInfo.device_ip,
 			user_agent: deviceInfo.user_agent
-		}, {transaction});
-	}
-
-	static async createUser(registrationOptions: RegistrationUserOptions, transaction: Transaction): Promise<users> {
-		return await users.create({
-			login: registrationOptions.login,
-			password: registrationOptions.password,
-			first_name: registrationOptions.first_name,
-			second_name: registrationOptions.second_name,
-			middle_name: registrationOptions.middle_name,
-			date_birthday: registrationOptions.dateOfBirthday,
-			'e-mail': registrationOptions['e-mail'],
-			mobile_phone: registrationOptions.mobile_phone,
 		}, {transaction});
 	}
 
