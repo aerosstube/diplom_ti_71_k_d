@@ -43,7 +43,7 @@ export class token extends Model<tokenAttributes, tokenCreationAttributes> imple
 				primaryKey: true
 			},
 			refresh_token: {
-				type: DataTypes.STRING(1000),
+				type: DataTypes.STRING(1024),
 				allowNull: false
 			},
 			user_id: {

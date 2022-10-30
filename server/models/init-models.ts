@@ -11,6 +11,8 @@ import type {group_teachersAttributes, group_teachersCreationAttributes} from '.
 import {group_teachers as _group_teachers} from './group_teachers';
 import type {groupsAttributes, groupsCreationAttributes} from './groups';
 import {groups as _groups} from './groups';
+import type {invite_codesAttributes, invite_codesCreationAttributes} from './invite_codes';
+import {invite_codes as _invite_codes} from './invite_codes';
 import type {lesson_problemAttributes, lesson_problemCreationAttributes} from './lesson_problem';
 import {lesson_problem as _lesson_problem} from './lesson_problem';
 import type {lesson_problem_typeAttributes, lesson_problem_typeCreationAttributes} from './lesson_problem_type';
@@ -50,6 +52,7 @@ export {
 	_group_students as group_students,
 	_group_teachers as group_teachers,
 	_groups as groups,
+	_invite_codes as invite_codes,
 	_lesson_problem as lesson_problem,
 	_lesson_problem_type as lesson_problem_type,
 	_lesson_standart_problem_content as lesson_standart_problem_content,
@@ -79,6 +82,8 @@ export type {
 	group_teachersCreationAttributes,
 	groupsAttributes,
 	groupsCreationAttributes,
+	invite_codesAttributes,
+	invite_codesCreationAttributes,
 	lesson_problemAttributes,
 	lesson_problemCreationAttributes,
 	lesson_problem_typeAttributes,
@@ -116,6 +121,7 @@ export function initModels(sequelize: Sequelize) {
 	const group_students = _group_students.initModel(sequelize);
 	const group_teachers = _group_teachers.initModel(sequelize);
 	const groups = _groups.initModel(sequelize);
+	const invite_codes = _invite_codes.initModel(sequelize);
 	const lesson_problem = _lesson_problem.initModel(sequelize);
 	const lesson_problem_type = _lesson_problem_type.initModel(sequelize);
 	const lesson_standart_problem_content = _lesson_standart_problem_content.initModel(sequelize);
@@ -191,6 +197,7 @@ export function initModels(sequelize: Sequelize) {
 		group_students: group_students,
 		group_teachers: group_teachers,
 		groups: groups,
+		invite_codes: invite_codes,
 		lesson_problem: lesson_problem,
 		lesson_problem_type: lesson_problem_type,
 		lesson_standart_problem_content: lesson_standart_problem_content,
