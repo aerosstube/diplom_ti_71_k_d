@@ -1,26 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import LearningDay from "./UI/learningDay/learningDay";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const lessons = [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5},
+        {title: 'qwer', body: 'dfsdfadsfadsf', mark: 5},
+        {title: 'ytrewq', body: '1231321', mark: 5},
+        {title: 'ytrewq', body: '1231321', mark: 5}
+        ]
+    return (
+        <div className="App">
+            <LearningDay lessons={lessons}/>
+        </div>
+    );
 }
 
 export default App;

@@ -1,0 +1,61 @@
+.learningDay{
+    box-sizing: border-box;
+    padding: 24px;
+    position: absolute;
+    width: 308px;
+    height: 392px;
+    margin: 20px;
+    background: #FFFFFF;
+    border: 1px solid #007DFF;
+
+    box-shadow: 6px 4px 6px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.learningDay  a{
+    box-sizing: border-box;
+    margin: 0 0 24px 0;
+    display: flex;
+    padding: 5px;
+    isolation: isolate;
+
+    width: 260px;
+    height: 68px;
+
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 125, 255, 0.3);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.textLesson{
+    width: 228px;
+    height: 24px;
+
+    /* Typography/Body 1 */
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+
+    letter-spacing: 0.15px;
+
+    color: rgba(0, 0, 0, 0.87);
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+.mark{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 53px;
+    height: 53px;
+    font-weight: bold;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 125, 255, 0.4);
+    border-radius: 15px;
+}
