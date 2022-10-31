@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from 'express';
 import {Transaction} from 'sequelize';
-import {SequelizeConnect} from '../../client /services/database-connect';
+import {SequelizeConnect} from '../../client/services/database-connect';
 import {InviteCodeBusinessService} from '../services/inviteCodes-service/inviteCode.business.service';
 
 export class InviteCodeController {

@@ -6,9 +6,9 @@ import * as UserAgent from 'express-useragent';
 import {application} from '../config/config';
 import {initModels} from '../models/init-models';
 import {adminRouterApp} from './admin/routers/init-router';
-import {ErrorMiddleware} from './client /middlewares/error-middleware';
-import {routerApp} from './client /routers/init-router';
-import {SequelizeConnect} from './client /services/database-connect';
+import {ErrorMiddleware} from './client/middlewares/error-middleware';
+import {routerApp} from './client/routers/init-router';
+import {SequelizeConnect} from './client/services/database-connect';
 import {CronJob} from './cron-job';
 
 export const app = express();
