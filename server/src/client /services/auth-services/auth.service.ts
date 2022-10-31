@@ -95,6 +95,16 @@ export class AuthService {
 		}
 	}
 
+	static async validateAccessToken(accessToken: string) {
+		try {
+			const tokenPayload = jwt.verify(accessToken, application.accessToken);
+			// @ts-ignore
+			return Object.assign(tokenPayload);
+		} catch (err) {
+			throw ApiError.UnauthorizedError();
+		}
+	}
+
 	static async destroyExpiredTokens(): Promise<void> {
 		const dateExpired: Date = new Date;
 		const tokens = await AuthDatabaseService.findExpiredTokens(dateExpired);
@@ -132,4 +142,6 @@ export class AuthService {
 
 		await deviceData.destroy({transaction});
 	}
+
+
 }
