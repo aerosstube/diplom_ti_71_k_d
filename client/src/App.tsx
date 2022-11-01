@@ -1,10 +1,6 @@
 import React from 'react';
 import './App.css';
-import LearningDay from "./UI/learningDay/learningDay";
 import LearningWeek from "./UI/LearningWeek/LearningWeek";
-import LessonPage from "./UI/LessonPage/LessonPage";
-import {ReactComponent} from "*.svg";
-import Regestration from "./UI/Regestration/Regestration";
 
 function App() {
     const days = [

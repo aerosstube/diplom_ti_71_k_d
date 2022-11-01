@@ -1,8 +1,8 @@
-.learningWeek{
+.learningWeek {
     margin: auto;
     display: flex;
     justify-content: space-between;
     width: 1194px;
     flex-wrap: wrap;
-    position: center;/*не знаю как, но выроввнило оценки, не трогать*/
+    position: center; /*не знаю как, но выроввнило оценки, не трогать*/
 }

@@ -8,7 +8,7 @@ export interface LessonProps {
     mark: number;
 }
 
-const Lesson: FC<LessonProps> = ({title,body,mark}) => {
+const Lesson: FC<LessonProps> = ({title, body, mark}) => {
     return (
         <ListItemButton component="a" href="#simple-list">
             <ListItemText

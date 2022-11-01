@@ -1,6 +1,7 @@
 import React from 'react';
 import cl from './LessonPage.module.css'
 import {ListItemButton, ListItemText} from "@mui/material";
+
 const LessonPage = () => {
     return (
         <div className={cl.lessonPage}>
@@ -11,7 +12,7 @@ const LessonPage = () => {
             <div className={cl.hometasks}>
 
             </div>
-            <ListItemButton component="a" href="#simple-list" >
+            <ListItemButton component="a" href="#simple-list">
                 <ListItemText
                     primary='Оценка'
                     secondary='За что'
@@ -22,7 +23,7 @@ const LessonPage = () => {
                     className={cl.mark}
                 />
             </ListItemButton>
-            </div>
+        </div>
     );
 };
 
