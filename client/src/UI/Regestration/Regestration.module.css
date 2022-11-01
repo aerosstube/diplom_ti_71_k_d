@@ -1,0 +1,44 @@
+.formReg{
+ width: 625px;
+ height: 650px;
+ margin: 160px 648px;
+ border: 1px solid #1E8BFD;
+ border-radius: 50px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+.textReg{
+ width: 415px;
+ height: 46px;
+ font-family: 'Roboto', serif;
+ font-style: normal;
+ font-weight: 400;
+ font-size: 26px;
+ line-height: 143%;
+ /* or 37px */
+ display: flex;
+ align-items: center;
+ text-align: center;
+
+ color: rgba(0, 125, 255, 0.7);
+}
+.imgReg{
+ width: 207px;
+ height: 193px;
+ margin: 0 0 0 8px;
+
+}
+.formReg .inputReg{
+ margin-top: 42px;
+}
+.formReg .buttonReg{
+ background-color: #007DFF;
+ margin-top: 15px;
+ color: white;
+}
+.buttonReg:hover{
+ background-color: white;
+ color: #007DFF ;
+ border: 1px solid #1E8BFD ;
+}
