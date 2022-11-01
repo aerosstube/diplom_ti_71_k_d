@@ -19,16 +19,15 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
 
 		const verifyToken: TokenOptions = await AuthService.validateAccessToken(accessToken);
 
-		const isAccess: boolean = verifyToken.roleId === 1;
+		const isAccess: boolean = verifyToken.role === 'admin';
 		if (req.baseUrl.includes('admin') && !isAccess)
-			return next(ApiError.NotAllowed('Нет доступа!'));
+			return next(ApiError.AcessDenied());
 
 		req.user = {
+			login: verifyToken.login,
 			userId: verifyToken.userId,
-			email: verifyToken.email,
-			fullName: verifyToken.fullName,
-			roleId: verifyToken.roleId,
-			imagePath: verifyToken.imagePath,
+			fullName: `${verifyToken.second_name} ${verifyToken.first_name} ${verifyToken.middle_name}`,
+			role: verifyToken.role
 		};
 		next();
 	} catch (err) {

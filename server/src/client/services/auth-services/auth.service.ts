@@ -95,7 +95,7 @@ export class AuthService {
 		}
 	}
 
-	static async validateAccessToken(accessToken: string) {
+	static validateAccessToken(accessToken: string): TokenOptions {
 		try {
 			const tokenPayload = jwt.verify(accessToken, application.accessToken);
 			// @ts-ignore

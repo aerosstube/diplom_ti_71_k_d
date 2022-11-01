@@ -14,7 +14,8 @@ export class AuthController {
 		try {
 			const {body: {user}, useragent, headers, socket} = req;
 
-			const deviceIp: string | undefined = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
+			// @ts-ignore
+			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
 			const authOptions: AuthOptions = {
 				deviceIp: deviceIp,
@@ -41,7 +42,8 @@ export class AuthController {
 		try {
 			const {body: {user}, useragent, headers, socket} = req;
 
-			const deviceIp: string | undefined = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
+			// @ts-ignore
+			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
 			const registrationOptions: RegistrationUserOptions = {
 				dateOfBirthday: user.dateOfBirthday,
@@ -50,7 +52,12 @@ export class AuthController {
 				password: user.password,
 				mobile_phone: user.mobilePhone,
 				'e-mail': user.eMail,
-				role: user.role
+				role: user.role,
+				inviteCodeOptions: {
+					inviteCode: user.inviteCode,
+					groupName: user.groupName,
+					isTeacher: user.isTeacher
+				}
 			};
 
 			const authOptions: AuthOptions = {

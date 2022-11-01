@@ -21,7 +21,7 @@ export class AuthDatabaseService {
 		});
 	}
 
-	static async createUserDevice(deviceInfo: { device_ip: string | undefined; user_agent: string }, transaction: Transaction): Promise<user_devices> {
+	static async createUserDevice(deviceInfo: { device_ip: string; user_agent: string }, transaction: Transaction): Promise<user_devices> {
 		return await user_devices.create({
 			device_ip: deviceInfo.device_ip,
 			user_agent: deviceInfo.user_agent
