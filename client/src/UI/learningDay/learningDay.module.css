@@ -1,10 +1,8 @@
 .learningDay{
     box-sizing: border-box;
     padding: 24px;
-    position: absolute;
     width: 308px;
     height: 392px;
-    margin: 20px;
     background: #FFFFFF;
     border: 1px solid #007DFF;
 
@@ -33,7 +31,7 @@
 
     /* Typography/Body 1 */
 
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -52,10 +50,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 53px;
-    height: 53px;
+    width: 53px !important;
+    height: 53px !important;
     font-weight: bold;
     background: #FFFFFF;
     border: 1px solid rgba(0, 125, 255, 0.4);
     border-radius: 15px;
+}
+.dayPlace{
+    width: 308px;
+    height: 500px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+
+}
+.textDay{
+    text-align: left;
+    margin: 20px 0 0 5px;
+    padding: 0;
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 143%;
+    /* identical to box height, or 29px */
+
+    letter-spacing: 0.17px;
+
+    color: rgba(32, 141, 255, 0.5) !important;
 }
