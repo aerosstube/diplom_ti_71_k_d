@@ -1,0 +1,45 @@
+.lessonPage{
+    width: 1636px;
+    height: 782px;
+    padding: 47px;
+    display: flex;
+    background: #FFFFFF;
+    border: 3px solid #007DFF;
+    border-radius: 50px;
+    margin: 20px auto;
+    justify-content: space-around;
+
+}
+.hometasks{
+    width: 524px;
+    height: 528px;
+    margin: 189px 0 0 52px;
+    border: 2px solid #4391E2;
+    border-radius: 30px;
+}
+.mark{
+    display: flex;
+    color: green;
+    align-items: center;
+    justify-content: center;
+    width: 53px !important;
+    height: 53px !important;
+    font-weight: bold;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 125, 255, 0.4);
+    border-radius: 15px;
+}
+.lessonPage a{
+    margin: 189px 0 0 47px;
+    display: flex;
+    justify-content: space-around;
+    padding:10px;
+
+    width: 260px !important;
+    height: 68px !important;
+
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 125, 255, 0.3);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
