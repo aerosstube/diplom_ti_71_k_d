@@ -3,12 +3,13 @@ import {v4} from 'uuid';
 import {InviteCodeOptions, InviteCodesDatabaseService} from './inviteCodes.database.service';
 
 export class InviteCodesService {
-	static async createInviteCode(groupName: string, transaction: Transaction): Promise<string> {
+	static async createInviteCode(isTeacher: boolean, groupName: string, transaction: Transaction): Promise<string> {
 		const uuid = v4().split('-');
 
 		const inviteCodeOptions: InviteCodeOptions = {
 			groupName: groupName,
-			inviteCode: `${uuid[1]}-${uuid[2]}`
+			inviteCode: `${uuid[1]}-${uuid[2]}`,
+			isTeacher: isTeacher
 		};
 
 		await InviteCodesDatabaseService.createInviteCode(inviteCodeOptions, transaction);
