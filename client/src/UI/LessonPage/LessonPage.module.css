@@ -2,30 +2,33 @@
     width: 1636px;
     height: 782px;
     padding: 47px;
-    display: flex;
+
     background: #FFFFFF;
     border: 3px solid #007DFF;
     border-radius: 50px;
     margin: 20px auto;
-    justify-content: space-around;
+
 
 }
 
 .hometasks {
     width: 524px;
     height: 528px;
-    margin: 189px 0 0 52px;
+    margin: auto 0 0 65px;
     border: 2px solid #4391E2;
     border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.mark {
+.lessonPage .mark {
     display: flex;
     color: green;
     align-items: center;
     justify-content: center;
-    width: 53px !important;
-    height: 53px !important;
+    max-width: 53px;
+    height: 53px;
     font-weight: bold;
     background: #FFFFFF;
     border: 1px solid rgba(0, 125, 255, 0.4);
@@ -33,13 +36,69 @@
 }
 
 .lessonPage a {
-    margin: 189px 0 0 47px;
+    margin: 0 0 427px 0;
     display: flex;
     justify-content: space-around;
-    padding: 10px;
+    padding: 10px 10px 10px 10px;
 
-    width: 260px !important;
-    height: 68px !important;
+    max-width: 260px;
+    height: 68px;
+
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 125, 255, 0.3);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.lessonName {
+    width: auto;
+    height: 101px;
+    display: block;
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 24px;
+    /* or 60% */
+    text-align: left;
+    align-items: center;
+    letter-spacing: 0.15px;
+    margin-left: 105px;
+    color: #000000;
+}
+
+.lessonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.lessonBlocksText {
+    width: 377px;
+    height: 78px;
+
+
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 24px;
+    /* or 60% */
+
+    text-align: center;
+    letter-spacing: 0.15px;
+
+    color: #000000;
+
+}
+
+li {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 10px 10px 10px;
+    margin-top: 15px;
+    max-width: 450px;
+    height: auto;
 
     background: #FFFFFF;
     border: 1px solid rgba(0, 125, 255, 0.3);
