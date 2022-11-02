@@ -7,8 +7,8 @@ export class InviteCodeController {
 	static async createInviteCode(req: Request, res: Response, next: NextFunction) {
 		const transaction: Transaction = await SequelizeConnect.transaction();
 		try {
-			const {groupName} = req.body;
-			const inviteCode: string = await InviteCodeBusinessService.createInviteCode(groupName, transaction);
+			const {groupName, isTeacher} = req.body;
+			const inviteCode: string = await InviteCodeBusinessService.createInviteCode(isTeacher, groupName, transaction);
 
 			res.json(inviteCode);
 			await transaction.commit();

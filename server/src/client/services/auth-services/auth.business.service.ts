@@ -1,6 +1,7 @@
 import {Transaction} from 'sequelize';
 import {ApiError} from '../../errors/api.error';
 import {InviteCodeDatabaseService} from '../inviteCode-service/inviteCode.database.service';
+import {InviteCodeService} from '../inviteCode-service/inviteCode.service';
 import {UserDatabaseService} from '../user-services/user.database.service';
 import {UserService} from '../user-services/user.service';
 import {AuthDatabaseService} from './auth.database.service';
@@ -95,6 +96,16 @@ export class AuthBusinessService {
 			throw ApiError.BadRequest('Пользователь с таким логином уже существует!');
 
 		user = await UserService.createUser(registrationOptions, transaction);
+
+		const {inviteCodeOptions} = registrationOptions;
+		const inviteCode = await InviteCodeDatabaseService.findInviteCode(inviteCodeOptions.inviteCode);
+		if (!inviteCode)
+			throw(ApiError.BadRequest('Неверный код регистрации!'));
+		inviteCodeOptions.groupName = inviteCode.group_name;
+		inviteCodeOptions.isTeacher = inviteCode.is_teacher;
+
+		await UserService.userDistribution(registrationOptions.inviteCodeOptions, user.id, transaction);
+
 		const authUser: AuthUser = {
 			dateOfBirthday: user.date_birthday,
 			fullName: `${user.second_name} ${user.first_name} ${user.middle_name} `,
@@ -105,11 +116,12 @@ export class AuthBusinessService {
 		const tokens: JwtTokens = await AuthService.generateToken(authUser);
 
 		await AuthService.saveTokenToDatabase(authOptions, user, tokens, transaction);
-		await InviteCodeDatabaseService.deleteInviteCode(registrationOptions.inviteCodeOptions.inviteCode);
+		await InviteCodeService.deleteInviteCode(registrationOptions.inviteCodeOptions.inviteCode);
 
 		return {
 			...tokens
 		};
-		//TODO: СДЕЛАТЬ ДОБАВЛЕНИЕ ЮЗЕРА ПОСЕ РЕГИСТРАЦИИ В ГРУППУ
+		//TODO: ИСПРАВИТЬ ДОБАВЛЕНИЕ В ГРУППУ (БАЗА ИЗМЕНИЛАСЬ)
+		//TODO: ДОБАВТЬ СВЯЗЬ В БАЗЕ МЕЖДУ ПРЕПОДОМ И ЕГО ПАРАМИ (ЛУЧШЕ В ПАРЫ Я ДУМАЮ)
 	}
 }

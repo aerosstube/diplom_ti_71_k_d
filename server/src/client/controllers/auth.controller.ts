@@ -55,8 +55,8 @@ export class AuthController {
 				role: user.role,
 				inviteCodeOptions: {
 					inviteCode: user.inviteCode,
-					groupName: user.groupName,
-					isTeacher: user.isTeacher
+					groupName: '',
+					isTeacher: false
 				}
 			};
 

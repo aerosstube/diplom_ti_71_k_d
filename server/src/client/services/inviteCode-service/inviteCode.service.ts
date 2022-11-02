@@ -11,4 +11,4 @@ export class InviteCodeService {
 		return await InviteCodeDatabaseService.deleteInviteCode(inviteCode);
 	}
 
-} //TODO: Исправить код для удаления в регистрации
+} 
