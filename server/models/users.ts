@@ -1,10 +1,9 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {groups, groupsId} from './groups';
-import type {marks, marksId} from './marks';
-import type {students, studentsId} from './students';
-import type {teachers, teachersId} from './teachers';
-import type {token, tokenId} from './token';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { marks, marksId } from './marks';
+import type { students, studentsId } from './students';
+import type { teachers, teachersCreationAttributes, teachersId } from './teachers';
+import type { token, tokenId } from './token';
 
 export interface usersAttributes {
   id: number;
@@ -36,18 +35,6 @@ export class users extends Model<usersAttributes, usersCreationAttributes> imple
   'e-mail'?: string;
   role!: string;
 
-  // users hasMany groups via user_id
-  groups!: groups[];
-  getGroups!: Sequelize.HasManyGetAssociationsMixin<groups>;
-  setGroups!: Sequelize.HasManySetAssociationsMixin<groups, groupsId>;
-  addGroup!: Sequelize.HasManyAddAssociationMixin<groups, groupsId>;
-  addGroups!: Sequelize.HasManyAddAssociationsMixin<groups, groupsId>;
-  createGroup!: Sequelize.HasManyCreateAssociationMixin<groups>;
-  removeGroup!: Sequelize.HasManyRemoveAssociationMixin<groups, groupsId>;
-  removeGroups!: Sequelize.HasManyRemoveAssociationsMixin<groups, groupsId>;
-  hasGroup!: Sequelize.HasManyHasAssociationMixin<groups, groupsId>;
-  hasGroups!: Sequelize.HasManyHasAssociationsMixin<groups, groupsId>;
-  countGroups!: Sequelize.HasManyCountAssociationsMixin;
   // users hasMany marks via user_id
   marks!: marks[];
   getMarks!: Sequelize.HasManyGetAssociationsMixin<marks>;

@@ -1,12 +1,12 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {audiences, audiencesId} from './audiences';
-import type {groups, groupsId} from './groups';
-import type {lessons, lessonsId} from './lessons';
-import type {marks, marksId} from './marks';
-import type {teachers, teachersId} from './teachers';
-import type {two_our_class, two_our_classId} from './two_our_class';
-import type {weekdays, weekdaysId} from './weekdays';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { audiences, audiencesId } from './audiences';
+import type { groups, groupsId } from './groups';
+import type { lessons, lessonsId } from './lessons';
+import type { marks, marksId } from './marks';
+import type { teachers, teachersId } from './teachers';
+import type { two_our_class, two_our_classId } from './two_our_class';
+import type { weekdays, weekdaysId } from './weekdays';
 
 export interface scheduleAttributes {
   id: number;

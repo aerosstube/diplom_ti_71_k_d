@@ -1,13 +1,11 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {schedule, scheduleId} from './schedule';
-import type {students, studentsId} from './students';
-import type {teachers, teachersId} from './teachers';
-import type {users, usersId} from './users';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { schedule, scheduleId } from './schedule';
+import type { students, studentsId } from './students';
+import type { teachers, teachersId } from './teachers';
 
 export interface groupsAttributes {
   id: number;
-  user_id: number;
   name: string;
 }
 
@@ -18,7 +16,6 @@ export type groupsCreationAttributes = Optional<groupsAttributes, groupsOptional
 
 export class groups extends Model<groupsAttributes, groupsCreationAttributes> implements groupsAttributes {
   id!: number;
-  user_id!: number;
   name!: string;
 
   // groups hasMany schedule via group_id
@@ -69,11 +66,6 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
   hasTeacher!: Sequelize.HasManyHasAssociationMixin<teachers, teachersId>;
   hasTeachers!: Sequelize.HasManyHasAssociationsMixin<teachers, teachersId>;
   countTeachers!: Sequelize.HasManyCountAssociationsMixin;
-  // groups belongsTo users via user_id
-  user!: users;
-  getUser!: Sequelize.BelongsToGetAssociationMixin<users>;
-  setUser!: Sequelize.BelongsToSetAssociationMixin<users, usersId>;
-  createUser!: Sequelize.BelongsToCreateAssociationMixin<users>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof groups {
     return groups.init({
@@ -82,14 +74,6 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
     },
     name: {
       type: DataTypes.STRING(256),

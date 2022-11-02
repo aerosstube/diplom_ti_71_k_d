@@ -1,8 +1,7 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {lessons, lessonsId} from './lessons';
-import type {schedule, scheduleId} from './schedule';
-import type {teachers, teachersId} from './teachers';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { lessons, lessonsId } from './lessons';
+import type { schedule, scheduleId } from './schedule';
 
 export interface two_our_classAttributes {
   id: number;
@@ -42,18 +41,6 @@ export class two_our_class extends Model<two_our_classAttributes, two_our_classC
   hasSchedule!: Sequelize.HasManyHasAssociationMixin<schedule, scheduleId>;
   hasSchedules!: Sequelize.HasManyHasAssociationsMixin<schedule, scheduleId>;
   countSchedules!: Sequelize.HasManyCountAssociationsMixin;
-  // two_our_class hasMany teachers via two_our_class_id
-  teachers!: teachers[];
-  getTeachers!: Sequelize.HasManyGetAssociationsMixin<teachers>;
-  setTeachers!: Sequelize.HasManySetAssociationsMixin<teachers, teachersId>;
-  addTeacher!: Sequelize.HasManyAddAssociationMixin<teachers, teachersId>;
-  addTeachers!: Sequelize.HasManyAddAssociationsMixin<teachers, teachersId>;
-  createTeacher!: Sequelize.HasManyCreateAssociationMixin<teachers>;
-  removeTeacher!: Sequelize.HasManyRemoveAssociationMixin<teachers, teachersId>;
-  removeTeachers!: Sequelize.HasManyRemoveAssociationsMixin<teachers, teachersId>;
-  hasTeacher!: Sequelize.HasManyHasAssociationMixin<teachers, teachersId>;
-  hasTeachers!: Sequelize.HasManyHasAssociationsMixin<teachers, teachersId>;
-  countTeachers!: Sequelize.HasManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof two_our_class {
     return two_our_class.init({

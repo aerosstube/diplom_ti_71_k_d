@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {lesson_problem, lesson_problemId} from './lesson_problem';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { lesson_problem, lesson_problemId } from './lesson_problem';
 
 export interface lesson_problem_typeAttributes {
   id: number;

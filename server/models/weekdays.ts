@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {schedule, scheduleId} from './schedule';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { schedule, scheduleId } from './schedule';
 
 export interface weekdaysAttributes {
   id: number;

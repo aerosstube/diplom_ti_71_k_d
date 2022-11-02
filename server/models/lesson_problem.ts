@@ -1,12 +1,9 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {lesson_problem_type, lesson_problem_typeId} from './lesson_problem_type';
-import type {
-	lesson_standart_problem_content,
-	lesson_standart_problem_contentId
-} from './lesson_standart_problem_content';
-import type {lesson_test_problem, lesson_test_problemId} from './lesson_test_problem';
-import type {lessons, lessonsId} from './lessons';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { lesson_problem_type, lesson_problem_typeId } from './lesson_problem_type';
+import type { lesson_standart_problem_content, lesson_standart_problem_contentId } from './lesson_standart_problem_content';
+import type { lesson_test_problem, lesson_test_problemId } from './lesson_test_problem';
+import type { lessons, lessonsId } from './lessons';
 
 export interface lesson_problemAttributes {
   id: number;

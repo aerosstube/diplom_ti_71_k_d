@@ -1,10 +1,11 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 
 export interface invite_codesAttributes {
   id: number;
   group_name: string;
   invite_code: string;
+  is_teacher: boolean;
 }
 
 export type invite_codesPk = "id";
@@ -16,6 +17,7 @@ export class invite_codes extends Model<invite_codesAttributes, invite_codesCrea
   id!: number;
   group_name!: string;
   invite_code!: string;
+  is_teacher!: boolean;
 
 
   static initModel(sequelize: Sequelize.Sequelize): typeof invite_codes {
@@ -33,6 +35,10 @@ export class invite_codes extends Model<invite_codesAttributes, invite_codesCrea
     },
     invite_code: {
       type: DataTypes.STRING(32),
+      allowNull: false
+    },
+    is_teacher: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     }
   }, {

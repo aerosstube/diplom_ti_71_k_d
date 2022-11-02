@@ -1,7 +1,7 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {schedule, scheduleId} from './schedule';
-import type {users, usersId} from './users';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { schedule, scheduleId } from './schedule';
+import type { users, usersId } from './users';
 
 export interface marksAttributes {
   id: number;

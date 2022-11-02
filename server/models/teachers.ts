@@ -1,14 +1,12 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {groups, groupsId} from './groups';
-import type {schedule, scheduleId} from './schedule';
-import type {two_our_class, two_our_classId} from './two_our_class';
-import type {users, usersId} from './users';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { groups, groupsId } from './groups';
+import type { schedule, scheduleId } from './schedule';
+import type { users, usersId } from './users';
 
 export interface teachersAttributes {
   group_id: number;
   user_id: number;
-  two_our_class_id: number;
   id: number;
 }
 
@@ -20,7 +18,6 @@ export type teachersCreationAttributes = Optional<teachersAttributes, teachersOp
 export class teachers extends Model<teachersAttributes, teachersCreationAttributes> implements teachersAttributes {
   group_id!: number;
   user_id!: number;
-  two_our_class_id!: number;
   id!: number;
 
   // teachers belongsTo groups via group_id
@@ -40,11 +37,6 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
   hasSchedule!: Sequelize.HasManyHasAssociationMixin<schedule, scheduleId>;
   hasSchedules!: Sequelize.HasManyHasAssociationsMixin<schedule, scheduleId>;
   countSchedules!: Sequelize.HasManyCountAssociationsMixin;
-  // teachers belongsTo two_our_class via two_our_class_id
-  two_our_class!: two_our_class;
-  getTwo_our_class!: Sequelize.BelongsToGetAssociationMixin<two_our_class>;
-  setTwo_our_class!: Sequelize.BelongsToSetAssociationMixin<two_our_class, two_our_classId>;
-  createTwo_our_class!: Sequelize.BelongsToCreateAssociationMixin<two_our_class>;
   // teachers belongsTo users via user_id
   user!: users;
   getUser!: Sequelize.BelongsToGetAssociationMixin<users>;
@@ -69,14 +61,6 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
         key: 'id'
       },
       unique: "group_teachers_user_id_key"
-    },
-    two_our_class_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'two_our_class',
-        key: 'id'
-      }
     },
     id: {
       autoIncrement: true,
