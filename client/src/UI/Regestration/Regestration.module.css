@@ -45,5 +45,6 @@
 .buttonReg:hover {
     background-color: white;
     color: #007DFF;
+    margin-top: 14px;
     border: 1px solid #1E8BFD;
 }
