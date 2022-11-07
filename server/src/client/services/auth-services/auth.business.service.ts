@@ -1,7 +1,7 @@
 import {Transaction} from 'sequelize';
 import {ApiError} from '../../errors/api.error';
-import {InviteCodeDatabaseService} from '../inviteCode-service/inviteCode.database.service';
-import {InviteCodeService} from '../inviteCode-service/inviteCode.service';
+import {InviteCodeDatabaseService} from '../inviteCode-services/inviteCode.database.service';
+import {InviteCodeService} from '../inviteCode-services/inviteCode.service';
 import {UserDatabaseService} from '../user-services/user.database.service';
 import {UserService} from '../user-services/user.service';
 import {AuthDatabaseService} from './auth.database.service';
@@ -121,7 +121,5 @@ export class AuthBusinessService {
 		return {
 			...tokens
 		};
-		//TODO: ИСПРАВИТЬ ДОБАВЛЕНИЕ В ГРУППУ (БАЗА ИЗМЕНИЛАСЬ)
-		//TODO: ДОБАВТЬ СВЯЗЬ В БАЗЕ МЕЖДУ ПРЕПОДОМ И ЕГО ПАРАМИ (ЛУЧШЕ В ПАРЫ Я ДУМАЮ)
 	}
 }

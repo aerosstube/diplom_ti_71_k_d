@@ -12,6 +12,14 @@ export class UserDatabaseService {
 		});
 	}
 
+	static async findUserById(id: number): Promise<users | null> {
+		return await users.findOne({
+			where: {
+				id: id
+			}
+		});
+	}
+
 	static async createUser(registrationOptions: RegistrationUserOptions, transaction: Transaction): Promise<users> {
 		return await users.create({
 			login: registrationOptions.login,

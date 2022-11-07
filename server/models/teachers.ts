@@ -1,30 +1,23 @@
 import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
-import type { groups, groupsId } from './groups';
-import type { schedule, scheduleId } from './schedule';
-import type { users, usersId } from './users';
+import {DataTypes, Model, Optional} from 'sequelize';
+import type {schedule, scheduleId} from './schedule';
+import type {teacher_has_group, teacher_has_groupId} from './teacher_has_group';
+import type {users, usersId} from './users';
 
 export interface teachersAttributes {
-  group_id: number;
   user_id: number;
   id: number;
 }
 
-export type teachersPk = "id";
+export type teachersPk = 'id';
 export type teachersId = teachers[teachersPk];
-export type teachersOptionalAttributes = "id";
+export type teachersOptionalAttributes = 'id';
 export type teachersCreationAttributes = Optional<teachersAttributes, teachersOptionalAttributes>;
 
 export class teachers extends Model<teachersAttributes, teachersCreationAttributes> implements teachersAttributes {
-  group_id!: number;
   user_id!: number;
   id!: number;
 
-  // teachers belongsTo groups via group_id
-  group!: groups;
-  getGroup!: Sequelize.BelongsToGetAssociationMixin<groups>;
-  setGroup!: Sequelize.BelongsToSetAssociationMixin<groups, groupsId>;
-  createGroup!: Sequelize.BelongsToCreateAssociationMixin<groups>;
   // teachers hasMany schedule via teacher_id
   schedules!: schedule[];
   getSchedules!: Sequelize.HasManyGetAssociationsMixin<schedule>;
@@ -37,6 +30,18 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
   hasSchedule!: Sequelize.HasManyHasAssociationMixin<schedule, scheduleId>;
   hasSchedules!: Sequelize.HasManyHasAssociationsMixin<schedule, scheduleId>;
   countSchedules!: Sequelize.HasManyCountAssociationsMixin;
+  // teachers hasMany teacher_has_group via teacher_id
+  teacher_has_groups!: teacher_has_group[];
+  getTeacher_has_groups!: Sequelize.HasManyGetAssociationsMixin<teacher_has_group>;
+  setTeacher_has_groups!: Sequelize.HasManySetAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  addTeacher_has_group!: Sequelize.HasManyAddAssociationMixin<teacher_has_group, teacher_has_groupId>;
+  addTeacher_has_groups!: Sequelize.HasManyAddAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  createTeacher_has_group!: Sequelize.HasManyCreateAssociationMixin<teacher_has_group>;
+  removeTeacher_has_group!: Sequelize.HasManyRemoveAssociationMixin<teacher_has_group, teacher_has_groupId>;
+  removeTeacher_has_groups!: Sequelize.HasManyRemoveAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  hasTeacher_has_group!: Sequelize.HasManyHasAssociationMixin<teacher_has_group, teacher_has_groupId>;
+  hasTeacher_has_groups!: Sequelize.HasManyHasAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  countTeacher_has_groups!: Sequelize.HasManyCountAssociationsMixin;
   // teachers belongsTo users via user_id
   user!: users;
   getUser!: Sequelize.BelongsToGetAssociationMixin<users>;
@@ -45,26 +50,18 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
 
   static initModel(sequelize: Sequelize.Sequelize): typeof teachers {
     return teachers.init({
-    group_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'groups',
-        key: 'id'
-      }
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        unique: 'group_teachers_user_id_key'
       },
-      unique: "group_teachers_user_id_key"
-    },
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+      id: {
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       unique: "teachers_id_key"

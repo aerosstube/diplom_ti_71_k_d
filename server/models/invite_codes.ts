@@ -1,5 +1,5 @@
 import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
+import {DataTypes, Model, Optional} from 'sequelize';
 
 export interface invite_codesAttributes {
   id: number;
@@ -30,7 +30,7 @@ export class invite_codes extends Model<invite_codesAttributes, invite_codesCrea
       unique: "invite_codes_id_key"
     },
     group_name: {
-      type: DataTypes.STRING(64),
+      type: DataTypes.STRING(256),
       allowNull: false
     },
     invite_code: {

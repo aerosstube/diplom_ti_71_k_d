@@ -1,17 +1,17 @@
 import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
-import type { schedule, scheduleId } from './schedule';
-import type { students, studentsId } from './students';
-import type { teachers, teachersId } from './teachers';
+import {DataTypes, Model, Optional} from 'sequelize';
+import type {schedule, scheduleId} from './schedule';
+import type {students, studentsId} from './students';
+import type {teacher_has_group, teacher_has_groupId} from './teacher_has_group';
 
 export interface groupsAttributes {
   id: number;
   name: string;
 }
 
-export type groupsPk = "id";
+export type groupsPk = 'id';
 export type groupsId = groups[groupsPk];
-export type groupsOptionalAttributes = "id";
+export type groupsOptionalAttributes = 'id';
 export type groupsCreationAttributes = Optional<groupsAttributes, groupsOptionalAttributes>;
 
 export class groups extends Model<groupsAttributes, groupsCreationAttributes> implements groupsAttributes {
@@ -30,18 +30,6 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
   hasSchedule!: Sequelize.HasManyHasAssociationMixin<schedule, scheduleId>;
   hasSchedules!: Sequelize.HasManyHasAssociationsMixin<schedule, scheduleId>;
   countSchedules!: Sequelize.HasManyCountAssociationsMixin;
-  // groups hasMany schedule via group_teacher_id
-  group_teacher_schedules!: schedule[];
-  getGroup_teacher_schedules!: Sequelize.HasManyGetAssociationsMixin<schedule>;
-  setGroup_teacher_schedules!: Sequelize.HasManySetAssociationsMixin<schedule, scheduleId>;
-  addGroup_teacher_schedule!: Sequelize.HasManyAddAssociationMixin<schedule, scheduleId>;
-  addGroup_teacher_schedules!: Sequelize.HasManyAddAssociationsMixin<schedule, scheduleId>;
-  createGroup_teacher_schedule!: Sequelize.HasManyCreateAssociationMixin<schedule>;
-  removeGroup_teacher_schedule!: Sequelize.HasManyRemoveAssociationMixin<schedule, scheduleId>;
-  removeGroup_teacher_schedules!: Sequelize.HasManyRemoveAssociationsMixin<schedule, scheduleId>;
-  hasGroup_teacher_schedule!: Sequelize.HasManyHasAssociationMixin<schedule, scheduleId>;
-  hasGroup_teacher_schedules!: Sequelize.HasManyHasAssociationsMixin<schedule, scheduleId>;
-  countGroup_teacher_schedules!: Sequelize.HasManyCountAssociationsMixin;
   // groups hasMany students via group_id
   students!: students[];
   getStudents!: Sequelize.HasManyGetAssociationsMixin<students>;
@@ -54,32 +42,32 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
   hasStudent!: Sequelize.HasManyHasAssociationMixin<students, studentsId>;
   hasStudents!: Sequelize.HasManyHasAssociationsMixin<students, studentsId>;
   countStudents!: Sequelize.HasManyCountAssociationsMixin;
-  // groups hasMany teachers via group_id
-  teachers!: teachers[];
-  getTeachers!: Sequelize.HasManyGetAssociationsMixin<teachers>;
-  setTeachers!: Sequelize.HasManySetAssociationsMixin<teachers, teachersId>;
-  addTeacher!: Sequelize.HasManyAddAssociationMixin<teachers, teachersId>;
-  addTeachers!: Sequelize.HasManyAddAssociationsMixin<teachers, teachersId>;
-  createTeacher!: Sequelize.HasManyCreateAssociationMixin<teachers>;
-  removeTeacher!: Sequelize.HasManyRemoveAssociationMixin<teachers, teachersId>;
-  removeTeachers!: Sequelize.HasManyRemoveAssociationsMixin<teachers, teachersId>;
-  hasTeacher!: Sequelize.HasManyHasAssociationMixin<teachers, teachersId>;
-  hasTeachers!: Sequelize.HasManyHasAssociationsMixin<teachers, teachersId>;
-  countTeachers!: Sequelize.HasManyCountAssociationsMixin;
+  // groups hasMany teacher_has_group via group_id
+  teacher_has_groups!: teacher_has_group[];
+  getTeacher_has_groups!: Sequelize.HasManyGetAssociationsMixin<teacher_has_group>;
+  setTeacher_has_groups!: Sequelize.HasManySetAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  addTeacher_has_group!: Sequelize.HasManyAddAssociationMixin<teacher_has_group, teacher_has_groupId>;
+  addTeacher_has_groups!: Sequelize.HasManyAddAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  createTeacher_has_group!: Sequelize.HasManyCreateAssociationMixin<teacher_has_group>;
+  removeTeacher_has_group!: Sequelize.HasManyRemoveAssociationMixin<teacher_has_group, teacher_has_groupId>;
+  removeTeacher_has_groups!: Sequelize.HasManyRemoveAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  hasTeacher_has_group!: Sequelize.HasManyHasAssociationMixin<teacher_has_group, teacher_has_groupId>;
+  hasTeacher_has_groups!: Sequelize.HasManyHasAssociationsMixin<teacher_has_group, teacher_has_groupId>;
+  countTeacher_has_groups!: Sequelize.HasManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof groups {
     return groups.init({
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    name: {
-      type: DataTypes.STRING(256),
-      allowNull: false
-    }
-  }, {
+      id: {
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+      },
+      name: {
+        type: DataTypes.STRING(256),
+        allowNull: false
+      }
+    }, {
     sequelize,
     tableName: 'groups',
     schema: 'public',

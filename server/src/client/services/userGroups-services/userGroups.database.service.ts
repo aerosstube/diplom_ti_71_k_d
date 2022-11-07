@@ -10,8 +10,7 @@ export interface UserGroupOptions {
 export class UserGroupsDatabaseService {
 	static async addTeacher(userGroupOptions: UserGroupOptions, transaction: Transaction): Promise<teachers> {
 		return await teachers.create({
-			user_id: userGroupOptions.userId,
-			group_id: userGroupOptions.groupId,
+			user_id: userGroupOptions.userId
 		}, {transaction});
 	}
 

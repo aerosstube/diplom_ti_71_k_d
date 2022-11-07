@@ -29,7 +29,7 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
 			fullName: `${verifyToken.second_name} ${verifyToken.first_name} ${verifyToken.middle_name}`,
 			role: verifyToken.role
 		};
-		next();
+		next(req);
 	} catch (err) {
 		return next(err);
 	}

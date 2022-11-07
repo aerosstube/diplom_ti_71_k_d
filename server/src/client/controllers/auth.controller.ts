@@ -14,7 +14,6 @@ export class AuthController {
 		try {
 			const {body: {user}, useragent, headers, socket} = req;
 
-			// @ts-ignore
 			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
 			const authOptions: AuthOptions = {
@@ -42,7 +41,7 @@ export class AuthController {
 		try {
 			const {body: {user}, useragent, headers, socket} = req;
 
-			// @ts-ignore
+
 			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
 			const registrationOptions: RegistrationUserOptions = {

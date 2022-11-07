@@ -27,7 +27,7 @@ export class UserService {
 	}
 
 	static async userDistribution(inviteCodeOptions: InviteCodeOptions, userId: number, transaction: Transaction): Promise<void> {
-		const group = await GroupDatabaseService.findGroup(inviteCodeOptions.groupName);
+		const group = await GroupDatabaseService.findGroupByName(inviteCodeOptions.groupName);
 		if (!group)
 			throw ApiError.BadRequest('Неверное имя группы!');
 
@@ -37,6 +37,13 @@ export class UserService {
 		};
 
 		await UserGroupsService.userGroupDistribution(inviteCodeOptions.isTeacher, userGroupOptions, transaction);
+	}
 
+	static async getUser(id: number): Promise<users> {
+		const user = await UserDatabaseService.findUserById(id);
+		if (!user)
+			throw ApiError.BadRequest('Неверный пользователь!');
+
+		return user;
 	}
 }
