@@ -14,7 +14,6 @@ export interface AuthUser {
 	userId: number;
 	login: string;
 	fullName: string;
-	dateOfBirthday?: string;
 	role: string;
 }
 
@@ -64,7 +63,6 @@ export class AuthService {
 	}
 
 	static async generateToken(payload: AuthUser, refreshToken: string | null = null): Promise<JwtTokens> {
-		console.log('ACESSS TOKEN ', payload);
 		return {
 			refreshToken: (refreshToken) ? refreshToken : jwt.sign(payload, application.refreshToken, {expiresIn: '30d'}),
 			accessToken: jwt.sign(payload, application.accessToken, {expiresIn: '15m'}),

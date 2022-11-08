@@ -52,7 +52,6 @@ export class AuthBusinessService {
 	static async userLogin(authOptions: AuthOptions, transaction: Transaction): Promise<JwtTokens> {
 		const userDatabase = await AuthService.checkUser(authOptions.login, authOptions.password);
 		const user: AuthUser = {
-			dateOfBirthday: userDatabase.date_birthday,
 			fullName: `${userDatabase.second_name} ${userDatabase.first_name} ${userDatabase.middle_name} `,
 			login: userDatabase.login,
 			userId: userDatabase.id,
@@ -108,7 +107,6 @@ export class AuthBusinessService {
 		await UserService.userDistribution(registrationOptions.inviteCodeOptions, user.id, transaction);
 
 		const authUser: AuthUser = {
-			dateOfBirthday: user.date_birthday,
 			fullName: `${user.second_name} ${user.first_name} ${user.middle_name} `,
 			login: user.login,
 			userId: user.id,

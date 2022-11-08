@@ -18,7 +18,6 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
 			return next(ApiError.UnauthorizedError());
 
 		const verifyToken: TokenOptions = await AuthService.validateAccessToken(accessToken);
-		console.log(verifyToken);
 		const isAccess: boolean = verifyToken.role === 'admin';
 		if (req.baseUrl.includes('admin') && !isAccess)
 			return next(ApiError.AcessDenied());

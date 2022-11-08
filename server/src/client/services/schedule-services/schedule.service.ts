@@ -1,8 +1,9 @@
-import {groups} from '../../../../models/groups';
 import {schedule} from '../../../../models/schedule';
 import {ApiError} from '../../errors/api.error';
 import {AudienceService} from '../audience-service/audience.service';
+import {AuthUser} from '../auth-services/auth.service';
 import {GroupService} from '../group-services/group.service';
+import {StudentService} from '../student-services/student.service';
 import {TeacherService} from '../teacher-service/teacher.service';
 import {TwoHourClassService} from '../twoHourClass-services/twoHourClass.service';
 import {WeekdayService} from '../weekday-service/weekday.service';
@@ -29,10 +30,9 @@ export class ScheduleService {
 		};
 	}
 
-	static async getScheduleDay(day: Date): Promise<ScheduleDay> {
-		const groupName: string = '12123';
-		const group: groups = await GroupService.getGroupByName(groupName);
-		const scheduleDayDatabase = await ScheduleDatabaseService.getScheduleDay(day, group.id);
+	static async getScheduleDay(user: AuthUser, day: Date): Promise<ScheduleDay> {
+		const student = await StudentService.getStudentByUserId(user.userId);
+		const scheduleDayDatabase = await ScheduleDatabaseService.getScheduleDay(day, student.group_id);
 		if (scheduleDayDatabase.length === 0)
 			throw ApiError.BadRequest('Расписание на этот день не существует!');
 
