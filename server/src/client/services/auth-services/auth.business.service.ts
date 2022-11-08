@@ -74,13 +74,13 @@ export class AuthBusinessService {
 	}
 
 	static async userRefreshToken(refreshToken: string): Promise<JwtTokens> {
+		const token = await AuthDatabaseService.findToken(refreshToken);
+		if (!token)
+			throw ApiError.UnauthorizedError();
+
 		const user = AuthService.validateRefreshToken(refreshToken);
 		if (!user)
 			ApiError.ValidationError();
-
-		const token = AuthDatabaseService.findToken(refreshToken);
-		if (!token)
-			throw ApiError.UnauthorizedError();
 
 		return AuthService.generateToken({
 			fullName: user.fullName,
