@@ -20,7 +20,8 @@ export class AuthController {
 				deviceIp: deviceIp,
 				userAgent: JSON.stringify(useragent).toString(),
 				password: user.password,
-				login: user.login
+				login: user.login,
+				role: user.role
 			};
 
 			const tokens: JwtTokens = await AuthBusinessService.userLogin(authOptions, transaction);
@@ -63,6 +64,7 @@ export class AuthController {
 				deviceIp: deviceIp,
 				login: user.login,
 				password: user.password,
+				role: user.role,
 				userAgent: JSON.stringify(useragent).toString()
 			};
 

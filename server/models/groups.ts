@@ -68,16 +68,16 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
         allowNull: false
       }
     }, {
-    sequelize,
-    tableName: 'groups',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "groups_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
+      sequelize,
+      tableName: 'groups',
+      schema: 'public',
+      timestamps: false,
+      indexes: [
+        {
+          name: 'groups_pkey',
+          unique: true,
+          fields: [
+            {name: 'id'},
         ]
       },
     ]

@@ -29,7 +29,8 @@ export class ScheduleService {
 		};
 	}
 
-	static async getScheduleDay(day: Date, groupName: string): Promise<ScheduleDay> {
+	static async getScheduleDay(day: Date): Promise<ScheduleDay> {
+		const groupName: string = '12123';
 		const group: groups = await GroupService.getGroupByName(groupName);
 		const scheduleDayDatabase = await ScheduleDatabaseService.getScheduleDay(day, group.id);
 		if (scheduleDayDatabase.length === 0)

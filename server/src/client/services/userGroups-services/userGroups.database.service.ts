@@ -17,7 +17,7 @@ export class UserGroupsDatabaseService {
 	static async addStudent(userGroupOptions: UserGroupOptions, transaction: Transaction): Promise<students> {
 		return await students.create({
 			user_id: userGroupOptions.userId,
-			group_id: userGroupOptions.groupId,
+
 		}, {transaction});
 	}
 }

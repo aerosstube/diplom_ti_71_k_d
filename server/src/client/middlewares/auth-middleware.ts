@@ -18,7 +18,7 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
 			return next(ApiError.UnauthorizedError());
 
 		const verifyToken: TokenOptions = await AuthService.validateAccessToken(accessToken);
-
+		console.log(verifyToken);
 		const isAccess: boolean = verifyToken.role === 'admin';
 		if (req.baseUrl.includes('admin') && !isAccess)
 			return next(ApiError.AcessDenied());
@@ -26,10 +26,10 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
 		req.user = {
 			login: verifyToken.login,
 			userId: verifyToken.userId,
-			fullName: `${verifyToken.second_name} ${verifyToken.first_name} ${verifyToken.middle_name}`,
+			fullName: verifyToken.fullName,
 			role: verifyToken.role
 		};
-		next(req);
+		next();
 	} catch (err) {
 		return next(err);
 	}

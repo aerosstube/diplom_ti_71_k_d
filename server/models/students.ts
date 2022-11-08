@@ -57,16 +57,16 @@ export class students extends Model<studentsAttributes, studentsCreationAttribut
         references: {
           model: 'users',
           key: 'id'
+        }
+      },
+      group_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'groups',
+          key: 'id'
+        }
       }
-    },
-    group_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'groups',
-        key: 'id'
-      }
-    }
   }, {
     sequelize,
     tableName: 'students',

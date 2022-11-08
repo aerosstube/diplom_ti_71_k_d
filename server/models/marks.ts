@@ -51,13 +51,13 @@ export class marks extends Model<marksAttributes, marksCreationAttributes> imple
       },
       user_id: {
         type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       }
-    }
-  }, {
+    }, {
     sequelize,
     tableName: 'marks',
     schema: 'public',

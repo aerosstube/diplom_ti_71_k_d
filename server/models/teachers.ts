@@ -62,11 +62,11 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
       id: {
         autoIncrement: true,
         type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      unique: "teachers_id_key"
-    }
-  }, {
+        allowNull: false,
+        primaryKey: true,
+        unique: 'teachers_id_key'
+      }
+    }, {
     sequelize,
     tableName: 'teachers',
     schema: 'public',

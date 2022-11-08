@@ -20,6 +20,7 @@ export interface AuthOptions {
 	password: string;
 	userAgent: string;
 	deviceIp: string;
+	role: string;
 	dateExpired?: Date;
 }
 
@@ -35,9 +36,7 @@ export interface TokenOptions {
 	userId: number;
 	login: string;
 	role: string;
-	first_name: string;
-	second_name: string;
-	middle_name?: string;
+	fullName: string;
 	iat?: number;
 	exp?: number;
 }
@@ -57,6 +56,7 @@ export class AuthBusinessService {
 			fullName: `${userDatabase.second_name} ${userDatabase.first_name} ${userDatabase.middle_name} `,
 			login: userDatabase.login,
 			userId: userDatabase.id,
+			role: userDatabase.role
 		};
 		const tokens: JwtTokens = await AuthService.generateToken(user);
 
@@ -84,9 +84,10 @@ export class AuthBusinessService {
 			throw ApiError.UnauthorizedError();
 
 		return AuthService.generateToken({
-			fullName: `${user.second_name} ${user.first_name} ${user.middle_name} `,
+			fullName: user.fullName,
 			login: user.login,
 			userId: user.userId,
+			role: user.role
 		}, refreshToken);
 	}
 
@@ -110,7 +111,8 @@ export class AuthBusinessService {
 			dateOfBirthday: user.date_birthday,
 			fullName: `${user.second_name} ${user.first_name} ${user.middle_name} `,
 			login: user.login,
-			userId: user.id
+			userId: user.id,
+			role: user.role
 		};
 
 		const tokens: JwtTokens = await AuthService.generateToken(authUser);

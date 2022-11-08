@@ -125,14 +125,14 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
         key: 'id'
       }
     },
-    teacher_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'teachers',
-        key: 'user_id'
-      }
-    },
+      teacher_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'teachers',
+          key: 'user_id'
+        }
+      },
       date_of_class: {
         type: DataTypes.DATE,
         allowNull: false
@@ -160,9 +160,9 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
           unique: true,
           fields: [
             {name: 'id'},
-        ]
-      },
-    ]
-  });
+          ]
+        },
+      ]
+    });
   }
 }

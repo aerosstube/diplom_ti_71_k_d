@@ -1,13 +1,14 @@
-import {NextFunction, Request, Response} from 'express';
-import {ScheduleService} from '../services/schedule-services/schedule.service';
+import {NextFunction, Response} from 'express';
+import {RequestWithUser} from '../middlewares/auth-middleware';
 
 export class ScheduleController {
-	static async getScheduleWeek(req: Request, res: Response, next: NextFunction) {
+	static async getScheduleWeek(req: RequestWithUser, res: Response, next: NextFunction) {
 		try {
 			const {startOfWeek} = req.body;
-			const day = await ScheduleService.getScheduleDay(new Date(startOfWeek),);
-			console.log(day);
-			res.json(day);
+
+			// const day = await Sch  eduleService.getScheduleDay(new Date(startOfWeek));
+			console.log(req.user);
+			res.json('works');
 		} catch (err) {
 			next(err);
 		}
