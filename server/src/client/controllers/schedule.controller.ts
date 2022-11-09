@@ -7,7 +7,7 @@ export class ScheduleController {
 		try {
 			const {startOfWeek} = req.body;
 			const day = await ScheduleService.getScheduleWeek(req.user, new Date(startOfWeek));
-			res.json(day);
+			res.json(day.scheduleDays);
 		} catch (err) {
 			next(err);
 		}

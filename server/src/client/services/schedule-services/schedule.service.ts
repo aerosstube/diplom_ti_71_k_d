@@ -57,19 +57,17 @@ export class ScheduleService {
 			date.setDate(date.getDate() + 1);
 
 			let scheduleArr: any[] = [];
-			let j = 0;
-			console.log(scheduleWeekDatabase[i].date_of_class, ' and date is ', date);
-			console.log(scheduleWeekDatabase[i].date_of_class == date);
-			console.log(i);
-			while (scheduleWeekDatabase[j].date_of_class === date) {
-				scheduleArr.push(scheduleWeekDatabase[j]);
-				j++;
+			for (const schedule of scheduleWeekDatabase) {
+				if (schedule.date_of_class.toISOString() === date.toISOString())
+					scheduleArr.push(schedule);
 			}
+
 			scheduleWeek.scheduleDays.push(await this.getScheduleDay(scheduleArr));
 		}
 
 		return scheduleWeek;
 	}
 }
+
 
 //TODO: СПРОСИ У КОСЕНКО КАКОГО ХУЯ БЛЯТЬ 40 МИНУТ ПРОСТО ПРОЕБАЛ
