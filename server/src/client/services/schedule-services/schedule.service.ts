@@ -68,6 +68,3 @@ export class ScheduleService {
 		return scheduleWeek;
 	}
 }
-
-
-//TODO: СПРОСИ У КОСЕНКО КАКОГО ХУЯ БЛЯТЬ 40 МИНУТ ПРОСТО ПРОЕБАЛ
