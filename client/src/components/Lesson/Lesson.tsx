@@ -1,6 +1,6 @@
 import {FC} from 'react';
-import {ListItemButton, ListItemText} from "@mui/material";
-import cl from "../learningDay/learningDay.module.css";
+import {ListItemButton, ListItemText} from '@mui/material';
+import cl from '../learningDay/learningDay.module.css';
 
 export interface LessonProps {
     title: string;

@@ -1,6 +1,6 @@
 import {FC} from 'react';
-import cl from './learningDay.module.css'
-import Lesson, {LessonProps} from "../Lesson/Lesson";
+import cl from './learningDay.module.css';
+import Lesson, {LessonProps} from '../Lesson/Lesson';
 
 
 export interface LearningDayProps {

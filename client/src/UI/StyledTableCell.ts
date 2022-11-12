@@ -1,9 +1,9 @@
-import {styled, TableCell, tableCellClasses, TableRow} from "@mui/material";
+import {styled, TableCell, tableCellClasses, TableRow} from '@mui/material';
 
 export const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
         color: theme.palette.common.black,
-        backgroundColor: "rgba(66,215,243,0.7)",
+        backgroundColor: 'rgba(66,215,243,0.7)',
         border: '2px #1E8BFD solid',
         textAlign: 'center',
         width: 'auto',

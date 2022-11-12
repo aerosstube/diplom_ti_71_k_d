@@ -1,15 +1,16 @@
-.but{
-   align-content: flex-end;
+.but {
+    align-content: flex-end;
     width: auto;
     height: 50px;
     margin-top: 10px !important;
 }
-.forma{
+
+.forma {
     width: 100%;
     height: 2000px;
 }
 
-.table{
+.table {
     margin: 20px 40px 20px 20px;
     width: auto;
     height: 577px;
@@ -18,25 +19,29 @@
     justify-content: space-between;
 
 }
-.inp{
+
+.inp {
     text-align: center;
-    width:15px;
+    width: 15px;
     height: 100%;
     outline: none;
     border: none;
-    background-color:rgba(66, 215, 243, 0);
+    background-color: rgba(66, 215, 243, 0);
     font-size: large;
     color: green;
 }
+
 /* */
-.inp:focus{
+.inp:focus {
     background-color: wheat;
     border-radius: 7px;
 }
-.tableCell{
+
+.tableCell {
     width: 50px;
 }
-.markSlider{
+
+.markSlider {
     width: 500px !important;
     margin-left: auto;
 

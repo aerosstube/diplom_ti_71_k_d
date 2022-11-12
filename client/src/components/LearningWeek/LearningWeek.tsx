@@ -1,6 +1,6 @@
 import {FC} from 'react';
-import LearningDay, {LearningDayProps} from "../learningDay/learningDay";
-import cl from './LearningWeek.module.css'
+import LearningDay, {LearningDayProps} from '../learningDay/learningDay';
+import cl from './LearningWeek.module.css';
 
 export interface LearningWeekProps {
     days: LearningDayProps[] | undefined;

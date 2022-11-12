@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
-import LearningWeek from "./UI/LearningWeek/LearningWeek";
+import Header from './components/header/Header';
+import AuthForm from './components/Regestration/AuthForm/AuthForm';
+import RegForm from './components/Regestration/RegForm/RegForm';
+import RegDataForm from './components/Regestration/RegForm/RegDataForm';
 
 function App() {
     const days = [
@@ -58,11 +61,12 @@ function App() {
             lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
 
         }
-    ]
+    ];
     return (
         <div className="App">
-            <LearningWeek days={days}/>
-        </div>
+            <Header/>
+            <RegDataForm/>
+            </div>
     );
 }
 

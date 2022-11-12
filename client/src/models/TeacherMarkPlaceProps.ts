@@ -1,3 +1,3 @@
 export interface TeacherMarkPlaceProps {
-    teacherUser: boolean
+    teacherUser: boolean;
 }

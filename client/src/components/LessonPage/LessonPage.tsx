@@ -1,6 +1,6 @@
 import React from 'react';
-import cl from './LessonPage.module.css'
-import {ListItemButton, ListItemText} from "@mui/material";
+import cl from './LessonPage.module.css';
+import {ListItemButton, ListItemText} from '@mui/material';
 
 const LessonPage = () => {
     return (
@@ -27,12 +27,12 @@ const LessonPage = () => {
                 </div>
                 <ListItemButton component="a" href="#simple-list">
                     <ListItemText
-                        primary='Оценка за урок'
-                        secondary='Срез знаний'
+                        primary="Оценка за урок"
+                        secondary="Срез знаний"
 
                     />
                     <ListItemText
-                        primary='5'
+                        primary="5"
                         className={cl.mark}
                     />
                 </ListItemButton>
