@@ -1,5 +1,5 @@
-import {Router} from 'express';
-import {AuthController} from '../controllers/auth.controller';
+import { Router } from 'express';
+import { AuthController } from '../controllers/auth.controller';
 
 const authRouter: Router = Router();
 
@@ -9,4 +9,4 @@ authRouter
 	.delete('/logout', AuthController.userLogout)
 	.get('/refresh', AuthController.userRefresh);
 
-export {authRouter};
+export { authRouter };

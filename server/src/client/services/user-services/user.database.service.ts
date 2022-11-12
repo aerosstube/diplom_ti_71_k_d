@@ -1,6 +1,6 @@
-import {Transaction} from 'sequelize';
-import {users} from '../../../../models/users';
-import {RegistrationUserOptions} from '../auth-services/auth.business.service';
+import { Transaction } from 'sequelize';
+import { users } from '../../../../models/users';
+import { RegistrationUserOptions } from '../auth-services/auth.business.service';
 
 export class UserDatabaseService {
 

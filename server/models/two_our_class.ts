@@ -1,6 +1,5 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { lessons, lessonsId } from './lessons';
 import type { schedule, scheduleId } from './schedule';
 
 export interface two_our_classAttributes {
@@ -17,18 +16,6 @@ export class two_our_class extends Model<two_our_classAttributes, two_our_classC
   id!: number;
   name!: string;
 
-  // two_our_class hasMany lessons via two_our_class_id
-  lessons!: lessons[];
-  getLessons!: Sequelize.HasManyGetAssociationsMixin<lessons>;
-  setLessons!: Sequelize.HasManySetAssociationsMixin<lessons, lessonsId>;
-  addLesson!: Sequelize.HasManyAddAssociationMixin<lessons, lessonsId>;
-  addLessons!: Sequelize.HasManyAddAssociationsMixin<lessons, lessonsId>;
-  createLesson!: Sequelize.HasManyCreateAssociationMixin<lessons>;
-  removeLesson!: Sequelize.HasManyRemoveAssociationMixin<lessons, lessonsId>;
-  removeLessons!: Sequelize.HasManyRemoveAssociationsMixin<lessons, lessonsId>;
-  hasLesson!: Sequelize.HasManyHasAssociationMixin<lessons, lessonsId>;
-  hasLessons!: Sequelize.HasManyHasAssociationsMixin<lessons, lessonsId>;
-  countLessons!: Sequelize.HasManyCountAssociationsMixin;
   // two_our_class hasMany schedule via two_our_class_id
   schedules!: schedule[];
   getSchedules!: Sequelize.HasManyGetAssociationsMixin<schedule>;

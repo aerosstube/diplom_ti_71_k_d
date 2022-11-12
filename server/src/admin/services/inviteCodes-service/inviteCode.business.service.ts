@@ -1,5 +1,5 @@
-import {Transaction} from 'sequelize';
-import {InviteCodesService} from './inviteCodes.service';
+import { Transaction } from 'sequelize';
+import { InviteCodesService } from './inviteCodes.service';
 
 export class InviteCodeBusinessService {
 

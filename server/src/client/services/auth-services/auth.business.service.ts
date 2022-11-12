@@ -1,11 +1,11 @@
-import {Transaction} from 'sequelize';
-import {ApiError} from '../../errors/api.error';
-import {InviteCodeDatabaseService} from '../inviteCode-services/inviteCode.database.service';
-import {InviteCodeService} from '../inviteCode-services/inviteCode.service';
-import {UserDatabaseService} from '../user-services/user.database.service';
-import {UserService} from '../user-services/user.service';
-import {AuthDatabaseService} from './auth.database.service';
-import {AuthService, AuthUser, JwtTokens} from './auth.service';
+import { Transaction } from 'sequelize';
+import { ApiError } from '../../errors/api.error';
+import { InviteCodeDatabaseService } from '../inviteCode-services/inviteCode.database.service';
+import { InviteCodeService } from '../inviteCode-services/inviteCode.service';
+import { UserDatabaseService } from '../user-services/user.database.service';
+import { UserService } from '../user-services/user.service';
+import { AuthDatabaseService } from './auth.database.service';
+import { AuthService, AuthUser, JwtTokens } from './auth.service';
 
 export interface RegistrationUserOptions extends Omit<AuthUser, 'userId'> {
 	password: string,

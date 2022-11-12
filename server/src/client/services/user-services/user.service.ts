@@ -1,12 +1,12 @@
-import {hash} from 'bcryptjs';
-import {Transaction} from 'sequelize';
-import {users} from '../../../../models/users';
-import {ApiError} from '../../errors/api.error';
-import {InviteCodeOptions, RegistrationUserOptions} from '../auth-services/auth.business.service';
-import {GroupDatabaseService} from '../group-services/group.database.service';
-import {UserGroupOptions} from '../userGroups-services/userGroups.database.service';
-import {UserGroupsService} from '../userGroups-services/userGroups.service';
-import {UserDatabaseService} from './user.database.service';
+import { hash } from 'bcryptjs';
+import { Transaction } from 'sequelize';
+import { users } from '../../../../models/users';
+import { ApiError } from '../../errors/api.error';
+import { InviteCodeOptions, RegistrationUserOptions } from '../auth-services/auth.business.service';
+import { GroupDatabaseService } from '../group-services/group.database.service';
+import { UserGroupOptions } from '../userGroups-services/userGroups.database.service';
+import { UserGroupsService } from '../userGroups-services/userGroups.service';
+import { UserDatabaseService } from './user.database.service';
 
 
 export class UserService {

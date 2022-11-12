@@ -1,4 +1,4 @@
-import {audiences} from '../../../../models/audiences';
+import { audiences } from '../../../../models/audiences';
 
 export class AudienceDatabaseService {
 	static async findAudienceById(id: number) {

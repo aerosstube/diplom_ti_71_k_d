@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Button, TextField} from '@mui/material';
+import { Button, TextField } from '@mui/material';
+import jwt from 'jwt-decode';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../hooks/hook';
+import { authAPI } from '../../../services/AuthService';
+import { UserSlice, UserState } from '../../../store/reducers/UserSlice';
 import cl from './AuthForm.module.css';
 import shp from './image-ep0zmoEb0-transformed.png';
-import {authAPI} from '../../../services/AuthService';
-import jwt from 'jwt-decode';
-import {UserSlice, UserState} from '../../../store/reducers/UserSlice';
-import {useAppDispatch} from '../../../hooks/hook';
 
 const AuthForm = () => {
     const [loginUser, {data: tokens, isLoading, error}] = authAPI.useUserLoginMutation();
@@ -23,6 +23,7 @@ const AuthForm = () => {
 
     useEffect(() => {
         if (tokens) {
+            console.log(tokens);
             const response: UserState = {
                 user: jwt(tokens.tokens.accessToken),
                 tokens,

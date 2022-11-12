@@ -1,7 +1,7 @@
-import {NextFunction, Request, Response} from 'express';
-import {application} from '../../../config/config';
-import {ApiError} from '../errors/api.error';
-import {InviteCodeBusinessService} from '../services/inviteCode-services/inviteCode.business.service';
+import { NextFunction, Request, Response } from 'express';
+import { application } from '../../../config/config';
+import { ApiError } from '../errors/api.error';
+import { InviteCodeBusinessService } from '../services/inviteCode-services/inviteCode.business.service';
 
 export class InviteCodeController {
 	static async inviteCodeRedirect(req: Request, res: Response, next: NextFunction) {

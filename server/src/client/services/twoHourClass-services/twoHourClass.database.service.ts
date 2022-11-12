@@ -1,4 +1,4 @@
-import {two_our_class} from '../../../../models/two_our_class';
+import { two_our_class } from '../../../../models/two_our_class';
 
 export class TwoHourClassDatabaseService {
 

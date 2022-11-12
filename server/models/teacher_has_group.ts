@@ -1,7 +1,7 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {groups, groupsId} from './groups';
-import type {teachers, teachersId} from './teachers';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { groups, groupsId } from './groups';
+import type { teachers, teachersId } from './teachers';
 
 export interface teacher_has_groupAttributes {
   id: number;

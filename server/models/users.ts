@@ -1,8 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { marks, marksId } from './marks';
 import type { students, studentsId } from './students';
-import type { teachers, teachersCreationAttributes, teachersId } from './teachers';
+import type { teachers, teachersId } from './teachers';
 import type { token, tokenId } from './token';
 
 export interface usersAttributes {
@@ -35,18 +34,6 @@ export class users extends Model<usersAttributes, usersCreationAttributes> imple
   'e-mail'?: string;
   role!: string;
 
-  // users hasMany marks via user_id
-  marks!: marks[];
-  getMarks!: Sequelize.HasManyGetAssociationsMixin<marks>;
-  setMarks!: Sequelize.HasManySetAssociationsMixin<marks, marksId>;
-  addMark!: Sequelize.HasManyAddAssociationMixin<marks, marksId>;
-  addMarks!: Sequelize.HasManyAddAssociationsMixin<marks, marksId>;
-  createMark!: Sequelize.HasManyCreateAssociationMixin<marks>;
-  removeMark!: Sequelize.HasManyRemoveAssociationMixin<marks, marksId>;
-  removeMarks!: Sequelize.HasManyRemoveAssociationsMixin<marks, marksId>;
-  hasMark!: Sequelize.HasManyHasAssociationMixin<marks, marksId>;
-  hasMarks!: Sequelize.HasManyHasAssociationsMixin<marks, marksId>;
-  countMarks!: Sequelize.HasManyCountAssociationsMixin;
   // users hasMany students via user_id
   students!: students[];
   getStudents!: Sequelize.HasManyGetAssociationsMixin<students>;
@@ -111,9 +98,9 @@ export class users extends Model<usersAttributes, usersCreationAttributes> imple
       allowNull: false
     },
     mobile_phone: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(32),
       allowNull: true,
-      unique: "users_mobile_phone_key"
+      unique: 'users_mobile_phone_key'
     },
     'e-mail': {
       type: DataTypes.STRING(256),

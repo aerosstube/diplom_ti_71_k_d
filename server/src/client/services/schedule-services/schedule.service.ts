@@ -1,14 +1,14 @@
-import {schedule} from '../../../../models/schedule';
-import {ApiError} from '../../errors/api.error';
-import {AudienceService} from '../audience-service/audience.service';
-import {AuthUser} from '../auth-services/auth.service';
-import {GroupService} from '../group-services/group.service';
-import {StudentService} from '../student-services/student.service';
-import {TeacherService} from '../teacher-service/teacher.service';
-import {TwoHourClassService} from '../twoHourClass-services/twoHourClass.service';
-import {WeekdayService} from '../weekday-service/weekday.service';
-import {Schedule, ScheduleDay, ScheduleWeek} from './schedule.business.service';
-import {ScheduleDatabaseService} from './schedule.database.service';
+import { schedule } from '../../../../models/schedule';
+import { ApiError } from '../../errors/api.error';
+import { AudienceService } from '../audience-service/audience.service';
+import { AuthUser } from '../auth-services/auth.service';
+import { GroupService } from '../group-services/group.service';
+import { StudentService } from '../student-services/student.service';
+import { TeacherService } from '../teacher-service/teacher.service';
+import { TwoHourClassService } from '../twoHourClass-services/twoHourClass.service';
+import { WeekdayService } from '../weekday-service/weekday.service';
+import { Schedule, ScheduleDay, ScheduleWeek } from './schedule.business.service';
+import { ScheduleDatabaseService } from './schedule.database.service';
 
 export class ScheduleService {
 	static async getSchedule(schedule: schedule): Promise<Schedule> {

@@ -1,6 +1,6 @@
-import {groups} from '../../../../models/groups';
-import {ApiError} from '../../errors/api.error';
-import {GroupDatabaseService} from './group.database.service';
+import { groups } from '../../../../models/groups';
+import { ApiError } from '../../errors/api.error';
+import { GroupDatabaseService } from './group.database.service';
 
 export class GroupService {
 	static async getGroupById(id: number): Promise<groups> {

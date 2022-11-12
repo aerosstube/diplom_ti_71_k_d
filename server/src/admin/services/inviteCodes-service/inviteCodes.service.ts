@@ -1,6 +1,6 @@
-import {Transaction} from 'sequelize';
-import {v4} from 'uuid';
-import {InviteCodeOptions, InviteCodesDatabaseService} from './inviteCodes.database.service';
+import { Transaction } from 'sequelize';
+import { v4 } from 'uuid';
+import { InviteCodeOptions, InviteCodesDatabaseService } from './inviteCodes.database.service';
 
 export class InviteCodesService {
 	static async createInviteCode(isTeacher: boolean, groupName: string, transaction: Transaction): Promise<string> {

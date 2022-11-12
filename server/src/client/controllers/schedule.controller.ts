@@ -1,6 +1,6 @@
-import {NextFunction, Response} from 'express';
-import {RequestWithUser} from '../middlewares/auth-middleware';
-import {ScheduleService} from '../services/schedule-services/schedule.service';
+import { NextFunction, Response } from 'express';
+import { RequestWithUser } from '../middlewares/auth-middleware';
+import { ScheduleService } from '../services/schedule-services/schedule.service';
 
 export class ScheduleController {
 	static async getScheduleWeek(req: RequestWithUser, res: Response, next: NextFunction) {

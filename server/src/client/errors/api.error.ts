@@ -1,4 +1,4 @@
-import {Error} from 'sequelize';
+import { Error } from 'sequelize';
 
 export class ApiError extends Error {
 	status: number;

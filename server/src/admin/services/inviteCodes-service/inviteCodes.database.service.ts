@@ -1,5 +1,5 @@
-import {Transaction} from 'sequelize';
-import {invite_codes} from '../../../../models/init-models';
+import { Transaction } from 'sequelize';
+import { invite_codes } from '../../../../models/init-models';
 
 export interface InviteCodeOptions {
 	inviteCode: string;

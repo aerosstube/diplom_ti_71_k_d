@@ -39,7 +39,8 @@ export class audiences extends Model<audiencesAttributes, audiencesCreationAttri
     },
     number_audience: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      unique: 'audiences_number_audience_key'
     }
   }, {
     sequelize,
@@ -48,10 +49,17 @@ export class audiences extends Model<audiencesAttributes, audiencesCreationAttri
     timestamps: false,
     indexes: [
       {
-        name: "audiences_pkey",
+        name: 'audiences_number_audience_key',
         unique: true,
         fields: [
-          { name: "id" },
+          {name: 'number_audience'},
+        ]
+      },
+      {
+        name: 'audiences_pkey',
+        unique: true,
+        fields: [
+          {name: 'id'},
         ]
       },
     ]

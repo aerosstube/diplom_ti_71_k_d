@@ -1,4 +1,4 @@
-import {groups} from '../../../../models/groups';
+import { groups } from '../../../../models/groups';
 
 export class GroupDatabaseService {
 	static async findGroupByName(groupName: string): Promise<groups | null> {

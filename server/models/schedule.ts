@@ -1,12 +1,11 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {audiences, audiencesId} from './audiences';
-import type {groups, groupsId} from './groups';
-import type {lessons, lessonsId} from './lessons';
-import type {schedule_has_mark, schedule_has_markId} from './schedule_has_mark';
-import type {teachers, teachersId} from './teachers';
-import type {two_our_class, two_our_classId} from './two_our_class';
-import type {weekdays, weekdaysId} from './weekdays';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { audiences, audiencesId } from './audiences';
+import type { groups, groupsId } from './groups';
+import type { marks, marksId } from './marks';
+import type { teachers, teachersId } from './teachers';
+import type { two_our_class, two_our_classId } from './two_our_class';
+import type { weekdays, weekdaysId } from './weekdays';
 
 export interface scheduleAttributes {
   id: number;
@@ -17,13 +16,12 @@ export interface scheduleAttributes {
   two_our_class_id: number;
   teacher_id: number;
   date_of_class: Date;
-  lesson_id?: number;
   homework?: string;
 }
 
 export type schedulePk = "id";
 export type scheduleId = schedule[schedulePk];
-export type scheduleOptionalAttributes = 'id' | 'lesson_id' | 'homework';
+export type scheduleOptionalAttributes = 'id' | 'homework';
 export type scheduleCreationAttributes = Optional<scheduleAttributes, scheduleOptionalAttributes>;
 
 export class schedule extends Model<scheduleAttributes, scheduleCreationAttributes> implements scheduleAttributes {
@@ -35,7 +33,6 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
   two_our_class_id!: number;
   teacher_id!: number;
   date_of_class!: Date;
-  lesson_id?: number;
   homework?: string;
 
   // schedule belongsTo audiences via audience_id
@@ -48,23 +45,18 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
   getGroup!: Sequelize.BelongsToGetAssociationMixin<groups>;
   setGroup!: Sequelize.BelongsToSetAssociationMixin<groups, groupsId>;
   createGroup!: Sequelize.BelongsToCreateAssociationMixin<groups>;
-  // schedule belongsTo lessons via lesson_id
-  lesson!: lessons;
-  getLesson!: Sequelize.BelongsToGetAssociationMixin<lessons>;
-  setLesson!: Sequelize.BelongsToSetAssociationMixin<lessons, lessonsId>;
-  createLesson!: Sequelize.BelongsToCreateAssociationMixin<lessons>;
-  // schedule hasMany schedule_has_mark via schedule_id
-  schedule_has_marks!: schedule_has_mark[];
-  getSchedule_has_marks!: Sequelize.HasManyGetAssociationsMixin<schedule_has_mark>;
-  setSchedule_has_marks!: Sequelize.HasManySetAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  addSchedule_has_mark!: Sequelize.HasManyAddAssociationMixin<schedule_has_mark, schedule_has_markId>;
-  addSchedule_has_marks!: Sequelize.HasManyAddAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  createSchedule_has_mark!: Sequelize.HasManyCreateAssociationMixin<schedule_has_mark>;
-  removeSchedule_has_mark!: Sequelize.HasManyRemoveAssociationMixin<schedule_has_mark, schedule_has_markId>;
-  removeSchedule_has_marks!: Sequelize.HasManyRemoveAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  hasSchedule_has_mark!: Sequelize.HasManyHasAssociationMixin<schedule_has_mark, schedule_has_markId>;
-  hasSchedule_has_marks!: Sequelize.HasManyHasAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  countSchedule_has_marks!: Sequelize.HasManyCountAssociationsMixin;
+  // schedule hasMany marks via schedule_id
+  marks!: marks[];
+  getMarks!: Sequelize.HasManyGetAssociationsMixin<marks>;
+  setMarks!: Sequelize.HasManySetAssociationsMixin<marks, marksId>;
+  addMark!: Sequelize.HasManyAddAssociationMixin<marks, marksId>;
+  addMarks!: Sequelize.HasManyAddAssociationsMixin<marks, marksId>;
+  createMark!: Sequelize.HasManyCreateAssociationMixin<marks>;
+  removeMark!: Sequelize.HasManyRemoveAssociationMixin<marks, marksId>;
+  removeMarks!: Sequelize.HasManyRemoveAssociationsMixin<marks, marksId>;
+  hasMark!: Sequelize.HasManyHasAssociationMixin<marks, marksId>;
+  hasMarks!: Sequelize.HasManyHasAssociationsMixin<marks, marksId>;
+  countMarks!: Sequelize.HasManyCountAssociationsMixin;
   // schedule belongsTo teachers via teacher_id
   teacher!: teachers;
   getTeacher!: Sequelize.BelongsToGetAssociationMixin<teachers>;
@@ -117,14 +109,14 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
         key: 'id'
       }
     },
-    two_our_class_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'two_our_class',
-        key: 'id'
-      }
-    },
+      two_our_class_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'two_our_class',
+          key: 'id'
+        }
+      },
       teacher_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -136,14 +128,6 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
       date_of_class: {
         type: DataTypes.DATE,
         allowNull: false
-      },
-      lesson_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'lessons',
-          key: 'id'
-        }
       },
       homework: {
         type: DataTypes.STRING(4096),

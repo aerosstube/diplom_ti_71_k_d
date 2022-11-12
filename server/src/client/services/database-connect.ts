@@ -1,6 +1,6 @@
-import {Dialect, Sequelize} from 'sequelize';
+import { Dialect, Sequelize } from 'sequelize';
 
-import {database} from '../../../config/config';
+import { database } from '../../../config/config';
 
 export const SequelizeConnect = new Sequelize(database.name, database.user, database.password,
 	{

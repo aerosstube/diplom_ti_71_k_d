@@ -1,8 +1,8 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {schedule, scheduleId} from './schedule';
-import type {students, studentsId} from './students';
-import type {teacher_has_group, teacher_has_groupId} from './teacher_has_group';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { schedule, scheduleId } from './schedule';
+import type { students, studentsId } from './students';
+import type { teacher_has_group, teacher_has_groupId } from './teacher_has_group';
 
 export interface groupsAttributes {
   id: number;
@@ -61,7 +61,8 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
         autoIncrement: true,
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        unique: 'groups_id_key'
       },
       name: {
         type: DataTypes.STRING(256),
@@ -74,13 +75,20 @@ export class groups extends Model<groupsAttributes, groupsCreationAttributes> im
       timestamps: false,
       indexes: [
         {
+          name: 'groups_id_key',
+          unique: true,
+          fields: [
+            {name: 'id'},
+          ]
+        },
+        {
           name: 'groups_pkey',
           unique: true,
           fields: [
             {name: 'id'},
-        ]
-      },
-    ]
-  });
+          ]
+        },
+      ]
+    });
   }
 }

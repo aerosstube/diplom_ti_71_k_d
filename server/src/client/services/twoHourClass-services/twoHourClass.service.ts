@@ -1,6 +1,6 @@
-import {two_our_class} from '../../../../models/two_our_class';
-import {ApiError} from '../../errors/api.error';
-import {TwoHourClassDatabaseService} from './twoHourClass.database.service';
+import { two_our_class } from '../../../../models/two_our_class';
+import { ApiError } from '../../errors/api.error';
+import { TwoHourClassDatabaseService } from './twoHourClass.database.service';
 
 export class TwoHourClassService {
 	static async getTwoHourClass(id: number): Promise<two_our_class> {

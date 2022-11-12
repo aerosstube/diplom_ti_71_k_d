@@ -1,7 +1,7 @@
-import {NextFunction, Request, Response} from 'express';
-import {ApiError} from '../errors/api.error';
-import {TokenOptions} from '../services/auth-services/auth.business.service';
-import {AuthService, AuthUser} from '../services/auth-services/auth.service';
+import { NextFunction, Request, Response } from 'express';
+import { ApiError } from '../errors/api.error';
+import { TokenOptions } from '../services/auth-services/auth.business.service';
+import { AuthService, AuthUser } from '../services/auth-services/auth.service';
 
 export interface RequestWithUser extends Request {
 	user: AuthUser;

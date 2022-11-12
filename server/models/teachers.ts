@@ -1,8 +1,8 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {schedule, scheduleId} from './schedule';
-import type {teacher_has_group, teacher_has_groupId} from './teacher_has_group';
-import type {users, usersId} from './users';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { schedule, scheduleId } from './schedule';
+import type { teacher_has_group, teacher_has_groupId } from './teacher_has_group';
+import type { users, usersId } from './users';
 
 export interface teachersAttributes {
   user_id: number;
@@ -67,16 +67,16 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
         unique: 'teachers_id_key'
       }
     }, {
-    sequelize,
-    tableName: 'teachers',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "group_teachers_user_id_key",
-        unique: true,
-        fields: [
-          { name: "user_id" },
+      sequelize,
+      tableName: 'teachers',
+      schema: 'public',
+      timestamps: false,
+      indexes: [
+        {
+          name: 'group_teachers_user_id_key',
+          unique: true,
+          fields: [
+            {name: 'user_id'},
         ]
       },
       {

@@ -1,4 +1,4 @@
-import {InviteCodeDatabaseService} from './inviteCode.database.service';
+import { InviteCodeDatabaseService } from './inviteCode.database.service';
 
 export class InviteCodeService {
 	static async checkInviteCode(inviteCode: string): Promise<boolean> {

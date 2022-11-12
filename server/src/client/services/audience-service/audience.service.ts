@@ -1,5 +1,5 @@
-import {ApiError} from '../../errors/api.error';
-import {AudienceDatabaseService} from './audience.database.service';
+import { ApiError } from '../../errors/api.error';
+import { AudienceDatabaseService } from './audience.database.service';
 
 export class AudienceService {
 	static async getAudience(id: number) {

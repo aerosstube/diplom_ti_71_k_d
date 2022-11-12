@@ -1,4 +1,4 @@
-import {invite_codes} from '../../../../models/init-models';
+import { invite_codes } from '../../../../models/init-models';
 
 export class InviteCodeDatabaseService {
 	static async findInviteCode(inviteCode: string) {

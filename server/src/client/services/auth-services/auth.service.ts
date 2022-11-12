@@ -1,14 +1,14 @@
-import {compare} from 'bcryptjs';
+import { compare } from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
-import {Transaction} from 'sequelize';
-import {application} from '../../../../config/config';
-import {token} from '../../../../models/token';
-import {user_devices} from '../../../../models/user_devices';
-import {users} from '../../../../models/users';
-import {ApiError} from '../../errors/api.error';
-import {UserService} from '../user-services/user.service';
-import {AuthOptions, SaveTokens, TokenOptions} from './auth.business.service';
-import {AuthDatabaseService, DeviceInfo} from './auth.database.service';
+import { Transaction } from 'sequelize';
+import { application } from '../../../../config/config';
+import { token } from '../../../../models/token';
+import { user_devices } from '../../../../models/user_devices';
+import { users } from '../../../../models/users';
+import { ApiError } from '../../errors/api.error';
+import { UserService } from '../user-services/user.service';
+import { AuthOptions, SaveTokens, TokenOptions } from './auth.business.service';
+import { AuthDatabaseService, DeviceInfo } from './auth.database.service';
 
 export interface AuthUser {
 	userId: number;

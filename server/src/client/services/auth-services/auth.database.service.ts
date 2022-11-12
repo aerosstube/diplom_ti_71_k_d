@@ -1,7 +1,7 @@
-import {Op, Transaction} from 'sequelize';
-import {token} from '../../../../models/token';
-import {user_devices} from '../../../../models/user_devices';
-import {SaveTokens} from './auth.business.service';
+import { Op, Transaction } from 'sequelize';
+import { token } from '../../../../models/token';
+import { user_devices } from '../../../../models/user_devices';
+import { SaveTokens } from './auth.business.service';
 
 export interface DeviceInfo {
 	userAgent: string;

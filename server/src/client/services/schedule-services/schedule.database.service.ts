@@ -1,5 +1,5 @@
-import {Op} from 'sequelize';
-import {schedule} from '../../../../models/schedule';
+import { Op } from 'sequelize';
+import { schedule } from '../../../../models/schedule';
 
 export class ScheduleDatabaseService {
 	static async getScheduleByDate(date: Date, groupId: number): Promise<schedule | null> {

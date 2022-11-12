@@ -1,5 +1,5 @@
-import {NextFunction, Request, Response} from 'express';
-import {ApiError} from '../errors/api.error';
+import { NextFunction, Request, Response } from 'express';
+import { ApiError } from '../errors/api.error';
 
 export const ErrorMiddleware = (err: ApiError, req: Request, res: Response, next: NextFunction) => {
 	console.log(err);

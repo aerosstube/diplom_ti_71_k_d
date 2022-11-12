@@ -1,6 +1,6 @@
-import {weekdays} from '../../../../models/weekdays';
-import {ApiError} from '../../errors/api.error';
-import {WeekdayDatabaseService} from './weekday.database.service';
+import { weekdays } from '../../../../models/weekdays';
+import { ApiError } from '../../errors/api.error';
+import { WeekdayDatabaseService } from './weekday.database.service';
 
 export class WeekdayService {
 	static async getWeekday(id: number): Promise<weekdays> {

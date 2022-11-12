@@ -1,12 +1,13 @@
 import * as Sequelize from 'sequelize';
-import {DataTypes, Model, Optional} from 'sequelize';
-import type {schedule_has_mark, schedule_has_markId} from './schedule_has_mark';
-import type {users, usersId} from './users';
+import { DataTypes, Model, Optional } from 'sequelize';
+import type { schedule, scheduleId } from './schedule';
+import type { students, studentsId } from './students';
 
 export interface marksAttributes {
   id: number;
-  mark: number;
-  user_id: number;
+  mark: string;
+  student_id: number;
+  schedule_id: number;
 }
 
 export type marksPk = 'id';
@@ -16,26 +17,20 @@ export type marksCreationAttributes = Optional<marksAttributes, marksOptionalAtt
 
 export class marks extends Model<marksAttributes, marksCreationAttributes> implements marksAttributes {
   id!: number;
-  mark!: number;
-  user_id!: number;
+  mark!: string;
+  student_id!: number;
+  schedule_id!: number;
 
-  // marks hasMany schedule_has_mark via mark_id
-  schedule_has_marks!: schedule_has_mark[];
-  getSchedule_has_marks!: Sequelize.HasManyGetAssociationsMixin<schedule_has_mark>;
-  setSchedule_has_marks!: Sequelize.HasManySetAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  addSchedule_has_mark!: Sequelize.HasManyAddAssociationMixin<schedule_has_mark, schedule_has_markId>;
-  addSchedule_has_marks!: Sequelize.HasManyAddAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  createSchedule_has_mark!: Sequelize.HasManyCreateAssociationMixin<schedule_has_mark>;
-  removeSchedule_has_mark!: Sequelize.HasManyRemoveAssociationMixin<schedule_has_mark, schedule_has_markId>;
-  removeSchedule_has_marks!: Sequelize.HasManyRemoveAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  hasSchedule_has_mark!: Sequelize.HasManyHasAssociationMixin<schedule_has_mark, schedule_has_markId>;
-  hasSchedule_has_marks!: Sequelize.HasManyHasAssociationsMixin<schedule_has_mark, schedule_has_markId>;
-  countSchedule_has_marks!: Sequelize.HasManyCountAssociationsMixin;
-  // marks belongsTo users via user_id
-  user!: users;
-  getUser!: Sequelize.BelongsToGetAssociationMixin<users>;
-  setUser!: Sequelize.BelongsToSetAssociationMixin<users, usersId>;
-  createUser!: Sequelize.BelongsToCreateAssociationMixin<users>;
+  // marks belongsTo schedule via schedule_id
+  schedule!: schedule;
+  getSchedule!: Sequelize.BelongsToGetAssociationMixin<schedule>;
+  setSchedule!: Sequelize.BelongsToSetAssociationMixin<schedule, scheduleId>;
+  createSchedule!: Sequelize.BelongsToCreateAssociationMixin<schedule>;
+  // marks belongsTo students via student_id
+  student!: students;
+  getStudent!: Sequelize.BelongsToGetAssociationMixin<students>;
+  setStudent!: Sequelize.BelongsToSetAssociationMixin<students, studentsId>;
+  createStudent!: Sequelize.BelongsToCreateAssociationMixin<students>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof marks {
     return marks.init({
@@ -43,34 +38,57 @@ export class marks extends Model<marksAttributes, marksCreationAttributes> imple
         autoIncrement: true,
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        unique: 'marks_id_key1'
       },
       mark: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
       },
-      user_id: {
+      student_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'students',
+          key: 'id'
+        }
+      },
+      schedule_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'schedule',
           key: 'id'
         }
       }
     }, {
-    sequelize,
-    tableName: 'marks',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "marks_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
+      sequelize,
+      tableName: 'marks',
+      schema: 'public',
+      timestamps: false,
+      indexes: [
+        {
+          name: 'marks_id_key',
+          unique: true,
+          fields: [
+            {name: 'id'},
+          ]
+        },
+        {
+          name: 'marks_id_key1',
+          unique: true,
+          fields: [
+            {name: 'id'},
+          ]
+        },
+        {
+          name: 'schedule_has_mark_pkey',
+          unique: true,
+          fields: [
+            {name: 'id'},
+          ]
+        },
+      ]
   });
   }
 }
