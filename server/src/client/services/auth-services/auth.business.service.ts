@@ -1,6 +1,5 @@
 import { Transaction } from 'sequelize';
 import { ApiError } from '../../errors/api.error';
-import { InviteCodeDatabaseService } from '../inviteCode-services/inviteCode.database.service';
 import { InviteCodeService } from '../inviteCode-services/inviteCode.service';
 import { UserDatabaseService } from '../user-services/user.database.service';
 import { UserService } from '../user-services/user.service';
@@ -50,7 +49,15 @@ export interface InviteCodeOptions {
 export class AuthBusinessService {
 
 	static async userLogin(authOptions: AuthOptions, transaction: Transaction): Promise<JwtTokens> {
+		if (await AuthDatabaseService.findUserDeviceByUA({
+			userAgent: authOptions.userAgent,
+			deviceIp: authOptions.deviceIp
+		}))
+			throw ApiError.BadRequest('Вы авторизованы!');
+
+
 		const userDatabase = await AuthService.checkUser(authOptions.login, authOptions.password);
+
 		const user: AuthUser = {
 			fullName: `${userDatabase.second_name} ${userDatabase.first_name} ${userDatabase.middle_name} `,
 			login: userDatabase.login,
@@ -91,19 +98,18 @@ export class AuthBusinessService {
 	}
 
 	static async userRegistration(registrationOptions: RegistrationUserOptions, authOptions: AuthOptions, transaction: Transaction): Promise<JwtTokens> {
-		let user = await UserDatabaseService.findUserByLogin(registrationOptions.login);
-		if (user)
+		if (await AuthDatabaseService.findUserDeviceByUA({
+			userAgent: authOptions.userAgent,
+			deviceIp: authOptions.deviceIp
+		}))
+			throw ApiError.BadRequest('Вы авторизованы!');
+
+		if (await UserDatabaseService.findUserByLogin(registrationOptions.login))
 			throw ApiError.BadRequest('Пользователь с таким логином уже существует!');
 
-		user = await UserService.createUser(registrationOptions, transaction);
+		const user = await UserService.createUser(registrationOptions, transaction);
 
-		const {inviteCodeOptions} = registrationOptions;
-		const inviteCode = await InviteCodeDatabaseService.findInviteCode(inviteCodeOptions.inviteCode);
-		if (!inviteCode)
-			throw(ApiError.BadRequest('Неверный код регистрации!'));
-		inviteCodeOptions.groupName = inviteCode.group_name;
-		inviteCodeOptions.isTeacher = inviteCode.is_teacher;
-
+		await InviteCodeService.setInviteCodeOptions(registrationOptions);
 		await UserService.userDistribution(registrationOptions.inviteCodeOptions, user.id, transaction);
 
 		const authUser: AuthUser = {

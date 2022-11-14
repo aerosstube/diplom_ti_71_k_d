@@ -7,7 +7,7 @@ import { user_devices } from '../../../../models/user_devices';
 import { users } from '../../../../models/users';
 import { ApiError } from '../../errors/api.error';
 import { UserService } from '../user-services/user.service';
-import { AuthOptions, SaveTokens, TokenOptions } from './auth.business.service';
+import { AuthOptions, RegistrationUserOptions, SaveTokens, TokenOptions } from './auth.business.service';
 import { AuthDatabaseService, DeviceInfo } from './auth.database.service';
 
 export interface AuthUser {
@@ -142,5 +142,21 @@ export class AuthService {
 		await deviceData.destroy({transaction});
 	}
 
+	static async createRegistrationUserOptions(user: any): Promise<RegistrationUserOptions> {
+		return {
+			dateOfBirthday: user.dateOfBirthday,
+			fullName: `${user.secondName} ${user.firstName} ${user.middleName} `,
+			login: user.login,
+			password: user.password,
+			mobile_phone: user.mobilePhone,
+			'e-mail': user.eMail,
+			role: user.role,
+			inviteCodeOptions: {
+				inviteCode: user.inviteCode,
+				groupName: '',
+				isTeacher: false
+			}
+		};
+	}
 
 }

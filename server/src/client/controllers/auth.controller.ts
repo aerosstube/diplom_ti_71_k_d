@@ -5,7 +5,7 @@ import {
 	AuthOptions,
 	RegistrationUserOptions
 } from '../services/auth-services/auth.business.service';
-import { JwtTokens } from '../services/auth-services/auth.service';
+import { AuthService, JwtTokens } from '../services/auth-services/auth.service';
 import { SequelizeConnect } from '../services/database-connect';
 
 export class AuthController {
@@ -45,20 +45,7 @@ export class AuthController {
 
 			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
-			const registrationOptions: RegistrationUserOptions = {
-				dateOfBirthday: user.dateOfBirthday,
-				fullName: `${user.secondName} ${user.firstName} ${user.middleName} `,
-				login: user.login,
-				password: user.password,
-				mobile_phone: user.mobilePhone,
-				'e-mail': user.eMail,
-				role: user.role,
-				inviteCodeOptions: {
-					inviteCode: user.inviteCode,
-					groupName: '',
-					isTeacher: false
-				}
-			};
+			const registrationOptions: RegistrationUserOptions = await AuthService.createRegistrationUserOptions(user);
 
 			const authOptions: AuthOptions = {
 				deviceIp: deviceIp,

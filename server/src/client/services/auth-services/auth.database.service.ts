@@ -37,6 +37,7 @@ export class AuthDatabaseService {
 		});
 	}
 
+
 	static async findToken(refreshToken: string): Promise<token | null> {
 		return await token.findOne({
 			where: {
