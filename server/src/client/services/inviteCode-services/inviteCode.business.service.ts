@@ -9,4 +9,5 @@ export class InviteCodeBusinessService {
 			throw ApiError.BadRequest('Код приглашения невалидный!');
 	}
 
+
 }
