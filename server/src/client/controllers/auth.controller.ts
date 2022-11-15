@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Transaction } from 'sequelize';
+import { ApiError } from '../errors/api.error';
 import {
 	AuthBusinessService,
 	AuthOptions,
@@ -12,7 +13,10 @@ export class AuthController {
 	static async userLogin(req: Request, res: Response, next: NextFunction) {
 		const transaction: Transaction = await SequelizeConnect.transaction();
 		try {
-			const {body: {user}, useragent, headers, socket} = req;
+			const {body: {user}, useragent, headers, socket, cookies: {refreshToken}} = req;
+
+			if (refreshToken)
+				next(ApiError.BadRequest('Вы авторизованы!'));
 
 			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
@@ -40,8 +44,10 @@ export class AuthController {
 	static async userRegistration(req: Request, res: Response, next: NextFunction) {
 		const transaction: Transaction = await SequelizeConnect.transaction();
 		try {
-			const {body: {user}, useragent, headers, socket} = req;
+			const {body: {user}, useragent, headers, socket, cookies: {refreshToken}} = req;
 
+			if (refreshToken)
+				next(ApiError.BadRequest('Вы авторизованы!'));
 
 			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
