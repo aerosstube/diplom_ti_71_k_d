@@ -37,7 +37,7 @@ export class ScheduleBusinessService {
 		const scheduleWeek: ScheduleWeek = await ScheduleService.getScheduleWeek(startOfWeek, student.group_id);
 		// scheduleWeek.scheduleDays[0].schedules[0].MARK
 		for (let i = 0; i < 7; i++) {
-
+			console.log('test');
 		}
 
 		return;
