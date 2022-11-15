@@ -6,9 +6,13 @@ export class MarkService {
 	static async getMarks(studentIdFK: number, startOfWeek: Date): Promise<marks[]> {
 		const marks = await MarkDatabaseService.getMarks(studentIdFK, startOfWeek);
 
-		if (marks.length)
-			throw ApiError.BadRequest('Неверный запрос! Такого студента не существует!');
+		if (!marks.length)
+			throw ApiError.BadRequest('Неверный запрос!');
 
 		return marks;
 	}
+
+	// static async getCurrentMark(mark: marks): Promise<marks> {
+	// 	for
+	// }
 }

@@ -6,7 +6,7 @@ export class StudentService {
 	static async getStudentByUserId(userId: number): Promise<students> {
 		const student = await StudentDatabaseService.findStudentById(userId);
 		if (!student)
-			throw ApiError.BadRequest('Такого студента не существует!');
+			throw ApiError.BadRequest('Вы не студент!');
 
 		return student;
 	}

@@ -5,7 +5,7 @@ import { GroupService } from '../group-services/group.service';
 import { TeacherService } from '../teacher-service/teacher.service';
 import { TwoHourClassService } from '../twoHourClass-services/twoHourClass.service';
 import { WeekdayService } from '../weekday-service/weekday.service';
-import { Schedule, ScheduleDay, ScheduleWeek } from './schedule.business.service';
+import { Schedule, ScheduleDay, ScheduleUserInfo, ScheduleWeek } from './schedule.business.service';
 import { ScheduleDatabaseService } from './schedule.database.service';
 
 export class ScheduleService {
@@ -15,7 +15,6 @@ export class ScheduleService {
 		const group = await GroupService.getGroupById(schedule.group_id);
 		const twoHourClass = await TwoHourClassService.getTwoHourClass(schedule.two_our_class_id);
 		const weekday = await WeekdayService.getWeekday(schedule.weekday_id);
-
 		return {
 			weekday: weekday.name,
 			audience: audience.number_audience,
@@ -25,6 +24,8 @@ export class ScheduleService {
 			startTime: schedule.start_time,
 			teacher: `${teacher.second_name} ${teacher.first_name} ${(teacher.middle_name) ? teacher.middle_name : ''}`,
 			twoOurClassName: twoHourClass.name,
+			// @ts-ignore
+			mark: schedule.mark
 		};
 	}
 
@@ -41,10 +42,12 @@ export class ScheduleService {
 		return scheduleDay;
 	}
 
-	static async getScheduleWeek(startOfWeek: Date, groupId: number): Promise<ScheduleWeek> {
-		const scheduleWeekDatabase: schedule[] = await ScheduleDatabaseService.getScheduleWeek(startOfWeek, groupId);
+	static async getScheduleWeek(startOfWeek: Date, scheduleUserInfo: ScheduleUserInfo): Promise<ScheduleWeek> {
+		const scheduleWeekDatabase: schedule[] = await ScheduleDatabaseService.getScheduleWeek(startOfWeek, scheduleUserInfo.groupId);
 		if (scheduleWeekDatabase.length === 0)
 			throw ApiError.BadRequest('Расписание на эту неделю не существует!');
+
+		// const marks = await MarkService.getMarks(scheduleUserInfo.studentIdFK, startOfWeek);
 
 		const scheduleWeek: ScheduleWeek = {
 			scheduleDays: []
@@ -56,8 +59,14 @@ export class ScheduleService {
 
 			let scheduleArr: any[] = [];
 			for (const schedule of scheduleWeekDatabase) {
-				if (schedule.date_of_class.toISOString() === startOfWeek.toISOString())
+				if (schedule.date_of_class.toISOString() === startOfWeek.toISOString()) {
+					// for (const mark of marks)
+					// 	if (mark.two_our_class_id === schedule.two_our_class_id &&
+					// 		mark.date.toISOString() === schedule.start_time.toISOString() ) { // @ts-ignore
+					// 		schedule.mark = mark.mark;
+					// 	}
 					scheduleArr.push(schedule);
+				}
 			}
 
 			scheduleWeek.scheduleDays.push(await ScheduleService.getScheduleDay(scheduleArr));
