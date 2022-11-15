@@ -16,7 +16,7 @@ export class AuthController {
 			const {body: {user}, useragent, headers, socket, cookies: {refreshToken}} = req;
 
 			if (refreshToken)
-				next(ApiError.BadRequest('Вы авторизованы!'));
+				return next(ApiError.BadRequest('Вы авторизованы!'));
 
 			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
@@ -47,7 +47,7 @@ export class AuthController {
 			const {body: {user}, useragent, headers, socket, cookies: {refreshToken}} = req;
 
 			if (refreshToken)
-				next(ApiError.BadRequest('Вы авторизованы!'));
+				return next(ApiError.BadRequest('Вы авторизованы!'));
 
 			const deviceIp: string = (headers['x-forwarded-for']) ? (headers['x-forwarded-for']).toString() : socket.remoteAddress;
 
@@ -64,7 +64,9 @@ export class AuthController {
 			const tokens: JwtTokens = await AuthBusinessService.userRegistration(registrationOptions, authOptions, transaction);
 			res.cookie('refreshToken', tokens.refreshToken, {maxAge: 30 * 24 * 3600 * 1000, httpOnly: true});
 
-			res.json(tokens);
+			res.json({
+				tokens: tokens
+			});
 			await transaction.commit();
 		} catch (err) {
 			await transaction.rollback();
