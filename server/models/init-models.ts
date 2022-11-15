@@ -11,6 +11,8 @@ import type { scheduleAttributes, scheduleCreationAttributes } from './schedule'
 import { schedule as _schedule } from './schedule';
 import type { studentsAttributes, studentsCreationAttributes } from './students';
 import { students as _students } from './students';
+import type { teacher_has_classesAttributes, teacher_has_classesCreationAttributes } from './teacher_has_classes';
+import { teacher_has_classes as _teacher_has_classes } from './teacher_has_classes';
 import type { teacher_has_groupAttributes, teacher_has_groupCreationAttributes } from './teacher_has_group';
 import { teacher_has_group as _teacher_has_group } from './teacher_has_group';
 import type { teachersAttributes, teachersCreationAttributes } from './teachers';
@@ -33,6 +35,7 @@ export {
   _marks as marks,
   _schedule as schedule,
   _students as students,
+  _teacher_has_classes as teacher_has_classes,
   _teacher_has_group as teacher_has_group,
   _teachers as teachers,
   _token as token,
@@ -55,6 +58,8 @@ export type {
   scheduleCreationAttributes,
   studentsAttributes,
   studentsCreationAttributes,
+  teacher_has_classesAttributes,
+  teacher_has_classesCreationAttributes,
   teacher_has_groupAttributes,
   teacher_has_groupCreationAttributes,
   teachersAttributes,
@@ -78,6 +83,7 @@ export function initModels(sequelize: Sequelize) {
   const marks = _marks.initModel(sequelize);
   const schedule = _schedule.initModel(sequelize);
   const students = _students.initModel(sequelize);
+  const teacher_has_classes = _teacher_has_classes.initModel(sequelize);
   const teacher_has_group = _teacher_has_group.initModel(sequelize);
   const teachers = _teachers.initModel(sequelize);
   const token = _token.initModel(sequelize);
@@ -94,16 +100,23 @@ export function initModels(sequelize: Sequelize) {
   groups.hasMany(students, {as: 'students', foreignKey: 'group_id'});
   teacher_has_group.belongsTo(groups, {as: 'group', foreignKey: 'group_id'});
   groups.hasMany(teacher_has_group, {as: 'teacher_has_groups', foreignKey: 'group_id'});
-  marks.belongsTo(schedule, {as: 'schedule', foreignKey: 'schedule_id'});
-  schedule.hasMany(marks, {as: 'marks', foreignKey: 'schedule_id'});
   marks.belongsTo(students, {as: 'student', foreignKey: 'student_id'});
   students.hasMany(marks, {as: 'marks', foreignKey: 'student_id'});
   schedule.belongsTo(teachers, {as: 'teacher', foreignKey: 'teacher_id'});
   teachers.hasMany(schedule, {as: 'schedules', foreignKey: 'teacher_id'});
+  teacher_has_classes.belongsTo(teachers, {as: 'teacher_id_fk_teacher', foreignKey: 'teacher_id_fk'});
+  teachers.hasMany(teacher_has_classes, {as: 'teacher_has_classes', foreignKey: 'teacher_id_fk'});
   teacher_has_group.belongsTo(teachers, {as: 'teacher', foreignKey: 'teacher_id'});
   teachers.hasMany(teacher_has_group, {as: 'teacher_has_groups', foreignKey: 'teacher_id'});
+  marks.belongsTo(two_our_class, {as: 'two_our_class', foreignKey: 'two_our_class_id'});
+  two_our_class.hasMany(marks, {as: 'marks', foreignKey: 'two_our_class_id'});
   schedule.belongsTo(two_our_class, {as: 'two_our_class', foreignKey: 'two_our_class_id'});
   two_our_class.hasMany(schedule, {as: 'schedules', foreignKey: 'two_our_class_id'});
+  teacher_has_classes.belongsTo(two_our_class, {
+    as: 'two_our_class_id_fk_two_our_class',
+    foreignKey: 'two_our_class_id_fk'
+  });
+  two_our_class.hasMany(teacher_has_classes, {as: 'teacher_has_classes', foreignKey: 'two_our_class_id_fk'});
   students.belongsTo(users, {as: 'user', foreignKey: 'user_id'});
   users.hasMany(students, {as: 'students', foreignKey: 'user_id'});
   teachers.belongsTo(users, {as: 'user', foreignKey: 'user_id'});
@@ -120,6 +133,7 @@ export function initModels(sequelize: Sequelize) {
     marks: marks,
     schedule: schedule,
     students: students,
+    teacher_has_classes: teacher_has_classes,
     teacher_has_group: teacher_has_group,
     teachers: teachers,
     token: token,

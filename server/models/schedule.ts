@@ -2,7 +2,6 @@ import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { audiences, audiencesId } from './audiences';
 import type { groups, groupsId } from './groups';
-import type { marks, marksId } from './marks';
 import type { teachers, teachersId } from './teachers';
 import type { two_our_class, two_our_classId } from './two_our_class';
 import type { weekdays, weekdaysId } from './weekdays';
@@ -45,18 +44,6 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
   getGroup!: Sequelize.BelongsToGetAssociationMixin<groups>;
   setGroup!: Sequelize.BelongsToSetAssociationMixin<groups, groupsId>;
   createGroup!: Sequelize.BelongsToCreateAssociationMixin<groups>;
-  // schedule hasMany marks via schedule_id
-  marks!: marks[];
-  getMarks!: Sequelize.HasManyGetAssociationsMixin<marks>;
-  setMarks!: Sequelize.HasManySetAssociationsMixin<marks, marksId>;
-  addMark!: Sequelize.HasManyAddAssociationMixin<marks, marksId>;
-  addMarks!: Sequelize.HasManyAddAssociationsMixin<marks, marksId>;
-  createMark!: Sequelize.HasManyCreateAssociationMixin<marks>;
-  removeMark!: Sequelize.HasManyRemoveAssociationMixin<marks, marksId>;
-  removeMarks!: Sequelize.HasManyRemoveAssociationsMixin<marks, marksId>;
-  hasMark!: Sequelize.HasManyHasAssociationMixin<marks, marksId>;
-  hasMarks!: Sequelize.HasManyHasAssociationsMixin<marks, marksId>;
-  countMarks!: Sequelize.HasManyCountAssociationsMixin;
   // schedule belongsTo teachers via teacher_id
   teacher!: teachers;
   getTeacher!: Sequelize.BelongsToGetAssociationMixin<teachers>;
@@ -101,14 +88,14 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
         key: 'id'
       }
     },
-    audience_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'audiences',
-        key: 'id'
-      }
-    },
+      audience_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'audiences',
+          key: 'id'
+        }
+      },
       two_our_class_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -122,7 +109,7 @@ export class schedule extends Model<scheduleAttributes, scheduleCreationAttribut
         allowNull: false,
         references: {
           model: 'teachers',
-          key: 'user_id'
+          key: 'id'
         }
       },
       date_of_class: {

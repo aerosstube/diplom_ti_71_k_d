@@ -43,7 +43,7 @@ export class teacher_has_group extends Model<teacher_has_groupAttributes, teache
         allowNull: false,
         references: {
           model: 'teachers',
-          key: 'user_id'
+          key: 'id'
         }
       },
       group_id: {

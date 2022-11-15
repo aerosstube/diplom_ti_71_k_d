@@ -68,16 +68,16 @@ export class students extends Model<studentsAttributes, studentsCreationAttribut
         }
       }
     }, {
-    sequelize,
-    tableName: 'students',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "group_students_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
+      sequelize,
+      tableName: 'students',
+      schema: 'public',
+      timestamps: false,
+      indexes: [
+        {
+          name: 'group_students_pkey',
+          unique: true,
+          fields: [
+            {name: 'id'},
         ]
       },
     ]

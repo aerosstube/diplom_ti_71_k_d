@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { schedule, scheduleId } from './schedule';
+import type { teacher_has_classes, teacher_has_classesId } from './teacher_has_classes';
 import type { teacher_has_group, teacher_has_groupId } from './teacher_has_group';
 import type { users, usersId } from './users';
 
@@ -30,6 +31,18 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
   hasSchedule!: Sequelize.HasManyHasAssociationMixin<schedule, scheduleId>;
   hasSchedules!: Sequelize.HasManyHasAssociationsMixin<schedule, scheduleId>;
   countSchedules!: Sequelize.HasManyCountAssociationsMixin;
+  // teachers hasMany teacher_has_classes via teacher_id_fk
+  teacher_has_classes!: teacher_has_classes[];
+  getTeacher_has_classes!: Sequelize.HasManyGetAssociationsMixin<teacher_has_classes>;
+  setTeacher_has_classes!: Sequelize.HasManySetAssociationsMixin<teacher_has_classes, teacher_has_classesId>;
+  addTeacher_has_class!: Sequelize.HasManyAddAssociationMixin<teacher_has_classes, teacher_has_classesId>;
+  addTeacher_has_classes!: Sequelize.HasManyAddAssociationsMixin<teacher_has_classes, teacher_has_classesId>;
+  createTeacher_has_class!: Sequelize.HasManyCreateAssociationMixin<teacher_has_classes>;
+  removeTeacher_has_class!: Sequelize.HasManyRemoveAssociationMixin<teacher_has_classes, teacher_has_classesId>;
+  removeTeacher_has_classes!: Sequelize.HasManyRemoveAssociationsMixin<teacher_has_classes, teacher_has_classesId>;
+  hasTeacher_has_class!: Sequelize.HasManyHasAssociationMixin<teacher_has_classes, teacher_has_classesId>;
+  hasTeacher_has_classes!: Sequelize.HasManyHasAssociationsMixin<teacher_has_classes, teacher_has_classesId>;
+  countTeacher_has_classes!: Sequelize.HasManyCountAssociationsMixin;
   // teachers hasMany teacher_has_group via teacher_id
   teacher_has_groups!: teacher_has_group[];
   getTeacher_has_groups!: Sequelize.HasManyGetAssociationsMixin<teacher_has_group>;
@@ -77,16 +90,16 @@ export class teachers extends Model<teachersAttributes, teachersCreationAttribut
           unique: true,
           fields: [
             {name: 'user_id'},
-        ]
-      },
-      {
-        name: "teachers_id_key",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
+          ]
+        },
+        {
+          name: 'teachers_id_key',
+          unique: true,
+          fields: [
+            {name: 'id'},
+          ]
+        },
+        {
         name: "teachers_pkey",
         unique: true,
         fields: [
