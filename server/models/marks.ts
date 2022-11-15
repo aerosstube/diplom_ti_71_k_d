@@ -1,13 +1,14 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { schedule, scheduleId } from './schedule';
 import type { students, studentsId } from './students';
+import type { two_our_class, two_our_classId } from './two_our_class';
 
 export interface marksAttributes {
   id: number;
   mark: string;
   student_id: number;
-  schedule_id: number;
+  two_our_class_id: number;
+  date: Date;
 }
 
 export type marksPk = 'id';
@@ -19,18 +20,19 @@ export class marks extends Model<marksAttributes, marksCreationAttributes> imple
   id!: number;
   mark!: string;
   student_id!: number;
-  schedule_id!: number;
+  two_our_class_id!: number;
+  date!: Date;
 
-  // marks belongsTo schedule via schedule_id
-  schedule!: schedule;
-  getSchedule!: Sequelize.BelongsToGetAssociationMixin<schedule>;
-  setSchedule!: Sequelize.BelongsToSetAssociationMixin<schedule, scheduleId>;
-  createSchedule!: Sequelize.BelongsToCreateAssociationMixin<schedule>;
   // marks belongsTo students via student_id
   student!: students;
   getStudent!: Sequelize.BelongsToGetAssociationMixin<students>;
   setStudent!: Sequelize.BelongsToSetAssociationMixin<students, studentsId>;
   createStudent!: Sequelize.BelongsToCreateAssociationMixin<students>;
+  // marks belongsTo two_our_class via two_our_class_id
+  two_our_class!: two_our_class;
+  getTwo_our_class!: Sequelize.BelongsToGetAssociationMixin<two_our_class>;
+  setTwo_our_class!: Sequelize.BelongsToSetAssociationMixin<two_our_class, two_our_classId>;
+  createTwo_our_class!: Sequelize.BelongsToCreateAssociationMixin<two_our_class>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof marks {
     return marks.init({
@@ -42,7 +44,7 @@ export class marks extends Model<marksAttributes, marksCreationAttributes> imple
         unique: 'marks_id_key1'
       },
       mark: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1),
         allowNull: false
       },
       student_id: {
@@ -53,13 +55,17 @@ export class marks extends Model<marksAttributes, marksCreationAttributes> imple
           key: 'id'
         }
       },
-      schedule_id: {
+      two_our_class_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'schedule',
+          model: 'two_our_class',
           key: 'id'
         }
+      },
+      date: {
+        type: DataTypes.DATE,
+        allowNull: false
       }
     }, {
       sequelize,
@@ -89,6 +95,6 @@ export class marks extends Model<marksAttributes, marksCreationAttributes> imple
           ]
         },
       ]
-  });
+    });
   }
 }
