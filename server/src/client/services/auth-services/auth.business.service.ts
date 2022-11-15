@@ -49,13 +49,6 @@ export interface InviteCodeOptions {
 export class AuthBusinessService {
 
 	static async userLogin(authOptions: AuthOptions, transaction: Transaction): Promise<JwtTokens> {
-		if (await AuthDatabaseService.findUserDeviceByUA({
-			userAgent: authOptions.userAgent,
-			deviceIp: authOptions.deviceIp
-		}))
-			throw ApiError.BadRequest('Вы авторизованы!');
-
-
 		const userDatabase = await AuthService.checkUser(authOptions.login, authOptions.password);
 
 		const user: AuthUser = {
@@ -98,12 +91,6 @@ export class AuthBusinessService {
 	}
 
 	static async userRegistration(registrationOptions: RegistrationUserOptions, authOptions: AuthOptions, transaction: Transaction): Promise<JwtTokens> {
-		if (await AuthDatabaseService.findUserDeviceByUA({
-			userAgent: authOptions.userAgent,
-			deviceIp: authOptions.deviceIp
-		}))
-			throw ApiError.BadRequest('Вы авторизованы!');
-
 		if (await UserDatabaseService.findUserByLogin(registrationOptions.login))
 			throw ApiError.BadRequest('Пользователь с таким логином уже существует!');
 
