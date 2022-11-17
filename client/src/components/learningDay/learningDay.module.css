@@ -47,6 +47,11 @@
     align-self: stretch;
     flex-grow: 0;
 }
+.textLessonNotMark{
+    margin-left: auto;
+    width: 120px;
+    text-align: right;
+}
 
 .mark {
     display: flex;
