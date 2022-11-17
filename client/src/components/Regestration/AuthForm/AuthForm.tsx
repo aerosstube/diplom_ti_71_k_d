@@ -14,10 +14,10 @@ const AuthForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const fromPage = location.state.state;
+    const fromPage = location.state?.state;
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const goToSchedule = () => navigate(fromPage)
+    const goToSchedule = () => navigate(fromPage? fromPage : '/schedule')
 
     const handleSend = async () => {
         const user = {
