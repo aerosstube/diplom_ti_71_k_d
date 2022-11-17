@@ -1,6 +1,7 @@
 import {FC} from 'react';
 import cl from './learningDay.module.css';
-import LessonMark, {LessonProps} from '../Lesson/LessonMark';
+import {LessonProps} from '../Lesson/LessonMark';
+import LessonMark from "../Lesson/Lesson";
 
 
 export interface LearningDayProps {
@@ -15,7 +16,7 @@ const LearningDay: FC<LearningDayProps> = ({lessons, nameOfDay}) => {
             <div className={cl.learningDay}>
                 {
                     lessons && lessons.map((lesson) => <LessonMark title={lesson.title} body={lesson.body}
-                                                                   mark={lesson.mark}/>)
+                                                               mark={lesson.mark}/>)
 
 
                 }

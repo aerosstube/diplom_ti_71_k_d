@@ -1,24 +1,33 @@
-import { Button, TextField } from '@mui/material';
+import {Button, TextField} from '@mui/material';
 import jwt from 'jwt-decode';
-import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../hooks/hook';
-import { authAPI } from '../../../services/AuthService';
-import { UserSlice, UserState } from '../../../store/reducers/UserSlice';
+import React, {useEffect, useState} from 'react';
+import {useAppDispatch} from '../../../hooks/hook';
+import {authAPI} from '../../../services/AuthService';
+import {UserSlice, UserState} from '../../../store/reducers/UserSlice';
 import cl from './AuthForm.module.css';
 import shp from './image-ep0zmoEb0-transformed.png';
+import {useLocation, useNavigate} from "react-router-dom";
 
 const AuthForm = () => {
-    const [loginUser, {data: tokens, isLoading, error}] = authAPI.useUserLoginMutation();
+    const [loginUser, {data: tokens, error}] = authAPI.useUserLoginMutation();
     const {addUser} = UserSlice.actions;
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const fromPage = location.state?.state;
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const goToSchedule = () => navigate(fromPage? fromPage : '/schedule')
+
     const handleSend = async () => {
         const user = {
             login,
             password
         };
         await loginUser(user);
+        setLogin('');
+        setPassword('')
+        goToSchedule();
     };
 
     useEffect(() => {
@@ -59,7 +68,7 @@ const AuthForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <Button className={cl.buttonReg} onClick={handleSend}>ВОЙТИ</Button>
-            {error && <p style={{color:'red'}}>Ошибка авторизации!</p>}
+            {error && <p style={{color: 'red'}}>Ошибка авторизации!</p>}
         </form>
     );
 };

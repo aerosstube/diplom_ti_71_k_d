@@ -8,7 +8,7 @@ export interface LessonProps {
     mark: number;
 }
 
-const Lesson: FC<LessonProps> = ({title, body}) => {
+const LessonMark: FC<LessonProps> = ({title, body, mark}) => {
     return (
         <ListItemButton component="a" href="#simple-list">
             <ListItemText
@@ -17,12 +17,11 @@ const Lesson: FC<LessonProps> = ({title, body}) => {
                 className={cl.textLesson}
             />
             <ListItemText
-                primary={'к. 219'}
-                secondary={'Демин Е.С.'}
-                className={cl.textLessonNotMark}
+                primary={mark}
+                className={cl.mark}
             />
         </ListItemButton>
     );
 };
 
-export default Lesson;
+export default LessonMark;
