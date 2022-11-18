@@ -1,7 +1,7 @@
 .mainBlock{
      width: 625px;
     height: 800px;
-    margin: 160px 648px;
+    margin: 160px auto;
     border: 1px solid #1E8BFD;
     border-radius: 50px;
     display: flex;
