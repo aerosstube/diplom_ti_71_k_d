@@ -8,7 +8,7 @@ import LearningWeek from "./components/LearningWeek/LearningWeek";
 import CheckAuth from "./components/Regestration/AuthForm/CheckAuth";
 import LearningWeekMark from "./components/LearningWeek/LearningWeekMark";
 
-function App() {
+export function App() {
     const days = [
         {
             nameOfDay: 'Расписание',
@@ -124,14 +124,21 @@ function App() {
 
     // @ts-ignore
     function getMonday(d) {
-  d = new Date(d);
-  var day = d.getDay(),
-      diff = d.getDate() - day + (day == 0 ? -6:1);
+        d = new Date(d);
+        let day = d.getDay();
+        let diff = d.getDate() - day + (day == 0 ? -6 : 1);
 
-  return new Date(d.setDate(diff));
-}
+        let res = new Date(d.setDate(diff));
+        res.setHours(0);
+        res.setMinutes(0);
+        res.setSeconds(0);
+        res.setMilliseconds(0);
+        return res.toISOString()
 
-    console.log(getMonday(new Date()).setDate(-1))
+    }
+
+    const mainDate = getMonday(new Date());
+
     return (
         <div className="App">
             <Header/>
@@ -141,7 +148,7 @@ function App() {
                 <Route path='/' element={<RegDataForm/>}/>
                 <Route path='/schedule' element={<CheckAuth><LearningWeek days={days}/></CheckAuth>}/>
             </Routes>
-            </div>
+        </div>
     );
 }
 
