@@ -21,7 +21,7 @@ const RegDataForm = () => {
 
     const [fio, setFio] = useState('');
     const [fioDirt, setFioDirt] = useState(false);
-    const [fioError, setFioError] = useState('Логин не может быть пустым');
+    const [fioError, setFioError] = useState('ФИО не может быть пустым');
 
     const [phone, setPhone] = useState('');
 
@@ -31,7 +31,7 @@ const RegDataForm = () => {
 
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [dateOfBirthDirt, setDateOfBirthDirt] = useState(false);
-    const [dateOfBirthError, setDateOfBirthError] = useState('Email не может быть пустым!');
+    const [dateOfBirthError, setDateOfBirthError] = useState('Дата не может быть пустой!');
 
     const [valid, setValid] = useState(false);
 
@@ -88,11 +88,9 @@ const RegDataForm = () => {
     // @ts-ignore
     const handleCheckFio = (e) => {
         setFio(e.target.value);
-        const checkMas = e.target.value.split(' ');
-        console.log(checkMas[checkMas.length-1]!='');
-        if ((checkMas.length < 2) || (checkMas[checkMas.length-1] === '')) {
+        const checkArr = e.target.value.split(' ');
+        if ((checkArr.length < 2) || (checkArr[checkArr.length-1] === '')) {
             setFioError('ФИО должно обязательно содержать имя и фамилию');
-			console.log('error?')
         } else {
             setFioError('')
         }
