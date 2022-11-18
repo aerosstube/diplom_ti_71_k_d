@@ -106,9 +106,8 @@ const RegDataForm = () => {
             setDateOfBirthError('')
         }
     }
-
-        // @ts-ignore
-      const handleLogin = (e) => {
+    // @ts-ignore
+    const handleLogin = (e) => {
         setLogin(e.target.value);
         if (e.target.value.split('').length>0) {
             setLoginError('')

@@ -122,7 +122,16 @@ function App() {
         }
     ];
 
+    // @ts-ignore
+    function getMonday(d) {
+  d = new Date(d);
+  var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6:1);
 
+  return new Date(d.setDate(diff));
+}
+
+    console.log(getMonday(new Date()).setDate(-1))
     return (
         <div className="App">
             <Header/>
