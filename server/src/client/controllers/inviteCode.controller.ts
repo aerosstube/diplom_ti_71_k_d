@@ -8,7 +8,11 @@ export class InviteCodeController {
 			if (req.cookies.refreshToken)
 				next(ApiError.BadRequest('Вы уже авторизованы!'));
 
-			const {inviteCode} = req.body;
+			const inviteCode = req.query.inviteCode;
+			if (typeof inviteCode !== 'string') {
+				return next(ApiError.BadRequest('Ошибка запроса!'))
+			}
+			console.log(inviteCode);
 			await InviteCodeBusinessService.checkInviteCode(inviteCode);
 
 			res.status(201).send('Код приглашения верный!');
