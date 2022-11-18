@@ -50,8 +50,4 @@ const TeachersMarkPlace: FC<TeacherMarkPlaceProps> = ({teacherUser}) => {
         </div>
     );
 };
-//Бля крч надо структуру данных продумать(переделать мэп-отрисовку)
-// поебланиться со стилями еще
-// ну и инпуты сделать человечески
-// Придумать с цветами оценок
 export default TeachersMarkPlace;
