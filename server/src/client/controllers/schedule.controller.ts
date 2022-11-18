@@ -1,6 +1,5 @@
 import { NextFunction, Response } from 'express';
 import { RequestWithUser } from '../middlewares/auth-middleware';
-import { MarkDatabaseService } from '../services/mark-services/mark.database.service';
 import { ScheduleBusinessService } from '../services/schedule-services/schedule.business.service';
 
 export class ScheduleController {
@@ -17,7 +16,7 @@ export class ScheduleController {
 	static async getScheduleWeekWithMarks(req: RequestWithUser, res: Response, next: NextFunction) {
 		try {
 			const {startOfWeek} = req.body;
-			const day = await MarkDatabaseService.getMarks(7, new Date(startOfWeek));
+			const day = await ScheduleBusinessService.getScheduleWeekMarks(req.user, new Date(startOfWeek));
 			res.json(day);
 		} catch (err) {
 			next(err);

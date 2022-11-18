@@ -1,5 +1,4 @@
 import { AuthUser } from '../auth-services/auth.service';
-import { MarkService } from '../mark-services/mark.service';
 import { StudentService } from '../student-services/student.service';
 import { ScheduleService } from './schedule.service';
 
@@ -35,24 +34,18 @@ export class ScheduleBusinessService {
 			studentIdFK: student.id,
 			groupId: student.group_id
 		};
+
 		return await ScheduleService.getScheduleWeek(startOfWeek, scheduleUserInfo);
 	}
 
 
-	static async getScheduleWeekMarks(user: AuthUser, startOfWeek: Date): Promise<void> {
+	static async getScheduleWeekMarks(user: AuthUser, startOfWeek: Date): Promise<ScheduleWeek> {
 		const student = await StudentService.getStudentByUserId(user.userId);
-		const marks = await MarkService.getMarks(student.id, startOfWeek);
 		const scheduleUserInfo: ScheduleUserInfo = {
 			studentIdFK: student.id,
-			groupId: student.id
+			groupId: student.group_id
 		};
-		const scheduleWeek: ScheduleWeek = await ScheduleService.getScheduleWeek(startOfWeek, scheduleUserInfo);
-		// scheduleWeek.scheduleDays[0].schedules[0].MARK
-		startOfWeek.setDate(startOfWeek.getDate() - 1);
-		for (let i = 0; i < 7; i++) {
 
-		}
-
-		return;
+		return await ScheduleService.getScheduleMarks(startOfWeek, scheduleUserInfo);
 	}
 }
