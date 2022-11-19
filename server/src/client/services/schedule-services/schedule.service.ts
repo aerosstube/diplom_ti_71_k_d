@@ -53,7 +53,7 @@ export class ScheduleService {
 		};
 
 		startOfWeek.setDate(startOfWeek.getDate() - 1);
-		for (let i = 0; i < 7; i++) {
+		for (let i = 0; i < 6; i++) {
 			startOfWeek.setDate(startOfWeek.getDate() + 1);
 
 			let scheduleArr: any[] = [];
@@ -81,7 +81,7 @@ export class ScheduleService {
 		};
 
 		startOfWeek.setDate(startOfWeek.getDate() - 1);
-		for (let i = 0; i < 7; i++) {
+		for (let i = 0; i < 6; i++) {
 			startOfWeek.setDate(startOfWeek.getDate() + 1);
 
 			let scheduleArr: any[] = [];
