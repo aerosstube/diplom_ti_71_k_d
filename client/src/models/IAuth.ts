@@ -10,14 +10,4 @@ export interface ITokens {
     };
 }
 
-export interface IUserData {
-    login: string;
-    password: string;
-    firstName: string;
-    secondName: string;
-    middleName: string
-    mobilePhone: string
-    eMail: string
-    dateOfBirthday: string;
-    inviteCode: string;
-}
+

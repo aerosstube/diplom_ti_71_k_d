@@ -5,4 +5,17 @@ export interface IUser {
     role: string;
     iat: number;
     exp: number;
+    inviteCode?: string;
+}
+
+export interface IUserData {
+    login: string,
+    password: string,
+    firstName: string,
+    secondName: string,
+    middleName: string,
+    mobilePhone: string,
+    eMail: string,
+    dateOfBirthday: string,
+    inviteCode: string
 }
