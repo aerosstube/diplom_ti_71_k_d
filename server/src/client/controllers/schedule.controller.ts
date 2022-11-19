@@ -24,7 +24,7 @@ export class ScheduleController {
 				return next(ApiError.BadRequest('Неверный запрос!'))
 
 			const day = await ScheduleBusinessService.getScheduleWeekMarks(req.user, new Date(startOfWeek));
-			res.json(day);
+			res.json(day.scheduleDays);
 		} catch (err) {
 			next(err);
 		}

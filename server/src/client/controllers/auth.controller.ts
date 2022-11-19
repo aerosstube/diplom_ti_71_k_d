@@ -92,9 +92,11 @@ export class AuthController {
 	static async userRefresh(req: Request, res: Response, next: NextFunction) {
 		try {
 			const {cookies} = req;
-			const tokens: JwtTokens = await AuthBusinessService.userRefreshToken(cookies.refreshToken);
+
 			if (!cookies.refreshToken)
-				return next(ApiError.BadRequest('Неверный refreshToken'))
+				return next(ApiError.BadRequest('Неверный refreshToken'));
+
+			const tokens: JwtTokens = await AuthBusinessService.userRefreshToken(cookies.refreshToken);
 			res.json({
 				tokens: tokens
 			});
