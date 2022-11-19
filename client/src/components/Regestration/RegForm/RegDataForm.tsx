@@ -1,15 +1,18 @@
 import {Button, TextField} from '@mui/material';
 import jwt from 'jwt-decode';
 import React, {useEffect, useState} from 'react';
-import {useAppDispatch} from '../../../hooks/hook';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {authAPI} from '../../../services/AuthService';
 import {UserSlice, UserState} from '../../../store/reducers/UserSlice';
 import cl from './RegDataForm.module.css';
+import {useNavigate} from "react-router-dom";
 
 const RegDataForm = () => {
-    const [userRegestration, {data: tokens, isLoading, error}] = authAPI.useUserRegestrationMutation();
+    const [userRegestration, {data: tokens, isLoading, error}] = authAPI.useUserRegisterMutation();
     const {addUser} = UserSlice.actions;
+    const {inviteCode} = useAppSelector(state => state.userReducer.user);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [login, setLogin] = useState('');
     const [loginDirt, setLoginDirt] = useState(false);
@@ -35,7 +38,7 @@ const RegDataForm = () => {
 
     const [valid, setValid] = useState(false);
 
-    const regExpDate=/^(0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[012])\.\d{4}$/;
+    const regExpDate = /^(0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[012])\.\d{4}$/;
     const regExpPassword = /^(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
     const regExpEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -58,7 +61,7 @@ const RegDataForm = () => {
                 setDateOfBirthDirt(true);
                 break;
             }
-            case 'login':{
+            case 'login': {
                 setLoginDirt(true);
                 break;
             }
@@ -89,7 +92,7 @@ const RegDataForm = () => {
     const handleCheckFio = (e) => {
         setFio(e.target.value);
         const checkArr = e.target.value.split(' ');
-        if ((checkArr.length < 2) || (checkArr[checkArr.length-1] === '')) {
+        if ((checkArr.length < 2) || (checkArr[checkArr.length - 1] === '')) {
             setFioError('ФИО должно обязательно содержать имя и фамилию');
         } else {
             setFioError('')
@@ -107,17 +110,17 @@ const RegDataForm = () => {
     // @ts-ignore
     const handleLogin = (e) => {
         setLogin(e.target.value);
-        if (e.target.value.split('').length>0) {
+        if (e.target.value.split('').length > 0) {
             setLoginError('')
         }
     }
 
 
     useEffect(() => {
-        if (emailError || passwordError || fioError) {
+        if (emailError || passwordError || fioError || loginError || dateOfBirthError) {
             setValid(false);
         } else setValid(true)
-    }, [emailError, passwordError, fioError])
+    }, [emailError, passwordError, fioError, loginError, dateOfBirthError])
 
     const handleSend = async () => {
         const user = {
@@ -129,10 +132,11 @@ const RegDataForm = () => {
             mobilePhone: phone,
             eMail: email,
             dateOfBirthday: dateOfBirth,
-            inviteCode: '24'
+            inviteCode: inviteCode || ''
         };
 
         await userRegestration(user);
+
     };
 
     useEffect(() => {
@@ -143,6 +147,7 @@ const RegDataForm = () => {
                 isLogged: true
             };
             dispatch(addUser(response));
+            navigate('/schedule');
         }
         if (error) {
             console.log(error);
@@ -161,7 +166,7 @@ const RegDataForm = () => {
                 onChange={(e) => handleLogin(e)}
                 onBlur={event => handleBlur(event)}
             />
-             {(loginDirt && loginError) && <div>{loginError}</div>}
+            {(loginDirt && loginError) && <div>{loginError}</div>}
             <TextField
                 value={password}
                 type="password"

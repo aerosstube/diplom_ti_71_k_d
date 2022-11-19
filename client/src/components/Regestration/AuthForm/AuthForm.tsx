@@ -1,7 +1,7 @@
 import {Button, TextField} from '@mui/material';
 import jwt from 'jwt-decode';
 import React, {useEffect, useState} from 'react';
-import {useAppDispatch} from '../../../hooks/hook';
+import {useAppDispatch} from '../../../hooks';
 import {authAPI} from '../../../services/AuthService';
 import {UserSlice, UserState} from '../../../store/reducers/UserSlice';
 import cl from './AuthForm.module.css';
