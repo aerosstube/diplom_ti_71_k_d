@@ -93,7 +93,8 @@ export class AuthController {
 		try {
 			const {cookies} = req;
 			const tokens: JwtTokens = await AuthBusinessService.userRefreshToken(cookies.refreshToken);
-
+			if (!cookies.refreshToken)
+				return next(ApiError.BadRequest('Неверный refreshToken'))
 			res.json({
 				tokens: tokens
 			});
