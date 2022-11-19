@@ -9,10 +9,11 @@ export const
 		logs: './logs'
 	},
 	database = {
-		port: 5432,
+		port: 55566,
 		host: 'localhost',
 		name: 'degree',
 		user: 'postgres',
 		password: 'root',
 		dialect: 'postgres'
 	};
+

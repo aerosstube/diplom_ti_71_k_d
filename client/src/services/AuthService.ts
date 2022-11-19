@@ -4,7 +4,7 @@ import {IUserData} from "../models/IUser";
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://10.99.97.13:8082/api'}),
+    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8081/api'}),
     endpoints: (build) => ({
         userLogin: build.mutation<ITokens, IAuth>({
             query: (user) => ({
