@@ -7,6 +7,8 @@ import RegDataForm from "./components/Regestration/RegForm/RegDataForm";
 import LearningWeek from "./components/LearningWeek/LearningWeek";
 import CheckAuth from "./components/Regestration/AuthForm/CheckAuth";
 import LearningWeekMark from "./components/LearningWeek/LearningWeekMark";
+import RegForm from "./components/Regestration/RegForm/RegForm";
+import {useRefreshUser} from "./hooks";
 
 export function App() {
     const days = [
@@ -65,62 +67,9 @@ export function App() {
 
         }
     ];
-    const days1 = [
-        {
-            nameOfDay: 'Успеваемость',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
 
-        },
-        {
-            nameOfDay: 'Вторник',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
+    const appLoading = useRefreshUser();
 
-        },
-        {
-            nameOfDay: 'Среда',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        },
-        {
-            nameOfDay: 'Четверг',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }]
-
-        },
-        {
-            nameOfDay: 'Пятница',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        },
-        {
-            nameOfDay: 'Суббота',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        }
-    ];
 
     // @ts-ignore
     function getMonday(d) {
@@ -141,13 +90,24 @@ export function App() {
 
     return (
         <div className="App">
-            <Header/>
-            <Routes>
-                <Route path='/auth' element={<AuthForm/>}/>
-                <Route path='/scheduleAndMarks' element={<CheckAuth><LearningWeekMark days={days1}/></CheckAuth>}/>
-                <Route path='/' element={<RegDataForm/>}/>
-                <Route path='/schedule' element={<CheckAuth><LearningWeek days={days}/></CheckAuth>}/>
-            </Routes>
+            {
+                (appLoading)
+                    ? <h1>Loading</h1>
+                    :
+                    <>
+                        <Header/>
+                        <Routes>
+                            <Route path='/regDataForm' element={<RegDataForm/>}/>
+                            <Route path='/regForm' element={<RegForm/>}/>
+                            <Route path='/auth' element={<AuthForm/>}/>
+                            <Route path='/scheduleAndMarks'
+                                   element={<CheckAuth><LearningWeekMark days={days}/></CheckAuth>}/>
+                            <Route path='/' element={<RegDataForm/>}/>
+                            <Route path='/schedule' element={<CheckAuth><LearningWeek days={days}/></CheckAuth>}/>
+                        </Routes>
+                    </>
+            }
+
         </div>
     );
 }
