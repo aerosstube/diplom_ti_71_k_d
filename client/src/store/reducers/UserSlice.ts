@@ -15,7 +15,8 @@ const initialState: UserState = {
         login: '',
         role: '',
         iat: 0,
-        exp: 0
+        exp: 0,
+        inviteCode: ''
     },
     tokens: {
         tokens: {
@@ -23,7 +24,8 @@ const initialState: UserState = {
             refreshToken: ''
         }
     },
-    isLogged: false
+    isLogged: false,
+
 };
 
 export const UserSlice = createSlice({
@@ -34,6 +36,9 @@ export const UserSlice = createSlice({
             state.user = action.payload.user;
             state.tokens = action.payload.tokens;
             state.isLogged = action.payload.isLogged;
+        },
+        addCode(state, action: PayloadAction<string>) {
+            state.user.inviteCode = action.payload;
         }
     }
 });
