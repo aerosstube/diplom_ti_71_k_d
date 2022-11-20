@@ -1,17 +1,28 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
-import {ILesson} from '../models/ILesson';
+import {ScheduleDay} from '../models/ISchedule';
+import {RootState} from "../store/store";
 
 
-
-const lessonApi = createApi({
+export const lessonApi = createApi({
     reducerPath: 'lessonApi',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8081/api/schedule'}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://10.99.97.13:8082/api/schedule',
+        prepareHeaders: (headers, {getState}) => {
+            const token = (getState() as RootState).userReducer.tokens?.tokens.accessToken;
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
+    }),
     endpoints: (build) => ({
-        fetchLessons: build.mutation<ILesson, string>({
-            query: () => ({
-                url: '/schedule',
-                method:'POST',
-                body:{}
+        fetchLessons: build.query<ScheduleDay[], string>({
+            query: (startOfWeek) => ({
+                url: '/get_week',
+                method: 'GET',
+                params: {
+                    startOfWeek
+                }
             })
         })
     })

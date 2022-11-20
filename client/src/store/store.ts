@@ -1,10 +1,12 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {authAPI} from '../services/AuthService';
 import userReducer from './reducers/UserSlice';
+import {lessonApi} from "../services/LessonService";
 
 const rootReducer = combineReducers({
     userReducer,
-    [authAPI.reducerPath]: authAPI.reducer
+    [authAPI.reducerPath]: authAPI.reducer,
+    [lessonApi.reducerPath]: lessonApi.reducer
 });
 
 export const setupStore = () => {
@@ -12,7 +14,8 @@ export const setupStore = () => {
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware().concat(
-                authAPI.middleware
+                authAPI.middleware,
+                lessonApi.middleware
             )
 
 
