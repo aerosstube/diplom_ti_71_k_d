@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Header from './components/header/Header';
 import {Route, Routes} from "react-router-dom";
 import AuthForm from "./components/Regestration/AuthForm/AuthForm";
 import RegDataForm from "./components/Regestration/RegForm/RegDataForm";
@@ -9,84 +8,14 @@ import CheckAuth from "./components/Regestration/AuthForm/CheckAuth";
 import LearningWeekMark from "./components/LearningWeek/LearningWeekMark";
 import RegForm from "./components/Regestration/RegForm/RegForm";
 import {useRefreshUser} from "./hooks";
+import Layout from "./components/Layout";
 
 export function App() {
-    const days = [
-        {
-            nameOfDay: 'Расписание',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        },
-        {
-            nameOfDay: 'Вторник',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        },
-        {
-            nameOfDay: 'Среда',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        },
-        {
-            nameOfDay: 'Четверг',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }]
-
-        },
-        {
-            nameOfDay: 'Пятница',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {
-                title: 'dfafasd',
-                body: 'dfsdfadsfadsf',
-                mark: 5
-            }, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}, {title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        },
-        {
-            nameOfDay: 'Суббота',
-            lessons: [{title: 'dfafasd', body: 'dfsdfadsfadsf', mark: 5}]
-
-        }
-    ];
 
     const appLoading = useRefreshUser();
 
 
-    // @ts-ignore
-    function getMonday(d) {
-        d = new Date(d);
-        let day = d.getDay();
-        let diff = d.getDate() - day + (day == 0 ? -6 : 1);
 
-        let res = new Date(d.setDate(diff));
-        res.setHours(0);
-        res.setMinutes(0);
-        res.setSeconds(0);
-        res.setMilliseconds(0);
-        return res.toISOString()
-
-    }
-
-    const mainDate = getMonday(new Date());
 
     return (
         <div className="App">
@@ -95,15 +24,16 @@ export function App() {
                     ? <h1>Loading</h1>
                     :
                     <>
-                        <Header/>
-                        <Routes>
+                         <Routes>
+                            <Route path='/' element={<Layout/>}>
                             <Route path='/regDataForm' element={<RegDataForm/>}/>
                             <Route path='/regForm' element={<RegForm/>}/>
                             <Route path='/auth' element={<AuthForm/>}/>
                             <Route path='/scheduleAndMarks'
-                                   element={<CheckAuth><LearningWeekMark days={days}/></CheckAuth>}/>
+                                   element={<CheckAuth><LearningWeekMark/></CheckAuth>}/>
                             <Route path='/' element={<RegDataForm/>}/>
-                            <Route path='/schedule' element={<CheckAuth><LearningWeek days={days}/></CheckAuth>}/>
+                            <Route path='/schedule' element={<CheckAuth><LearningWeek/></CheckAuth>}/>
+                            </Route>
                         </Routes>
                     </>
             }
