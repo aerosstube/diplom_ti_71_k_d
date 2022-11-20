@@ -1,23 +1,23 @@
 import {FC} from 'react';
 import cl from './learningDay.module.css';
-import LessonMark, {LessonProps} from '../Lesson/LessonMark';
-
+import {Schedule} from "../../models/ISchedule";
+import Lesson from "../Lesson/Lesson";
 
 export interface LearningDayProps {
     nameOfDay: string;
-    lessons: LessonProps[] | undefined;
+    schedules: Schedule[];
+
 }
 
-const LearningDay: FC<LearningDayProps> = ({lessons, nameOfDay}) => {
+const LearningDay: FC<LearningDayProps> = ({nameOfDay, schedules}) => {
+    console.log(schedules)
     return (
         <div className={cl.dayPlace}>
-            <p className={cl.textDay}>{nameOfDay}</p>
+            <p className={cl.textDay}>{nameOfDay ? nameOfDay : 'Суббота'}</p>
             <div className={cl.learningDay}>
                 {
-                    lessons && lessons.map((lesson) => <LessonMark title={lesson.title} body={lesson.body}
-                                                                   mark={lesson.mark}/>)
-
-
+                    schedules.length !== 0 ? schedules.map((lesson) => <Lesson schedule={lesson}/>) :
+                        <div> Нет занятий</div>
                 }
             </div>
         </div>

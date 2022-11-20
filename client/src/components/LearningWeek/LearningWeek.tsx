@@ -1,16 +1,19 @@
 import {FC} from 'react';
-import LearningDay, {LearningDayProps} from '../learningDay/learningDay';
+import LearningDay from '../learningDay/learningDay';
 import cl from './LearningWeek.module.css';
+import {getMonday} from "../../utils";
+import {lessonApi} from "../../services/LessonService";
 
-export interface LearningWeekProps {
-    days: LearningDayProps[] | undefined;
-}
 
-const LearningWeek: FC<LearningWeekProps> = ({days}) => {
+const LearningWeek: FC = () => {
+    const mainDate = getMonday(new Date());
+    const {data: days} = lessonApi.useFetchLessonsQuery(mainDate);
     return (
         <div className={cl.learningWeek}>
             {
-                days && days.map((day) => <LearningDay nameOfDay={day.nameOfDay} lessons={day.lessons}/>)
+
+                days?.map((day) => <LearningDay nameOfDay={day.schedules[0]?.weekday || ''}
+                                                schedules={day.schedules}/>)
 
             }
         </div>
