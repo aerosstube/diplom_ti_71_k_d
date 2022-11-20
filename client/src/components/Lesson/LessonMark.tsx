@@ -2,22 +2,17 @@ import {FC} from 'react';
 import {ListItemButton, ListItemText} from '@mui/material';
 import cl from '../learningDay/learningDay.module.css';
 
-export interface LessonProps {
-    title: string;
-    body: string;
-    mark: number;
-}
 
-const LessonMark: FC<LessonProps> = ({title, body, mark}) => {
+const LessonMark: FC = ({}) => {
     return (
         <ListItemButton component="a" href="#simple-list">
             <ListItemText
-                primary={title}
-                secondary={body}
+                primary={'title'}
+                secondary={'body'}
                 className={cl.textLesson}
             />
             <ListItemText
-                primary={mark}
+                primary={'mark'}
                 className={cl.mark}
             />
         </ListItemButton>
