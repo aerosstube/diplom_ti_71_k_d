@@ -8,18 +8,21 @@ interface LessonProps {
 }
 
 const Lesson: FC<LessonProps> = ({schedule}) => {
+    
+    const teacherName = schedule.teacher.split(/\s+/).map((w, i) => i ? w.substring(0, 1).toUpperCase() + '.' : w).join(' ');
+    const lessonsName = schedule.twoOurClassName.split('').length > 15 ? schedule.twoOurClassName.substring(0, 15) + '.' : schedule.twoOurClassName;
     const hours = (new Date(schedule.startTime).getHours().toString().length === 1) ? ('0' + new Date(schedule.startTime).getHours().toString()) : new Date(schedule.startTime).getHours().toString();
     const minutes = (new Date(schedule.startTime).getMinutes().toString().length === 1) ? '00' : new Date(schedule.startTime).getMinutes().toString();
     return (
         <ListItemButton component="a" href="#simple-list">
             <ListItemText
-                primary={schedule.twoOurClassName}
-                secondary={hours + ':' + minutes}//Проблема в этой блядской строчке
+                primary={lessonsName}
+                secondary={hours + ':' + minutes}
                 className={cl.textLesson}
             />
             <ListItemText
-                primary={schedule.audience}
-                secondary={schedule.teacher}
+                primary={'к. ' + schedule.audience}
+                secondary={teacherName}
                 className={cl.textLessonNotMark}
             />
         </ListItemButton>
