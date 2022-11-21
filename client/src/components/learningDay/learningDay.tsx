@@ -10,14 +10,13 @@ export interface LearningDayProps {
 }
 
 const LearningDay: FC<LearningDayProps> = ({nameOfDay, schedules}) => {
-    console.log(schedules)
     return (
         <div className={cl.dayPlace}>
             <p className={cl.textDay}>{nameOfDay ? nameOfDay : 'Суббота'}</p>
             <div className={cl.learningDay}>
                 {
                     schedules.length !== 0 ? schedules.map((lesson) => <Lesson schedule={lesson}/>) :
-                        <div> Нет занятий</div>
+                        <h1 className={cl.textDay} style={{textAlign: 'center', marginTop: '145px'}}> Нет занятий</h1>
                 }
             </div>
         </div>

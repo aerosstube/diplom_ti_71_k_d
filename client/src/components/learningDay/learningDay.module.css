@@ -49,7 +49,7 @@
 }
 .textLessonNotMark{
     margin-left: auto;
-    width: 120px;
+    width: auto;
     text-align: right;
 }
 
