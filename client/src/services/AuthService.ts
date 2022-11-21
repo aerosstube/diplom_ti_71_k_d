@@ -1,10 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { IAuth, ITokens} from '../models/IAuth';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
+import {IAuth, ITokens} from '../models/IAuth';
 import {IUserData} from "../models/IUser";
+import {baseURL} from "./config";
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8081/api'}),
+    baseQuery: fetchBaseQuery({baseUrl: `${baseURL}/api`}),
     endpoints: (build) => ({
         userLogin: build.mutation<ITokens, IAuth>({
             query: (user) => ({
