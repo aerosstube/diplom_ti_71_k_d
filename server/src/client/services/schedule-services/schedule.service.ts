@@ -70,7 +70,6 @@ export class ScheduleService {
 	}
 
 	static async getScheduleMarks(startOfWeek: Date, scheduleUserInfo: ScheduleUserInfo): Promise<ScheduleWeek> {
-		const startCode = new Date();
 		const scheduleWeekDatabase: schedule[] = await ScheduleDatabaseService.getScheduleWeek(startOfWeek, scheduleUserInfo.groupId);
 		if (scheduleWeekDatabase.length === 0)
 			throw ApiError.BadRequest('Расписание на эту неделю не существует!');

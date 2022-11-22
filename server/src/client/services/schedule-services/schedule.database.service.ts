@@ -1,4 +1,5 @@
 import { Op } from 'sequelize';
+import { audiences } from '../../../../models/audiences';
 import { schedule } from '../../../../models/schedule';
 
 export class ScheduleDatabaseService {
