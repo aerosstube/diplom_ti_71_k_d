@@ -33,7 +33,8 @@ export const lessonApi = createApi({
                 params: {
                     startOfWeek
                 }
-            })
+
+            }),
         })
     })
 });

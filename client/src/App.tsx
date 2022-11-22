@@ -26,12 +26,12 @@ export function App() {
                     <>
                          <Routes>
                             <Route path='/' element={<Layout/>}>
-                            <Route path='/regDataForm' element={<RegDataForm/>}/>
-                            <Route path='/regForm' element={<RegForm/>}/>
-                            <Route path='/auth' element={<AuthForm/>}/>
+                                <Route path='/regForm' element={<RegForm/>}/>
+                                <Route path='/regDataForm' element={<RegDataForm/>}/>
+                                <Route path='/auth' element={<AuthForm/>}/>
                                 <Route path='/scheduleAndMarks' element={<CheckAuth><LearningWeekMark/></CheckAuth>}/>
                                 <Route path='/' element={<RegDataForm/>}/>
-                            <Route path='/schedule' element={<CheckAuth><LearningWeek/></CheckAuth>}/>
+                                <Route path='/schedule' element={<CheckAuth><LearningWeek/></CheckAuth>}/>
                             </Route>
                         </Routes>
                     </>

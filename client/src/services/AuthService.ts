@@ -21,21 +21,28 @@ export const authAPI = createApi({
                 body: {user}
             })
         }),
-        userCodeReg: build.mutation<string,string>({
-            query:(inviteCode:string) => ({
+        userCodeReg: build.mutation<string, string>({
+            query: (inviteCode: string) => ({
                 url: `/inviteCode/check`,
                 method: 'get',
-                params:{
+                params: {
                     inviteCode
                 }
 
             })
         }),
-        refresh: build.query<any,string>({
-            query:() => ({
+        refresh: build.query<any, string>({
+            query: () => ({
                 url: '/auth/refresh',
                 method: 'get'
             })
+        }),
+        logoutUser: build.mutation<any, any>({
+            query: () => ({
+                url: '/auth/logout',
+                method: 'DEL'
+            }),
+
         })
     })
 });

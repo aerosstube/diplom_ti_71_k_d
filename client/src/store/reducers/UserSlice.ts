@@ -39,8 +39,14 @@ export const UserSlice = createSlice({
         },
         addCode(state, action: PayloadAction<string>) {
             state.user.inviteCode = action.payload;
+        },
+        removeUser(state) {
+            state.user = initialState.user;
+            state.tokens = initialState.tokens;
+            state.isLogged = initialState.isLogged;
         }
     }
 });
 
 export default UserSlice.reducer;
+export const {removeUser} = UserSlice.actions;
