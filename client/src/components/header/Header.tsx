@@ -25,7 +25,7 @@ const Header = () => {
                     }}
                 >
                     {fullName && headerName}
-                    {!fullName && <Link to='/auth'>Авторизоваться</Link>}
+                    {!fullName && <Link to='/auth' className={cl.links}>Авторизоваться</Link>}
                 </Typography>
 
             </Toolbar>

@@ -3,7 +3,7 @@ import {ListItemButton, ListItemText} from '@mui/material';
 import cl from '../learningDay/learningDay.module.css';
 import {Schedule} from "../../models/ISchedule";
 
-interface LessonProps {
+export interface LessonProps {
     schedule: Schedule;
 }
 

@@ -25,6 +25,15 @@ export const lessonApi = createApi({
                     startOfWeek
                 }
             })
+        }),
+        fetchMarks: build.query<ScheduleDay[], string>({
+            query: (startOfWeek) => ({
+                url: '/get_week_marks',
+                method: 'GET',
+                params: {
+                    startOfWeek
+                }
+            })
         })
     })
 });
