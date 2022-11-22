@@ -34,13 +34,13 @@ export const authAPI = createApi({
         refresh: build.query<any, string>({
             query: () => ({
                 url: '/auth/refresh',
-                method: 'get'
+                method: 'GET'
             })
         }),
         logoutUser: build.mutation<any, any>({
             query: () => ({
                 url: '/auth/logout',
-                method: 'DEL'
+                method: 'DELETE'
             }),
 
         })

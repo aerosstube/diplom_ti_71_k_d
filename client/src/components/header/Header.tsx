@@ -9,7 +9,7 @@ const Header = () => {
     const {fullName} = useAppSelector(state => state.userReducer.user);
     const {removeUser} = UserSlice.actions;
     const dispatch = useAppDispatch();
-    const [logoutUser, {}] = authAPI.useLogoutUserMutation();
+    const [logoutUser] = authAPI.useLogoutUserMutation();
     const arr = fullName.split(' ');
     arr[2] = '';
     const headerName = arr.join(" ");
