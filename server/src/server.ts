@@ -6,12 +6,13 @@ import * as UserAgent from 'express-useragent';
 import path from 'path';
 import { application } from '../config/config';
 import { initModels } from '../models/init-models';
-import { adminRouterApp } from './admin/routers/init-router';
-import { ErrorMiddleware } from './client/middlewares/error-middleware';
-import { clientAppRouter } from './client/routers/clientApp.router';
-import { routerApp } from './client/routers/init-router';
-import { SequelizeConnect } from './client/services/database-connect';
+import { adminRouterApp } from './API/admin/routers/init-router';
+import { clientAppRouter } from './API/client/routers/clientApp.router';
+import { routerApp } from './API/client/routers/init-router';
+
 import { CronJob } from './cron-job';
+import { ErrorMiddleware } from './middlewares/error-middleware';
+import { SequelizeConnect } from './services/database-connect';
 
 export const app = express();
 

@@ -1,5 +1,5 @@
 import * as cron from 'node-cron';
-import { AuthService } from './client/services/auth-services/auth.service';
+import { AuthService } from './services/auth-services/auth.service';
 
 export class CronJob {
 	static async startJob() {

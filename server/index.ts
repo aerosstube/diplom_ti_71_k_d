@@ -1,3 +1,3 @@
-import {run as app} from './src/server';
+import { run as app } from './src/server';
 
 app();
