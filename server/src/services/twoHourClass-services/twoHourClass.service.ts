@@ -11,4 +11,13 @@ export class TwoHourClassService {
 
 		return twoHourClass;
 	}
+
+	static async getTwoHourClassByName(name: string): Promise<two_our_class> {
+		const twoHourClass = await TwoHourClassDatabaseService.findTwoHourClassByName(name);
+
+		if (!twoHourClass)
+			throw ApiError.BadRequest('Такой пары не существует!');
+
+		return twoHourClass;
+	}
 }

@@ -1,4 +1,4 @@
-import { groups } from '../../../../models/groups';
+import { groups } from '../../../models/groups';
 import { ApiError } from '../../errors/api.error';
 import { GroupDatabaseService } from './group.database.service';
 

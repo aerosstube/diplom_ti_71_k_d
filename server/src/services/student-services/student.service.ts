@@ -10,4 +10,12 @@ export class StudentService {
 
 		return student;
 	}
+
+	static async getUserStudent(groupId: number): Promise<unknown> {
+		const student = await StudentDatabaseService.findStudentUser(groupId);
+		if (!student)
+			throw ApiError.BadRequest('Вы не студент!');
+
+		return student;
+	}
 }

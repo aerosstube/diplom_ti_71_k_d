@@ -46,4 +46,13 @@ export class UserService {
 
 		return user;
 	}
+
+	static async getUserByFullName(fullName: string) {
+		const user = await UserDatabaseService.findUserByFullName(fullName.split(' '));
+
+		if (!user)
+			throw ApiError.BadRequest('Неверное ФИО предодавателя!');
+
+		return user;
+	}
 }

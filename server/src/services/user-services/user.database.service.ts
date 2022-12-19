@@ -33,4 +33,14 @@ export class UserDatabaseService {
 			role: registrationOptions.role
 		}, {transaction});
 	}
+
+	static async findUserByFullName(fullName: string[]) {
+		return await users.findOne({
+			where: {
+				first_name: fullName[1],
+				second_name: fullName[0],
+				middle_name: fullName[2]
+			}
+		});
+	}
 }

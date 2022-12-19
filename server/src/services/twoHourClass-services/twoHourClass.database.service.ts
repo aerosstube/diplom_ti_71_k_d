@@ -9,4 +9,12 @@ export class TwoHourClassDatabaseService {
 			}
 		});
 	}
+
+	static async findTwoHourClassByName(name: string): Promise<two_our_class | null> {
+		return await two_our_class.findOne({
+			where: {
+				name
+			}
+		});
+	}
 }

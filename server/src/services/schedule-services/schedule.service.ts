@@ -16,6 +16,7 @@ export class ScheduleService {
 		const group = await GroupService.getGroupById(schedule.group_id);
 		const twoHourClass = await TwoHourClassService.getTwoHourClass(schedule.two_our_class_id);
 		const weekday = await WeekdayService.getWeekday(schedule.weekday_id);
+
 		return {
 			weekday: weekday.name,
 			audience: audience.number_audience,
