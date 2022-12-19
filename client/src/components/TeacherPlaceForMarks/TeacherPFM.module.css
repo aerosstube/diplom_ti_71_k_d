@@ -1,0 +1,21 @@
+.tableContain {
+    border: 2px solid #0095FFDB;
+    margin: 10px 20px;
+}
+
+.tableInp {
+    border: none;
+    width: 100%;
+}
+
+.tableCells {
+    border: none;
+    width: 100%;
+
+}
+
+.tableText {
+    font-weight: bold;
+    font-size: 20px;
+    color: #0095FFDB;
+}
