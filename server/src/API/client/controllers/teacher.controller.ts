@@ -37,11 +37,12 @@ export class TeacherController {
 		}
 	}
 
-	static getAllowedClasses(req: RequestWithUser, res: Response, next: NextFunction) {
+	static async getAllowedClasses(req: RequestWithUser, res: Response, next: NextFunction) {
 		try {
 			const {user} = req;
+			const classes = await TeacherBusinessService.getAllowedClasses(user.userId);
 
-			res.json({});
+			res.json({classes});
 		} catch (err) {
 			next(err);
 		}

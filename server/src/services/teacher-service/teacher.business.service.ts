@@ -40,13 +40,15 @@ export class TeacherBusinessService {
 		return groups;
 	}
 
-	// static async getAllowedClasses(userId: number) {
-	// 	const teacher = await TeacherService.getTeacherByUserId(userId);
-	// 	const teacherClasses = await TeacherService.getTeacherClasses(teacher.id);
-	// 	const classes = [];
-	//
-	// 	for (const class of teacherClasses) {
-	// 		classes.push(await TwoHourClassService.getTwoHourClass())
-	// 	}
-	// }
+	static async getAllowedClasses(userId: number) {
+		const teacher = await TeacherService.getTeacherByUserId(userId);
+		const teacherClasses = await TeacherService.getTeacherClasses(teacher.id);
+		const classes = [];
+
+		for (const classElement of teacherClasses) {
+			classes.push(await TwoHourClassService.getTwoHourClass(classElement.two_our_class_id_fk));
+		}
+
+		return classes;
+	}
 }
