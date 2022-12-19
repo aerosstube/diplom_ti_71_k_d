@@ -5,18 +5,6 @@ import { TeacherBusinessService } from '../../../services/teacher-service/teache
 
 
 export class TeacherController {
-	static async getAllowedGroups(req: RequestWithUser, res: Response, next: NextFunction) {
-		try {
-			const {user} = req;
-			const groups = await TeacherBusinessService.getAllowedGroups(user.userId);
-			console.log(groups);
-			res.json({groups});
-		} catch (err) {
-			next(err);
-		}
-	}
-
-
 	static async getGroupMarks(req: RequestWithUser, res: Response, next: NextFunction) {
 		try {
 			const {query: {className, groupId}} = req;
@@ -36,5 +24,26 @@ export class TeacherController {
 
 	static async updateStudentMark(req: RequestWithUser, res: Response, next: NextFunction) {
 
+	}
+
+	static async getAllowedGroups(req: RequestWithUser, res: Response, next: NextFunction) {
+		try {
+			const {user} = req;
+			const groups = await TeacherBusinessService.getAllowedGroups(user.userId);
+
+			res.json({groups});
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	static getAllowedClasses(req: RequestWithUser, res: Response, next: NextFunction) {
+		try {
+			const {user} = req;
+
+			res.json({});
+		} catch (err) {
+			next(err);
+		}
 	}
 }

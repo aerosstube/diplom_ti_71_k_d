@@ -34,7 +34,7 @@ export class TeacherService {
 
 	static async getTeacherGroups(teacherId: number) {
 		const teacherGroups = await TeacherDatabaseService.findTeacherGroups(teacherId);
-		if (!teacherGroups.length)
+		if (teacherGroups[0] === undefined)
 			throw ApiError.BadRequest('Неверный учитель!');
 
 		return teacherGroups;

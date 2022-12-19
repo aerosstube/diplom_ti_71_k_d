@@ -7,6 +7,7 @@ const teacherRouter: Router = Router();
 teacherRouter
 	.get('/getStudentsMarks', AuthMiddleware, TeacherController.getGroupMarks)
 	.get('/getAllowedGroups', AuthMiddleware, TeacherController.getAllowedGroups)
+	.get('/getAllowedClasses', AuthMiddleware, TeacherController.getAllowedClasses)
 	.put('/updateStudentMark', AuthMiddleware, TeacherController.updateStudentMark);
 
 export { teacherRouter };
