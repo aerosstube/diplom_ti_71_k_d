@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button, TextField} from '@mui/material';
-import cl from '../AuthForm/AuthForm.module.css';
-import shp from '../AuthForm/image-ep0zmoEb0-transformed.png';
-import {useNavigate} from "react-router-dom";
+import cl from './RegForm.module.css';
+import {Link, useNavigate} from "react-router-dom";
 import {authAPI} from "../../../services/AuthService";
 import {UserSlice} from "../../../store/reducers/UserSlice";
 import {useAppDispatch} from "../../../hooks";
+import img from "../../../img/logo2.png";
+import {Button, Input} from "antd";
 
 
 const RegForm = () => {
@@ -13,7 +13,11 @@ const RegForm = () => {
     const {addCode} = UserSlice.actions;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const [login, setLogin] = useState('');
+    const [loginDirt, setLoginDirt] = useState(false);
+    const [loginError, setLoginError] = useState('Логин не может быть пустым');
+    const [valid, setValid] = useState(false)
 
 
     const handleSend = async () => {
@@ -22,6 +26,23 @@ const RegForm = () => {
 
 
     }
+    //@ts-ignore
+    const handleCheckLogin = (e) => {
+        setLogin(e.target.value);
+        if (e.target.value.split('').length > 0) {
+            setLoginError('')
+        } else {
+            setLoginError('Логин не может быть пустым');
+
+        }
+    }
+    useEffect(() => {
+        if (loginError || loginDirt) {
+            setValid(false)
+        } else {
+            setValid(true)
+        }
+    }, [loginError, loginDirt])
 
 
     useEffect(() => {
@@ -34,31 +55,25 @@ const RegForm = () => {
     }, [status]);
 
     return (
-        <form className={cl.formReg}>
-            <img
-                src={shp} alt="лого"
-                className={cl.imgReg}
+        <form className={cl.mainContainer}>
+            <img src={img} alt="" className={cl.regImg}/>
+            <p className={cl.regText}>Добро пожаловать в электронный школьный портал!</p>
+            <Input
+                placeholder="Код регистрации"
+                className={cl.regInp}
+                onChange={(e) => handleCheckLogin(e)}
+                onBlur={() => setLoginDirt(true)}
             />
-            <p className={cl.textReg}>Добро пожаловать! Введите код регистрации</p>
-            <TextField
-                value={login}
-                id="outlined-name"
-                label="Enter code"
-                className={cl.inpReg}
-                onChange={(e) => setLogin(e.target.value)}
-            />
-
-            {
-                // @ts-ignore
-                status && <div>{status?.message}</div>
-            }
+            {(loginDirt && loginError) && <p className={cl.error}>{loginError}</p>}
             <Button
-                className={cl.buttonReg}
+                type="primary"
+                className={cl.regBut}
                 onClick={handleSend}
+                disabled={!valid}
             >
-                ВОЙТИ
+                Регистрация
             </Button>
-
+            <Link to='/auth' className={cl.regLink}>Уже зарегистрированы?</Link>
         </form>
     );
 };

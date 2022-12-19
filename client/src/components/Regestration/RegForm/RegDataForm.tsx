@@ -1,11 +1,15 @@
-import {Button, TextField} from '@mui/material';
 import jwt from 'jwt-decode';
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {authAPI} from '../../../services/AuthService';
 import {UserSlice, UserState} from '../../../store/reducers/UserSlice';
-import cl from './RegDataForm.module.css';
-import {useNavigate} from "react-router-dom";
+import cl from './RegForm.module.css';
+import {Link, useNavigate} from "react-router-dom";
+import img from "../../../img/logo2.png";
+import {Button, Input} from "antd";
+import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
+import {checkPhone} from "../../../utils/checkPhone";
+
 
 const RegDataForm = () => {
     const [userRegestration, {data: tokens, isLoading, error}] = authAPI.useUserRegisterMutation();
@@ -27,6 +31,8 @@ const RegDataForm = () => {
     const [fioError, setFioError] = useState('ФИО не может быть пустым');
 
     const [phone, setPhone] = useState('');
+    const [phoneDirt, setPhoneDirt] = useState(false);
+    const [phoneError, setPhoneError] = useState('Телефон не может быть пустым');
 
     const [email, setEmail] = useState('');
     const [emailDirt, setEmailDirt] = useState(false);
@@ -63,6 +69,10 @@ const RegDataForm = () => {
             }
             case 'login': {
                 setLoginDirt(true);
+                break;
+            }
+            case 'phone' : {
+                setPhoneDirt(true);
                 break;
             }
         }
@@ -108,11 +118,19 @@ const RegDataForm = () => {
         }
     }
     // @ts-ignore
-    const handleLogin = (e) => {
+    const handleCheckLogin = (e) => {
         setLogin(e.target.value);
         if (e.target.value.split('').length > 0) {
             setLoginError('')
         }
+    }
+    // @ts-ignore
+    const handleCheckPhone = (e) => {
+        setPhone(checkPhone(e) || '');
+        if (e.target.value.split('').length > 0) {
+            setPhoneError('')
+        }
+
     }
 
 
@@ -155,71 +173,73 @@ const RegDataForm = () => {
     }, [tokens, error]);
 
     return (
-        <div className={cl.mainBlock}>
-            <p className={cl.dataText}>Введите необходитмую для продолжения информацию:</p>
-            <TextField
-                value={login}
-                id="outlined-name"
-                label="Login"
-                name='login'
-                className={cl.inpData}
-                onChange={(e) => handleLogin(e)}
-                onBlur={event => handleBlur(event)}
-            />
-            {(loginDirt && loginError) && <div>{loginError}</div>}
-            <TextField
-                value={password}
-                type="password"
-                id="outlined-name"
-                label="Password"
-                name='password'
-                className={cl.inpData}
-                onChange={(e) => handleCheckPassword(e)}
-                onBlur={event => handleBlur(event)}
-            />
-            {(passwordDirt && passwordError) && <div>{passwordError}</div>}
-            <TextField
+        <form className={cl.regDataForm}>
+            <img src={img} alt="" className={cl.regImg}/>
+            <p className={cl.regText}>Добро пожаловать в электронный школьный портал!</p>
+            <Input
+                placeholder="Фамилия Имя Отчество"
+                className={cl.regInp}
                 value={fio}
-                id="outlined-name"
-                label="FIO"
                 name='fio'
-                className={cl.inpData}
                 onChange={(e) => handleCheckFio(e)}
                 onBlur={event => handleBlur(event)}
             />
-            {(fioDirt && fioError) && <div>{fioError}</div>}
-
-            <TextField
-                value={phone}
-                id="outlined-name"
-                label="Mobile Phone"
-                className={cl.inpData}
-                onChange={(e) => setPhone(e.target.value)}
-            />
-
-            <TextField
-                onBlur={event => handleBlur(event)}
-                value={email}
-                id="outlined-name"
-                name='email'
-                label="E-mail"
-                className={cl.inpData}
-                onChange={(e) => handleCheckEmail(e)}
-            />
-            {(emailDirt && emailError) && <div>{emailError}</div>}
-            <TextField
+            {(fioDirt && fioError) && <p className={cl.error}>{fioError}</p>}
+            <Input
+                placeholder="Дата рождения"
+                className={cl.regInp}
                 value={dateOfBirth}
-                id="outlined-name"
-                label="Date Of Birthday"
                 name='date'
-                className={cl.inpData}
                 onChange={(e) => handleCheckDate(e)}
                 onBlur={event => handleBlur(event)}
             />
-            {(dateOfBirthDirt && dateOfBirthError) && <div>{dateOfBirthError}</div>}
+            {(dateOfBirthDirt && dateOfBirthError) && <p className={cl.error}>{dateOfBirthError}</p>}
 
-            <Button disabled={!valid} className={cl.buttonData} onClick={handleSend}>Зарегестрироваться</Button>
-        </div>
+            <Input
+                placeholder="Электронная почта"
+                className={cl.regInp}
+                value={email}
+                name='email'
+                onChange={(e) => handleCheckEmail(e)}
+                onBlur={event => handleBlur(event)}
+            />
+            {(emailDirt && emailError) && <p className={cl.error}>{emailError}</p>}
+
+            <Input
+                placeholder="Телефон"
+                className={cl.regInp}
+                value={phone}
+                name='phone'
+                onChange={(e) => handleCheckPhone(e)}
+                onBlur={event => handleBlur(event)}
+            />
+            {(phoneDirt) && <p className={cl.error}>{phoneError}</p>}
+            <Input
+                placeholder="Логин"
+                className={cl.regInp}
+                value={login}
+                name='login'
+                onChange={(e) => handleCheckLogin(e)}
+                onBlur={event => handleBlur(event)}
+            />
+            {(loginError && loginDirt) && <p className={cl.error}>{loginError}</p>}
+
+            <Input.Password
+                iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
+                placeholder="Пароль"
+                className={cl.regInp}
+                value={password}
+                name='password'
+                onChange={(e) => handleCheckPassword(e)}
+                data-tel-input
+                onBlur={event => handleBlur(event)}
+                type='password'
+            />
+            {(passwordDirt && passwordError) && <p className={cl.error}>{passwordError}</p>}
+
+            <Button disabled={!valid} type="primary" className={cl.regBut} onClick={handleSend}>Регистрация</Button>
+            <Link to='/auth' className={cl.regLink}>Уже зарегистрированы?</Link>
+        </form>
     );
 };
 
