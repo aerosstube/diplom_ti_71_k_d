@@ -1,23 +1,68 @@
-import {Button, TextField} from '@mui/material';
 import jwt from 'jwt-decode';
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch} from '../../../hooks';
 import {authAPI} from '../../../services/AuthService';
 import {UserSlice, UserState} from '../../../store/reducers/UserSlice';
-import cl from './AuthForm.module.css';
-import shp from './image-ep0zmoEb0-transformed.png';
+import cl from '../RegForm/RegForm.module.css';
 import {useLocation, useNavigate} from "react-router-dom";
+import img from "../../../img/logo2.png";
+import {Button, Input} from "antd";
 
 const AuthForm = () => {
     const [loginUser, {data: tokens, error}] = authAPI.useUserLoginMutation();
+
+    const [password, setPassword] = useState('');
+    const [passwordDirt, setPasswordDirt] = useState(false);
+    const [passwordError, setPasswordError] = useState('Пароль не может быть пустым');
+    const regExpPassword = /^(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
+    const [login, setLogin] = useState('');
+    const [loginDirt, setLoginDirt] = useState(false);
+    const [loginError, setLoginError] = useState('Логин не может быть пустым');
+
+    const [valid, setValid] = useState(false)
+    // @ts-ignore
+    const handleBlur = (e) => {
+        switch (e.target.name) {
+            case 'login': {
+                setLoginDirt(true);
+                break;
+            }
+            case 'password': {
+                setPasswordDirt(true);
+                break;
+            }
+
+        }
+    }
+
+    // @ts-ignore
+    const handleCheckPassword = (e) => {
+        setPassword(e.target.value);
+        if (!regExpPassword.test(String(e.target.value))) {
+            setPasswordError('Пароль должен содержать одну заглавную и строчную букву и быть не короче 8 символов!')
+        } else {
+            setPasswordError('')
+        }
+    }
+
+    // @ts-ignore
+    const handleCheckLogin = (e) => {
+        setLogin(e.target.value);
+        if (e.target.value.split('').length > 0) {
+            setLoginError('')
+        } else {
+            setLoginError('Логин не может быть пустым')
+        }
+    }
+
     const {addUser} = UserSlice.actions;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const fromPage = location.state?.state;
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-    const goToSchedule = () => navigate(fromPage? fromPage : '/schedule')
+
+    const goToSchedule = () => navigate(fromPage ? fromPage : '/schedule');
 
     const handleSend = async () => {
         const user = {
@@ -31,8 +76,14 @@ const AuthForm = () => {
     };
 
     useEffect(() => {
+        if (loginError || passwordError) {
+            setValid(false);
+        } else setValid(true)
+    }, [passwordError, loginError])
+
+    useEffect(() => {
         if (tokens) {
-            console.log(tokens);
+
             const response: UserState = {
                 user: jwt(tokens.tokens.accessToken),
                 tokens,
@@ -46,29 +97,34 @@ const AuthForm = () => {
     }, [tokens, error]);
 
     return (
-        <form className={cl.formReg}>
-            <img
-                src={shp} alt="лого"
-                className={cl.imgReg}
+        <form className={cl.mainContainer}>
+            <img src={img} alt="" className={cl.regImg}/>
+            <p className={cl.regText}>Добро пожаловать в электронный школьный портал!</p>
+            <Input
+                placeholder="Логин"
+                name='login'
+                className={cl.regInp}
+                onChange={e => handleCheckLogin(e)}
+                onBlur={e => handleBlur(e)}
             />
-            <p className={cl.textReg}>Добро пожаловать на школьный портал!</p>
-            <TextField
-                value={login}
-                id="outlined-name"
-                label="Log in"
-                className={cl.inpReg}
-                onChange={(e) => setLogin(e.target.value)}
+            {(loginError && loginDirt) && <p className={cl.error}>{loginError}</p>}
+            <Input.Password
+                placeholder="Пароль"
+                name='password'
+                className={cl.regInp}
+                onChange={e => handleCheckPassword(e)}
+                onBlur={e => (handleBlur(e))}
             />
-            <TextField
-                value={password}
-                id="outlined-name"
-                label="Password"
-                className={cl.inputReg}
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button className={cl.buttonReg} onClick={handleSend}>ВОЙТИ</Button>
-            {error && <p style={{color: 'red'}}>Ошибка авторизации!</p>}
+            {(passwordError && passwordDirt) && <p className={cl.error}>{passwordError}</p>}
+            {error && <p className={cl.error}>Ошибка авторизации</p>}
+            <Button
+                type="primary"
+                className={cl.regBut}
+                onClick={handleSend}
+                disabled={!valid}
+            >
+                Войти
+            </Button>
         </form>
     );
 };
