@@ -26,7 +26,7 @@ export class TeacherService {
 
 	static async getTeacherClasses(teacherId: number): Promise<teacher_has_classes[]> {
 		const teacherClasses = await TeacherDatabaseService.findTeacherClasses(teacherId);
-		if (!teacherClasses.length)
+		if (teacherClasses[0] === undefined)
 			throw ApiError.BadRequest('Неверный учитель!');
 
 		return teacherClasses;
