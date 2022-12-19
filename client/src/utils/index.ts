@@ -9,6 +9,6 @@ export function getMonday(d) {
     res.setMinutes(0);
     res.setSeconds(0);
     res.setMilliseconds(0);
-    return res.toISOString()
+    return res
 
 }
