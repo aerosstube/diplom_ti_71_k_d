@@ -7,11 +7,12 @@ import { TeacherBusinessService } from '../../../services/teacher-service/teache
 export class TeacherController {
 	static async getGroupMarks(req: RequestWithUser, res: Response, next: NextFunction) {
 		try {
-			const {query: {className, groupId}} = req;
+			const {query: {classId, groupId}} = req;
 
-			if (typeof className !== 'string')
+			if (typeof classId !== 'string')
 				return next(ApiError.BadRequest('Неверный запрос!'));
-			await TeacherBusinessService.checkTeacherLesson(req.user.userId, className);
+
+			await TeacherBusinessService.checkTeacherLesson(req.user.userId, parseInt(classId));
 
 			if (typeof groupId !== 'string')
 				return next(ApiError.BadRequest('Неверный запрос!'));

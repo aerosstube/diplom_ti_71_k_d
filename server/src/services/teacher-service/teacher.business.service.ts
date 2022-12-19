@@ -5,13 +5,16 @@ import { TwoHourClassService } from '../twoHourClass-services/twoHourClass.servi
 import { TeacherService } from './teacher.service';
 
 export class TeacherBusinessService {
-	static async checkTeacherLesson(userId: number, nameOfClass: string): Promise<void> {
+	static async checkTeacherLesson(userId: number, classId: number): Promise<void> {
 		const teacher = await TeacherService.getTeacherByUserId(userId);
 		const teacherClasses = await TeacherService.getTeacherClasses(teacher.id);
-		const twoHourClass = await TwoHourClassService.getTwoHourClassByName(nameOfClass);
+		const twoHourClass = await TwoHourClassService.getTwoHourClass(classId);
+
 		let isAble = false;
 
 		for (const el of teacherClasses) {
+			console.log(`${el.teacher_id_fk} === ${teacher.id} is ${el.teacher_id_fk == teacher.id}`);
+
 			if (el.teacher_id_fk == teacher.id &&
 				el.two_our_class_id_fk == twoHourClass.id) {
 				isAble = true;
