@@ -1,0 +1,65 @@
+.lessonContain {
+    display: flex;
+    width: 258px;
+    height: 66px;
+    border: 1px solid rgba(0, 149, 255, 0.55);
+    border-radius: 10px;
+    flex-wrap: wrap;
+    margin: 0 24px 24px 24px;
+}
+
+.lessonMark {
+    width: 53px;
+    height: 53px;
+    border: 1px solid rgba(0, 149, 255, 0.55);
+    border-radius: 10px;
+    margin: auto 10px 7px auto;
+
+}
+
+.lessonName {
+    font-weight: bold;
+    margin-bottom: 3px;
+    height: 15px;
+    text-align: left;
+}
+
+.timeOfLesson {
+    font-weight: bold;
+    margin-bottom: 3px;
+    height: 15px;
+    text-align: right;
+}
+
+.teacherName {
+    text-align: left;
+    color: gray;
+    height: 15px;
+    margin-top: 3px;
+}
+
+.numberOfCab {
+    text-align: right;
+    color: gray;
+    height: 15px;
+    margin-top: 3px;
+}
+
+.lessonTextLeft {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lessonTextRight {
+    margin: 0 10px 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.markText {
+    font-weight: bold;
+    font-size: large;
+    margin: 15px 0 16px 0;
+}
