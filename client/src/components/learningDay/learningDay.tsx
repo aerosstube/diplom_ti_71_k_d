@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import cl from './learningDay.module.css';
+import cl from './LearningDay.module.css';
 import {Schedule} from "../../models/ISchedule";
 import Lesson from "../Lesson/Lesson";
 
@@ -12,14 +12,15 @@ export interface LearningDayProps {
 const LearningDay: FC<LearningDayProps> = ({nameOfDay, schedules}) => {
     return (
         <div className={cl.dayPlace}>
-            <p className={cl.textDay}>{nameOfDay ? nameOfDay : 'Суббота'}</p>
-            <div className={cl.learningDay}>
+            <p className={cl.dayName}>{nameOfDay ? nameOfDay : 'Суббота'}</p>
+            <div className={cl.dayContain}>
                 {
                     schedules.length !== 0 ? schedules.map((lesson) => <Lesson schedule={lesson}/>) :
-                        <h1 className={cl.textDay} style={{textAlign: 'center', marginTop: '145px'}}> Нет занятий</h1>
+                        <h1 className={cl.dayTextNonLessons}> Нет занятий</h1>
                 }
             </div>
         </div>
+
     );
 };
 
