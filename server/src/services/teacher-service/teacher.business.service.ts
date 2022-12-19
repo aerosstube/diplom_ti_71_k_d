@@ -13,8 +13,6 @@ export class TeacherBusinessService {
 		let isAble = false;
 
 		for (const el of teacherClasses) {
-			console.log(`${el.teacher_id_fk} === ${teacher.id} is ${el.teacher_id_fk == teacher.id}`);
-
 			if (el.teacher_id_fk == teacher.id &&
 				el.two_our_class_id_fk == twoHourClass.id) {
 				isAble = true;
