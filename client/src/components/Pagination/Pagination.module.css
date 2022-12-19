@@ -1,0 +1,14 @@
+.pageContain {
+    display: flex;
+    justify-content: center;
+}
+
+.pageIcon {
+    color: #0095FFDB;
+    margin: 23px 5px 0 5px;
+}
+
+.pageText {
+    color: #0095FFDB;
+    margin-bottom: 0;
+}
