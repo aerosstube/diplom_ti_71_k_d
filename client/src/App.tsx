@@ -9,12 +9,13 @@ import LearningWeekMark from "./components/LearningWeek/LearningWeekMark";
 import RegForm from "./components/Regestration/RegForm/RegForm";
 import {useRefreshUser} from "./hooks";
 import Layout from "./components/Layout";
+import TeacherPlaceForMarks from "./components/TeacherPlaceForMarks/TeacherPlaceForMarks";
+import Groups from "./components/Groups/Groups";
+import LessonsChoise from "./components/Groups/LessonsChoise";
 
 export function App() {
 
     const appLoading = useRefreshUser();
-
-
 
 
     return (
@@ -24,14 +25,19 @@ export function App() {
                     ? <h1>Loading</h1>
                     :
                     <>
-                         <Routes>
-                            <Route path='/' element={<Layout/>}>
-                                <Route path='/regForm' element={<RegForm/>}/>
-                                <Route path='/regDataForm' element={<RegDataForm/>}/>
-                                <Route path='/auth' element={<AuthForm/>}/>
-                                <Route path='/scheduleAndMarks' element={<CheckAuth><LearningWeekMark/></CheckAuth>}/>
-                                <Route path='/' element={<RegDataForm/>}/>
-                                <Route path='/schedule' element={<CheckAuth><LearningWeek/></CheckAuth>}/>
+                        <Routes>
+                            <Route path='/' element={<Layout/>}> {/*Корневая страница*/}
+                                <Route path='/lessons' element={<LessonsChoise/>}/>
+                                <Route path='/teacherPlace' element={<TeacherPlaceForMarks/>}/>
+                                <Route path='/regForm' element={<RegForm/>}/> {/*Форма регистрации*/}
+                                <Route path='/regDataForm'
+                                       element={<RegDataForm/>}/> {/*Форма заполнения данных для регистрации*/}
+                                <Route path='/auth' element={<AuthForm/>}/> {/*Форма аутентифакации*/}
+                                <Route path='/scheduleAndMarks'
+                                       element={<CheckAuth><LearningWeekMark/></CheckAuth>}/> {/*Успеваемость*/}
+                                <Route path='/schedule'
+                                       element={<CheckAuth><LearningWeek/></CheckAuth>}/> {/*Расписание*/}
+                                <Route path='/groups' element={<CheckAuth><Groups/></CheckAuth>}/>
                             </Route>
                         </Routes>
                     </>

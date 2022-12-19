@@ -7,6 +7,7 @@ import {useAppSelector} from "../../../hooks";
 const CheckAuth = ({children}) => {
     const location=useLocation();
     const isLogged= useAppSelector(state => state.userReducer.tokens.tokens.accessToken)
+
     if (isLogged===''){
         return <Navigate to='/auth' state={{state:location.pathname}}/>
 
