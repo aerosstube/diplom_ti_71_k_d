@@ -1,12 +1,13 @@
 import { Transaction } from 'sequelize';
 import { ApiError } from '../../errors/api.error';
 import { InviteCodeService } from '../inviteCode-services/inviteCode.service';
+import { TeacherService } from '../teacher-service/teacher.service';
 import { UserDatabaseService } from '../user-services/user.database.service';
 import { UserService } from '../user-services/user.service';
 import { AuthDatabaseService } from './auth.database.service';
 import { AuthService, AuthUser, JwtTokens } from './auth.service';
 
-export interface RegistrationUserOptions extends Omit<AuthUser, 'userId'> {
+export interface RegistrationUserOptions extends Omit<AuthUser, 'userId' | 'isTeacher'> {
 	password: string,
 	mobile_phone: string,
 	'e-mail': string,
@@ -36,6 +37,7 @@ export interface TokenOptions {
 	login: string;
 	role: string;
 	fullName: string;
+	isTeacher: boolean;
 	iat?: number;
 	exp?: number;
 }
@@ -55,7 +57,8 @@ export class AuthBusinessService {
 			fullName: `${userDatabase.second_name} ${userDatabase.first_name} ${userDatabase.middle_name} `,
 			login: userDatabase.login,
 			userId: userDatabase.id,
-			role: userDatabase.role
+			role: userDatabase.role,
+			isTeacher: await TeacherService.isUserTeacher(userDatabase.id)
 		};
 		const tokens: JwtTokens = await AuthService.generateToken(user);
 
@@ -86,7 +89,8 @@ export class AuthBusinessService {
 			fullName: user.fullName,
 			login: user.login,
 			userId: user.userId,
-			role: user.role
+			role: user.role,
+			isTeacher: await TeacherService.isUserTeacher(user.userId)
 		}, refreshToken);
 	}
 
@@ -103,7 +107,8 @@ export class AuthBusinessService {
 			fullName: `${user.second_name} ${user.first_name} ${user.middle_name} `,
 			login: user.login,
 			userId: user.id,
-			role: user.role
+			role: user.role,
+			isTeacher: await TeacherService.isUserTeacher(user.id)
 		};
 
 		const tokens: JwtTokens = await AuthService.generateToken(authUser);

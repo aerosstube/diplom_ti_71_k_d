@@ -24,6 +24,14 @@ export class TeacherService {
 		return teacher;
 	}
 
+	static async isUserTeacher(userId: number): Promise<boolean> {
+		const teacher = await TeacherDatabaseService.findTeacherByUserId(userId);
+
+		return !!teacher;
+
+
+	}
+
 	static async getTeacherClasses(teacherId: number): Promise<teacher_has_classes[]> {
 		const teacherClasses = await TeacherDatabaseService.findTeacherClasses(teacherId);
 		if (teacherClasses[0] === undefined)

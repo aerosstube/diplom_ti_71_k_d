@@ -14,6 +14,7 @@ export interface AuthUser {
 	login: string;
 	fullName: string;
 	role: string;
+	isTeacher: boolean;
 }
 
 export interface JwtTokens {

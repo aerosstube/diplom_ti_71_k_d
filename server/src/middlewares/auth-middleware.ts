@@ -21,12 +21,13 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
 		const isAccess: boolean = verifyToken.role === 'ADMIN';
 		if (req.baseUrl.includes('admin') && !isAccess)
 			return next(ApiError.AcessDenied());
-
+		console.log(`verifyToken = ${verifyToken.isTeacher}`);
 		req.user = {
 			login: verifyToken.login,
 			userId: verifyToken.userId,
 			fullName: verifyToken.fullName,
-			role: verifyToken.role
+			role: verifyToken.role,
+			isTeacher: verifyToken.isTeacher
 		};
 		next();
 	} catch (err) {
