@@ -24,9 +24,16 @@ export class TeacherBusinessService {
 	}
 
 	static async getGroupMarks(groupId: number): Promise<unknown> {
-		const marks = await StudentService.getUserStudent(groupId);
+		const students = await StudentService.getUserStudent(groupId);
 
-		return {marks};
+		return {students};
+	}
+
+	static async updateStudentMark(markId: number, isTeacher: boolean) {
+		if (!isTeacher)
+			throw ApiError.AcessDenied();
+
+
 	}
 
 	static async getAllowedGroups(userId: number) {
@@ -51,5 +58,9 @@ export class TeacherBusinessService {
 		}
 
 		return classes;
+	}
+
+	static async getClassesForMarks(groupId: number, classId: number) {
+		return await TeacherService.getClassesForMarks(groupId, classId);
 	}
 }

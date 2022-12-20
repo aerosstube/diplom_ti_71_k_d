@@ -2,6 +2,7 @@ import { teacher_has_classes } from '../../../models/teacher_has_classes';
 import { teachers } from '../../../models/teachers';
 import { users } from '../../../models/users';
 import { ApiError } from '../../errors/api.error';
+import { ScheduleDatabaseService } from '../schedule-services/schedule.database.service';
 import { UserService } from '../user-services/user.service';
 import { TeacherDatabaseService } from './teacher.database.service';
 
@@ -28,9 +29,12 @@ export class TeacherService {
 		const teacher = await TeacherDatabaseService.findTeacherByUserId(userId);
 
 		return !!teacher;
+	}
 
+	static async updateStudentMark(markId: number) {
 
 	}
+
 
 	static async getTeacherClasses(teacherId: number): Promise<teacher_has_classes[]> {
 		const teacherClasses = await TeacherDatabaseService.findTeacherClasses(teacherId);
@@ -49,4 +53,11 @@ export class TeacherService {
 
 	}
 
+	static async getClassesForMarks(groupId: number, classId: number) {
+		const schedule = await ScheduleDatabaseService.getDates(groupId, classId);
+		if (schedule[0] === undefined)
+			throw ApiError.BadRequest('Неверный запрос!');
+
+		return schedule;
+	}
 }

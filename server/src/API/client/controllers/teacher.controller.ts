@@ -17,14 +17,24 @@ export class TeacherController {
 			if (typeof groupId !== 'string')
 				return next(ApiError.BadRequest('Неверный запрос!'));
 
-			res.json(await TeacherBusinessService.getGroupMarks(parseInt(groupId)));
+			const students = await TeacherBusinessService.getGroupMarks(parseInt(groupId));
+			const classes = await TeacherBusinessService.getClassesForMarks(parseInt(groupId), parseInt(classId));
+			console.log('classes ============== \n', classes);
+			res.json({
+				students,
+				classes
+			});
 		} catch (err) {
 			next(err);
 		}
 	}
 
 	static async updateStudentMark(req: RequestWithUser, res: Response, next: NextFunction) {
+		try {
 
+		} catch (err) {
+			next(err);
+		}
 	}
 
 	static async getAllowedGroups(req: RequestWithUser, res: Response, next: NextFunction) {
