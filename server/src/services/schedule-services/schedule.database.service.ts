@@ -35,4 +35,20 @@ export class ScheduleDatabaseService {
 			]
 		});
 	}
+
+	static async getDates(groupId: number, classId: number): Promise<schedule[]> {
+		return await schedule.findAll({
+			where: {
+				group_id: groupId,
+				two_our_class_id: classId
+			},
+			attributes: [
+				`date_of_class`
+			],
+			order: [
+				[`date_of_class`, `ASC`]
+			]
+		});
+	}
+
 }
