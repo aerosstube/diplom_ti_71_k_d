@@ -17,11 +17,11 @@ export class TeacherController {
 			if (typeof groupId !== 'string')
 				return next(ApiError.BadRequest('Неверный запрос!'));
 
-			const students = await TeacherBusinessService.getGroupMarks(parseInt(groupId));
+			const student_marks = await TeacherBusinessService.getGroupMarks(parseInt(groupId));
 			const classes = await TeacherBusinessService.getClassesForMarks(parseInt(groupId), parseInt(classId));
-			console.log('classes ============== \n', classes);
+
 			res.json({
-				students,
+				student_marks,
 				classes
 			});
 		} catch (err) {

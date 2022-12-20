@@ -24,16 +24,14 @@ export class TeacherBusinessService {
 	}
 
 	static async getGroupMarks(groupId: number): Promise<unknown> {
-		const students = await StudentService.getUserStudent(groupId);
+		const data = await StudentService.getUserStudent(groupId);
 
-		return {students};
+		return {data};
 	}
 
 	static async updateStudentMark(markId: number, isTeacher: boolean) {
 		if (!isTeacher)
 			throw ApiError.AcessDenied();
-
-
 	}
 
 	static async getAllowedGroups(userId: number) {

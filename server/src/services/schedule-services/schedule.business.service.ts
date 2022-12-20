@@ -20,6 +20,7 @@ export interface Schedule {
 	dateOfClass: Date;
 	homework?: string;
 	mark?: string;
+	id: number;
 }
 
 export interface ScheduleUserInfo {

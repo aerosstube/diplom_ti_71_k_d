@@ -18,6 +18,7 @@ export class ScheduleService {
 		const weekday = await WeekdayService.getWeekday(schedule.weekday_id);
 
 		return {
+			id: schedule.id,
 			weekday: weekday.name,
 			audience: audience.number_audience,
 			dateOfClass: schedule.date_of_class,
