@@ -15,8 +15,13 @@ export class StudentDatabaseService {
 	static async findStudentUser(groupId: number): Promise<unknown> {
 		return await students.findAll({
 			where: {
-				group_id: groupId
+				group_id: groupId,
 			},
+			attributes: [
+				[`id`, `student_id`],
+				`user_id`
+
+			],
 			include: [{
 				model: marks,
 				as: `marks`,
