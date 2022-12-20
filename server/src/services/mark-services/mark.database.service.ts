@@ -14,4 +14,12 @@ export class MarkDatabaseService {
 			}
 		});
 	}
+
+	static async findMarkById(markId: number) {
+		return await marks.findOne({
+			where: {
+				id: markId
+			}
+		});
+	}
 }
