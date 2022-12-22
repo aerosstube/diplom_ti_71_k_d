@@ -1,6 +1,8 @@
 import { NextFunction, Response } from 'express';
+import { Transaction } from 'sequelize';
 import { ApiError } from '../../../errors/api.error';
 import { RequestWithUser } from '../../../middlewares/auth-middleware';
+import { SequelizeConnect } from '../../../services/database-connect';
 import { TeacherBusinessService } from '../../../services/teacher-service/teacher.business.service';
 
 
@@ -30,9 +32,15 @@ export class TeacherController {
 	}
 
 	static async updateStudentMark(req: RequestWithUser, res: Response, next: NextFunction) {
+		const transaction: Transaction = await SequelizeConnect.transaction();
 		try {
+			const {body: {markId, updatedMark}, user: {isTeacher}} = req;
 
+			await TeacherBusinessService.updateStudentMark(markId, {isTeacher, updatedMark}, transaction);
+			res.json('Оценка изменилась!');
+			await transaction.commit();
 		} catch (err) {
+			await transaction.rollback();
 			next(err);
 		}
 	}

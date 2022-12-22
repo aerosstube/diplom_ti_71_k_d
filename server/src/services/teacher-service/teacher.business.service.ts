@@ -1,3 +1,4 @@
+import { Transaction } from 'sequelize';
 import { ApiError } from '../../errors/api.error';
 import { GroupService } from '../group-services/group.service';
 import { StudentService } from '../student-services/student.service';
@@ -29,9 +30,18 @@ export class TeacherBusinessService {
 		return {data};
 	}
 
-	static async updateStudentMark(markId: number, isTeacher: boolean) {
-		if (!isTeacher)
+	static async updateStudentMark(markId: number, options: { isTeacher: boolean, updatedMark: string }, transaction: Transaction): Promise<void> {
+		if (!options.isTeacher)
 			throw ApiError.AcessDenied();
+
+		if (options.updatedMark != '5' && options.updatedMark != '4'
+			&& options.updatedMark != '3' && options.updatedMark != '2'
+			&& options.updatedMark != 'Б' && options.updatedMark != 'П'
+			&& options.updatedMark != 'Н') {
+			throw ApiError.BadRequest('Неверная оценка!');
+		}
+
+		await TeacherService.updateStudentMark(markId, options.updatedMark, transaction);
 	}
 
 	static async getAllowedGroups(userId: number) {
