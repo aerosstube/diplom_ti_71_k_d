@@ -3,6 +3,7 @@ import { teacher_has_classes } from '../../../models/teacher_has_classes';
 import { teachers } from '../../../models/teachers';
 import { users } from '../../../models/users';
 import { ApiError } from '../../errors/api.error';
+import { MarkDatabaseService } from '../mark-services/mark.database.service';
 import { MarkService } from '../mark-services/mark.service';
 import { ScheduleDatabaseService } from '../schedule-services/schedule.database.service';
 import { UserService } from '../user-services/user.service';
@@ -35,8 +36,19 @@ export class TeacherService {
 
 	static async updateStudentMark(markId: number, updatedMark: string, transaction: Transaction): Promise<void> {
 		const mark = await MarkService.getMarkById(markId);
-		mark.mark = updatedMark;
-		await mark.save({transaction});
+		await MarkDatabaseService.saveMark({
+			updatedMark,
+			mark
+		}, transaction);
+	}
+
+	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction) {
+		await MarkDatabaseService.saveMark({
+			updatedMark: options.updatedMark,
+			studentId: options.studentId,
+			classId: options.classId,
+			date: new Date(options.date)
+		}, transaction);
 	}
 
 
@@ -64,4 +76,5 @@ export class TeacherService {
 
 		return schedule;
 	}
+
 }

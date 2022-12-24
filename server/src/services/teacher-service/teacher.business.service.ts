@@ -30,18 +30,12 @@ export class TeacherBusinessService {
 		return {data};
 	}
 
-	static async updateStudentMark(markId: number, options: { isTeacher: boolean, updatedMark: string }, transaction: Transaction): Promise<void> {
-		if (!options.isTeacher)
-			throw ApiError.AcessDenied();
-
-		if (options.updatedMark != '5' && options.updatedMark != '4'
-			&& options.updatedMark != '3' && options.updatedMark != '2'
-			&& options.updatedMark != 'Б' && options.updatedMark != 'П'
-			&& options.updatedMark != 'Н') {
-			throw ApiError.BadRequest('Неверная оценка!');
-		}
-
+	static async updateStudentMark(markId: number, options: { updatedMark: string }, transaction: Transaction): Promise<void> {
 		await TeacherService.updateStudentMark(markId, options.updatedMark, transaction);
+	}
+
+	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction): Promise<void> {
+		await TeacherService.saveStudentMark(options, transaction);
 	}
 
 	static async getAllowedGroups(userId: number) {
