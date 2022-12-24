@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 import { marks } from '../../../models/marks';
 
 export class MarkDatabaseService {
@@ -15,11 +15,25 @@ export class MarkDatabaseService {
 		});
 	}
 
-	static async findMarkById(markId: number) {
+	static async findMarkById(markId: number): Promise<marks | null> {
 		return await marks.findOne({
 			where: {
 				id: markId
 			}
 		});
+	}
+
+	static async saveMark(options: { mark?: marks, updatedMark: string, studentId?: number, classId?: number, date?: Date }, transaction: Transaction) {
+		if (options.mark) {
+			options.mark.mark = options.updatedMark;
+			return await options.mark.save({transaction});
+		}
+
+		return await marks.create({
+			mark: options.updatedMark,
+			student_id: options.studentId,
+			two_our_class_id: options.classId,
+			date: options.date
+		}, {transaction});
 	}
 }
