@@ -1,9 +1,10 @@
 import React from 'react';
 import cl from "./Header.module.css";
 import {NavLink} from "react-router-dom";
+import {useAppSelector} from "../../hooks";
 
 const HeaderTexts = () => {
-    const isTeacher = true;
+    const isTeacher = useAppSelector(state => state.userReducer.user.isTeacher);
     return (
         <>
             {isTeacher ?

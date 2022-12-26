@@ -53,7 +53,7 @@ const Header = () => {
 
                     }}
                 >
-                    <Dropdown menu={{items, onClick: handleClick}} placement="bottomCenter"
+                    <Dropdown menu={{items, onClick: handleClick}} placement="bottom"
                               overlayClassName={cl.exitMenu}
                               trigger={['click']}>
                         <h2 className={cl.headerText}>{headerName}</h2>
