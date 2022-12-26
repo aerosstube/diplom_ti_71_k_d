@@ -16,7 +16,8 @@ const initialState: UserState = {
         role: '',
         iat: 0,
         exp: 0,
-        inviteCode: ''
+        inviteCode: '',
+        isTeacher: false
     },
     tokens: {
         tokens: {
