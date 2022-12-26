@@ -1,87 +1,50 @@
 import React from 'react';
-import {Input, Table} from "antd";
+import {Table} from "antd";
 import {ColumnsType} from "antd/es/table";
 import cl from './TeacherPFM.module.css'
 import {useLocation} from "react-router-dom";
+import {teacherAPI} from "../../services/TeacherService";
+import {convertColumnData} from "../../utils/ConvertColumnData";
+import {convertTableData} from "../../utils/ConvertTableData";
+import TableCell from "../TableCell/TableCell";
+import {FindStudentID} from "../../utils/FindStidentID";
 
 const TeacherPlaceForMarks = () => {
-
-    interface DataType {
-        key: string;
-        name: string;
-        age: number;
-        address: string;
-        tags: string[];
-    }
-
-    const columns: ColumnsType<DataType> = [
-        {
-            title: 'ФИО СТУДЕНТА',
-            dataIndex: 'name',
-            key: 'name',
-
-        },
-        {
-            title: 'Оценка за фвфвддлоыфв',
-            dataIndex: 'age',
-            key: 'age',
-            render: (text) => <Input value={text} className={cl.tableCells} pattern="2|3|4|5|[Нн]|[Бб]"/>,
-        },
-        {
-            title: 'Оценка за фвфвддлоыфв',
-            dataIndex: 'address',
-            key: 'address',
-            render: (text) => <Input value={text} className={cl.tableCells} pattern="2|3|4|5|[Нн]|[Бб]"/>,
-        },
-        {
-            title: 'Оценка за фвфвддлоыфв',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: (text) => <Input value={text} className={cl.tableCells} pattern="2|3|4|5|[Нн]|[Бб]"/>,
-        },
-        {
-            title: 'Оценка за фвфвддлоыфв',
-            key: 'action',
-            render: (text) => <Input value={text} className={cl.tableCells} pattern="2|3|4|5|[Нн]|[Бб]"/>,
-        },
-    ];
-
-    const data: DataType[] = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-        {
-            key: '4',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
     const location = useLocation();
+    const arg = location.state.groupID.toString() + location.state.classID.toString();
+    const {data: marks} = teacherAPI.useFetchMarksQuery(arg);
+
+    // @ts-ignore
+    const columns: ColumnsType<DataType> = convertColumnData(marks, false);
+    const columnsRender = {
+        render: (text: string, record: any) => {
+            // @ts-ignore
+            const studentID = FindStudentID(marks, record.name)
+            return <TableCell
+                text={(text + ',' + record.name).toString()}
+                studentID={studentID}
+                // @ts-ignore
+                dates={marks.classes}
+                classID={location.state.classID}
+            />
+        }
+    }
+    const finalColumns: any = [];
+    for (let i = 0; i < columns.length; i++) {
+        if (i >= 1) {
+            // @ts-ignore
+            finalColumns[i] = Object.assign({}, columns[i], columnsRender)
+        } else {
+            finalColumns[i] = columns[i];
+        }
+    }
+    // @ts-ignore
+    const data: any[] = convertTableData(marks, false)
     return (
         <div className={cl.tableContain}>
             <p className={cl.tableText}>Группа {location.state.name}, {location.state.nameOfLesson} </p>
-            <Table columns={columns} className={cl.table} dataSource={data} pagination={false}
-                   scroll={{x: 1500, y: 500}} bordered={true}/>
+            <Table columns={finalColumns} className={cl.table} dataSource={data} pagination={false}
+                   scroll={{x: 1500}} bordered={true}/>
         </div>
     );
 };
