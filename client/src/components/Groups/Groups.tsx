@@ -2,21 +2,30 @@ import React from 'react';
 import cl from './Groups.module.css'
 import {useNavigate} from "react-router-dom";
 import {Button} from "antd";
+import {teacherAPI} from "../../services/TeacherService";
 
 
 const Groups = () => {
     const navigate = useNavigate();
-    const goToMarks = (name: string) => navigate('/lessons', {state: {name: name, lesson: ''}});
-    const names = [
-        'ТИ-71', 'ТБД-72', 'ТР-71', 'ТИП-71', 'ТИ-71',
-    ];
+    const {data: groups} = teacherAPI.useFetchGroupsQuery('');
+    const goToMarks = (name: string, groupID: number) => navigate('/lessons', {
+        state: {
+            name: name,
+            lesson: '',
+            groupID: groupID,
+            classID: 0
+        }
+    });
+
     return (
         <div className={cl.groupContain}>
-            {
-                names && names.map((name) => <Button className={cl.groupBlock}
-                                                     onClick={() => goToMarks(name)}>{name}</Button>)
-            }
 
+
+            {
+                //@ts-ignore
+                groups && groups.groups.map((group) => <Button key={group.id} className={cl.groupBlock}
+                                                               onClick={() => goToMarks(group.name, group.id)}>{group.name}</Button>)
+            }
 
         </div>
     );

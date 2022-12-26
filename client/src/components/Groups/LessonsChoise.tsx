@@ -2,40 +2,28 @@ import React from 'react';
 import cl from "./Groups.module.css";
 import {Button} from "antd";
 import {useLocation, useNavigate} from "react-router-dom";
+import {teacherAPI} from "../../services/TeacherService";
 
 const LessonsChoise = () => {
-    const lessons = [
-        {
-            name: 'ТИ-71',
-            lessons: [
-                'MDK(TI71)',
-                'MDK(TI71)2',
-                "MDK(TI71)3"
-            ]
-        },
-        {
-            name: 'ТР-71',
-            lessons: [
-                'MDK(ТР71)',
-                'MDK(ТР71)2',
-                "MDK(ТР71)3"
-            ]
-        },
-
-    ];
     const navigate = useNavigate();
     const location = useLocation();
-    const goToMarks = (lessonName: string) => navigate('/teacherPlace', {
+    const {data} = teacherAPI.useFetchClassesQuery('')
+    const goToMarks = (lessonName: string, classID: number) => navigate('/teacherPlace', {
         state: {
             name: location.state.name,
-            nameOfLesson: lessonName
+            nameOfLesson: lessonName,
+            groupID: location.state.groupID,
+            classID: classID
         }
     });
     return (
         <div className={cl.groupContain}>
-            {lessons.map((lesson) => lesson.name === location.state.name ? lesson.lessons.map((lessonName) => <Button
-                className={cl.groupBlock} onClick={() => goToMarks(lessonName)}>{lessonName}</Button>) : '')
 
+            {
+                //@ts-ignore
+                data ? data.classes && data.classes.map((lesson) => <Button key={lesson.id} className={cl.groupBlock}
+                                                                            onClick={() => goToMarks(lesson.name, lesson.id)}>{lesson.name}</Button>) :
+                    <div></div>
             }
 
 
