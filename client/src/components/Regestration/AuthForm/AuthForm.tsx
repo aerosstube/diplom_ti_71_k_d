@@ -4,7 +4,7 @@ import {useAppDispatch} from '../../../hooks';
 import {authAPI} from '../../../services/AuthService';
 import {UserSlice, UserState} from '../../../store/reducers/UserSlice';
 import cl from '../RegForm/RegForm.module.css';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import img from "../../../img/logo2.png";
 import {Button, Input} from "antd";
 
@@ -45,7 +45,6 @@ const AuthForm = () => {
             setPasswordError('')
         }
     }
-
     // @ts-ignore
     const handleCheckLogin = (e) => {
         setLogin(e.target.value);
@@ -55,14 +54,18 @@ const AuthForm = () => {
             setLoginError('Логин не может быть пустым')
         }
     }
-
     const {addUser} = UserSlice.actions;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
-    const fromPage = location.state?.state;
 
-    const goToSchedule = () => navigate(fromPage ? fromPage : '/schedule');
+
+    const goToSchedule = (isTeacher: boolean) => {
+        if (isTeacher) {
+            navigate('/groups')
+        } else {
+            navigate('/schedule')
+        }
+    };
 
     const handleSend = async () => {
         const user = {
@@ -72,7 +75,6 @@ const AuthForm = () => {
         await loginUser(user);
         setLogin('');
         setPassword('')
-        goToSchedule();
     };
 
     useEffect(() => {
@@ -90,6 +92,7 @@ const AuthForm = () => {
                 isLogged: true
             };
             dispatch(addUser(response));
+            goToSchedule(response.user.isTeacher);
         }
         if (error) {
             console.log(error);
