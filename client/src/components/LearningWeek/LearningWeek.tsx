@@ -26,14 +26,14 @@ const LearningWeek: FC = () => {
         <>
             <div className={classes.pageContain}>
                 <LeftOutlined className={classes.pageIcon} onClick={decWeek}/>
-                <h4 className={classes.pageText}>{mainDate.getDate()}.{mainDate.getMonth()}.{mainDate.getFullYear()}</h4>
+                <h4 className={classes.pageText}>{mainDate.getDate()}.{mainDate.getMonth() + 1}.{mainDate.getFullYear()}</h4>
                 <RightOutlined className={classes.pageIcon} onClick={incWeek}/>
             </div>
             <div className={cl.learningWeek}>
                 {
 
-                    days?.map((day) => <LearningDay nameOfDay={day.schedules[0]?.weekday || ''}
-                                                    schedules={day.schedules}/>)
+                    days?.map((day, index) => <LearningDay key={index} nameOfDay={day.schedules[0]?.weekday || ''}
+                                                           schedules={day.schedules}/>)
 
                 }
             </div>

@@ -15,7 +15,7 @@ const LearningDay: FC<LearningDayProps> = ({nameOfDay, schedules}) => {
             <p className={cl.dayName}>{nameOfDay ? nameOfDay : 'Суббота'}</p>
             <div className={cl.dayContain}>
                 {
-                    schedules.length !== 0 ? schedules.map((lesson) => <Lesson schedule={lesson}/>) :
+                    schedules.length !== 0 ? schedules.map((lesson) => <Lesson key={lesson.id} schedule={lesson}/>) :
                         <h1 className={cl.dayTextNonLessons}> Нет занятий</h1>
                 }
             </div>
