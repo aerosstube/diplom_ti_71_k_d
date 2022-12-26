@@ -6,6 +6,8 @@ export interface IUser {
     iat: number;
     exp: number;
     inviteCode?: string;
+    isTeacher: boolean,
+
 }
 
 export interface IUserData {

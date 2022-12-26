@@ -1,19 +1,20 @@
 export interface ScheduleWeek {
-	scheduleDays: ScheduleDay[];
+    scheduleDays: ScheduleDay[];
 }
 
 export interface ScheduleDay {
-	schedules: Schedule[];
+    schedules: Schedule[];
 }
 
 export interface Schedule {
-	startTime: Date;
-	groupName: string;
-	weekday: string;
-	audience: number;
-	twoOurClassName: string;
-	teacher: string;
-	dateOfClass: Date;
-	homework?: string;
-	mark?: string;
+    id: number;
+    startTime: Date;
+    groupName: string;
+    weekday: string;
+    audience: number;
+    twoOurClassName: string;
+    teacher: string;
+    dateOfClass: Date;
+    homework?: string;
+    mark?: string;
 }
