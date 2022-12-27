@@ -27,10 +27,7 @@ export function convertTableData(data: IBDMarks, toBD: false) {
                 arr1.push('-' + i.toString())
 
             }
-            console.log(arr1)
-
             arr1 = fixArrayOfMarks(arr1);
-            console.log(arr1)
             let obj1 = Object.assign({}, arr1);
             let obj3 = Object.assign({}, obj, obj1)
 
