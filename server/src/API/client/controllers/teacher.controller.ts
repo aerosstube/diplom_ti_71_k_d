@@ -48,10 +48,14 @@ export class TeacherController {
 
 			if (!updatedMark) {
 				await TeacherBusinessService.deleteStudentMark(markId, transaction);
-				res.json('Оценка удалена!');
+				res.json({
+					message: 'Оценка удалена!'
+				});
 			} else if (markId) {
 				await TeacherBusinessService.updateStudentMark(markId, {updatedMark}, transaction);
-				res.json('Оценка изменилась!');
+				res.json({
+					message: 'Оценка изменилась!'
+				});
 			} else if (!markId) {
 				const mark = await TeacherBusinessService.saveStudentMark({
 					updatedMark,
