@@ -1,5 +1,6 @@
 import { Op, Transaction } from 'sequelize';
 import { marks } from '../../../models/marks';
+import { two_our_class } from '../../../models/two_our_class';
 
 export class MarkDatabaseService {
 	static async getMarksForStudent(studentIdFK: number, date: Date): Promise<marks[]> {
@@ -33,6 +34,14 @@ export class MarkDatabaseService {
 				`mark`,
 				[`two_our_class_id`, `classId`],
 				`date`
+			], include: [
+				{
+					model: two_our_class,
+					as: `two_our_class`,
+					attributes: [
+						`name`
+					]
+				}
 			]
 		});
 	}
