@@ -35,21 +35,24 @@ export class TeacherController {
 		const transaction: Transaction = await SequelizeConnect.transaction();
 		try {
 			const {body: {markId, updatedMark, studentId, classId, date}, user: {isTeacher}} = req;
-
 			if (!isTeacher)
 				return next(ApiError.AcessDenied());
 
 			if (updatedMark != '5' && updatedMark != '4'
 				&& updatedMark != '3' && updatedMark != '2'
 				&& updatedMark != 'Б' && updatedMark != 'П'
-				&& updatedMark != 'Н') {
+				&& updatedMark != 'Н' && updatedMark != undefined
+				&& updatedMark != '') {
 				return next(ApiError.BadRequest('Неверная оценка!'));
 			}
 
-			if (markId) {
+			if (!updatedMark) {
+				await TeacherBusinessService.deleteStudentMark(markId, transaction);
+				res.json('Оценка удалена!');
+			} else if (markId) {
 				await TeacherBusinessService.updateStudentMark(markId, {updatedMark}, transaction);
 				res.json('Оценка изменилась!');
-			} else {
+			} else if (!markId) {
 				await TeacherBusinessService.saveStudentMark({updatedMark, studentId, classId, date}, transaction);
 				res.json('Оценка добавлена!');
 			}

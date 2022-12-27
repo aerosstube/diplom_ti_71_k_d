@@ -34,6 +34,10 @@ export class TeacherBusinessService {
 		await TeacherService.updateStudentMark(markId, options.updatedMark, transaction);
 	}
 
+	static async deleteStudentMark(markId: number, transaction: Transaction): Promise<void> {
+		await TeacherService.deleteStudentMark(markId, transaction);
+	}
+
 	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction): Promise<void> {
 		await TeacherService.saveStudentMark(options, transaction);
 	}

@@ -1,4 +1,5 @@
 import { Transaction } from 'sequelize';
+import { marks } from '../../../models/marks';
 import { teacher_has_classes } from '../../../models/teacher_has_classes';
 import { teachers } from '../../../models/teachers';
 import { users } from '../../../models/users';
@@ -40,6 +41,16 @@ export class TeacherService {
 			updatedMark,
 			mark
 		}, transaction);
+	}
+
+
+	static async deleteStudentMark(markId: number, transaction: Transaction): Promise<void> {
+		await marks.destroy({
+			where: {
+				id: markId
+			},
+			transaction
+		});
 	}
 
 	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction) {
