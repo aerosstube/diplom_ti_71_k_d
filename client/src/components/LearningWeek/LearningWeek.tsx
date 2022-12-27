@@ -3,31 +3,25 @@ import LearningDay from '../learningDay/learningDay';
 import cl from './LearningWeek.module.css';
 import {getMonday} from "../../utils";
 import {lessonApi} from "../../services/LessonService";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import classes from '../Pagination/Pagination.module.css'
+import {DatePicker, DatePickerProps} from "antd";
 
 
 const LearningWeek: FC = () => {
     const [mainDate, setMainDate] = useState(getMonday(new Date('November 17, 2022 03:24:00')));
     const {data: days} = lessonApi.useFetchLessonsQuery(mainDate.toISOString());
 
-    function incWeek() {
-        mainDate.setDate(mainDate.getDate() + 7)
-        setMainDate(mainDate)
-    }
+    const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+        let dateOfDay = new Date(dateString);
+        dateOfDay.setHours(dateOfDay.getHours() - 3)
+        setMainDate(getMonday(dateOfDay))
+    };
 
-    function decWeek() {
-        mainDate.setDate(mainDate.getDate() - 7)
-        setMainDate(mainDate)
-
-    }
 
     return (
         <>
             <div className={classes.pageContain}>
-                <LeftOutlined className={classes.pageIcon} onClick={decWeek}/>
-                <h4 className={classes.pageText}>{mainDate.getDate()}.{mainDate.getMonth() + 1}.{mainDate.getFullYear()}</h4>
-                <RightOutlined className={classes.pageIcon} onClick={incWeek}/>
+                <DatePicker onChange={onChange}/>
             </div>
             <div className={cl.learningWeek}>
                 {

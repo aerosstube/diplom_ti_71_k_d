@@ -11,16 +11,19 @@ const LearningWeekMark: FC = () => {
     const {data: days} = lessonApi.useFetchMarksQuery(mainMarkDate.toISOString());
 
     const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-        console.log(date, dateString)
+        let dateOfDay = new Date(dateString);
+        dateOfDay.setHours(dateOfDay.getHours() - 3)
+        setMainMarkDate(getMonday(dateOfDay))
+
 
     };
-
-
     return (
         <>
             <div className={classes.pageContain}>
                 <DatePicker onChange={onChange}/>
             </div>
+
+
             <div className={cl.learningWeek}>
                 {
 

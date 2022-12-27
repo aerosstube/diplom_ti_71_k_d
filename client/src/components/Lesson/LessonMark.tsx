@@ -4,7 +4,7 @@ import {LessonProps} from "./Lesson";
 
 
 const LessonMark: FC<LessonProps> = ({schedule}) => {
-    const mark = schedule.mark ? schedule.mark.toString() : 'y';
+    const mark = schedule.mark ? schedule.mark.toString() : '-';
     const teacherName = schedule.teacher.split(/\s+/).map((w, i) => i ? w.substring(0, 1).toUpperCase() + '.' : w).join(' ');
     const lessonsName = schedule.twoOurClassName.split('').length > 15 ? schedule.twoOurClassName.substring(0, 15) + '.' : schedule.twoOurClassName;
     return (
