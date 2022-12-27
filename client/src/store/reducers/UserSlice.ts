@@ -37,6 +37,7 @@ export const UserSlice = createSlice({
             state.user = action.payload.user;
             state.tokens = action.payload.tokens;
             state.isLogged = action.payload.isLogged;
+            localStorage.setItem('token', action.payload.tokens.tokens.accessToken)
         },
         addCode(state, action: PayloadAction<string>) {
             state.user.inviteCode = action.payload;
