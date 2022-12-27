@@ -42,6 +42,7 @@ const TeacherPlaceForMarks = () => {
     }
     // @ts-ignore
     const data: any[] = convertTableData(marks, false)
+    console.log(finalColumns)
     return (
         <div className={cl.tableContain}>
             <p className={cl.tableText}>Группа {location.state.name}, {location.state.nameOfLesson} </p>

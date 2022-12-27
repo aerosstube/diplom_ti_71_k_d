@@ -31,7 +31,6 @@ const TableCell: FC<TableCellProps> = ({text, classID, studentID, dates, marks, 
         markId = findMarkId(marks, dateOfLesson)
     }, [value])
     const handleSend = async () => {
-        console.log(markId, 'penis')
         let mark: IMarksToBD = {classId: 0, date: "", studentId: 0, updatedMark: ""}
         if (markOfLesson !== '-') {
             mark = {

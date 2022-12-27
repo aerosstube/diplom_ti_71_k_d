@@ -17,8 +17,8 @@ const HeaderTexts = () => {
                     <NavLink to='/scheduleAndMarks'
                              className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Учебная
                         неделя</NavLink>
-                    <NavLink to='/studentMarks'
-                             className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Успеваемость</NavLink>
+                    {/*<NavLink to='/studentMarks'*/}
+                    {/*         className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Успеваемость</NavLink>*/}
                     <NavLink to='/schedule'
                              className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Расписание</NavLink>
                 </div>

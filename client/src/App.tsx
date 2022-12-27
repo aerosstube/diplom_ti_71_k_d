@@ -12,6 +12,7 @@ import Layout from "./components/Layout";
 import TeacherPlaceForMarks from "./components/TeacherPlaceForMarks/TeacherPlaceForMarks";
 import Groups from "./components/Groups/Groups";
 import LessonsChoise from "./components/Groups/LessonsChoise";
+import StudentPlaceForMarks from "./components/StudentPlaceForMarks/StudentPlaceForMarks";
 
 export function App() {
 
@@ -28,7 +29,8 @@ export function App() {
                         <Routes>
                             <Route path='/' element={<Layout/>}> {/*Корневая страница*/}
                                 <Route path='/lessons' element={<LessonsChoise/>}/>
-                                <Route path='/teacherPlace' element={<TeacherPlaceForMarks/>}/>
+                                <Route path='/teacherPlace' element={<CheckAuth><TeacherPlaceForMarks/></CheckAuth>}/>
+                                <Route path='/studentMarks' element={<CheckAuth><StudentPlaceForMarks/></CheckAuth>}/>
                                 <Route path='/regForm' element={<RegForm/>}/> {/*Форма регистрации*/}
                                 <Route path='/regDataForm'
                                        element={<RegDataForm/>}/> {/*Форма заполнения данных для регистрации*/}
