@@ -3,7 +3,7 @@ import cl from './Header.module.css'
 import img from '../../img/logo.png'
 import {ConfigProvider, Dropdown, MenuProps} from "antd";
 import {LogoutOutlined} from "@ant-design/icons";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {UserSlice} from "../../store/reducers/UserSlice";
 import {authAPI} from "../../services/AuthService";
@@ -12,6 +12,7 @@ import HeaderTexts from "./HeaderTexts";
 const Header = () => {
     const {fullName} = useAppSelector(state => state.userReducer.user);
     const {removeUser} = UserSlice.actions;
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [logoutUser] = authAPI.useLogoutUserMutation();
     const arr = fullName.split(' ');
@@ -24,6 +25,7 @@ const Header = () => {
     };
     const handleClick: MenuProps['onClick'] = async ({key}) => {
         await handleLogOut();
+        navigate('/auth')
     };
     const items: MenuProps['items'] = [
         {

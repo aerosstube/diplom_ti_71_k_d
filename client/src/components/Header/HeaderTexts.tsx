@@ -11,12 +11,13 @@ const HeaderTexts = () => {
                 <div className={cl.headerContain}>
                     <NavLink to='/groups'
                              className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Группы</NavLink>
-                    <NavLink to='/schedule'
-                             className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Расписание</NavLink>
                 </div>
                 :
                 <div className={cl.headerContain}>
                     <NavLink to='/scheduleAndMarks'
+                             className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Учебная
+                        неделя</NavLink>
+                    <NavLink to='/studentMarks'
                              className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Успеваемость</NavLink>
                     <NavLink to='/schedule'
                              className={({isActive}) => isActive ? cl.activeLink : cl.headerText}>Расписание</NavLink>
