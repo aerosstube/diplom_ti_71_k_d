@@ -19,7 +19,21 @@ export class MarkDatabaseService {
 		return await marks.findOne({
 			where: {
 				id: markId
-			}
+			},
+
+		});
+	}
+
+	static async findMarksByStudentId(studentId: number): Promise<marks[]> {
+		return await marks.findAll({
+			where: {
+				student_id: studentId
+			},
+			attributes: [
+				`mark`,
+				[`two_our_class_id`, `classId`],
+				`date`
+			]
 		});
 	}
 

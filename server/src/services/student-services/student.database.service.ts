@@ -44,7 +44,6 @@ export class StudentDatabaseService {
 			order: [
 				[`user`, `second_name`, `ASC`]
 			]
-
 		});
 	}
 }
