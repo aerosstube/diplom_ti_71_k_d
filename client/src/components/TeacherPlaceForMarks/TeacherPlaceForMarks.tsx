@@ -12,7 +12,7 @@ import {FindStudentID} from "../../utils/FindStidentID";
 const TeacherPlaceForMarks = () => {
     const location = useLocation();
     const arg = location.state.groupID.toString() + location.state.classID.toString();
-    const {data: marks} = teacherAPI.useFetchMarksQuery(arg);
+    const {data: marks, refetch} = teacherAPI.useFetchMarksQuery(arg);
 
     // @ts-ignore
     const columns: ColumnsType<DataType> = convertColumnData(marks, false);
@@ -26,6 +26,8 @@ const TeacherPlaceForMarks = () => {
                 // @ts-ignore
                 dates={marks.classes}
                 classID={location.state.classID}
+                marks={marks}
+                refetch={refetch}
             />
         }
     }
