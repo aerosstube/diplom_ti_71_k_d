@@ -53,8 +53,15 @@ export class TeacherController {
 				await TeacherBusinessService.updateStudentMark(markId, {updatedMark}, transaction);
 				res.json('Оценка изменилась!');
 			} else if (!markId) {
-				await TeacherBusinessService.saveStudentMark({updatedMark, studentId, classId, date}, transaction);
-				res.json('Оценка добавлена!');
+				const mark = await TeacherBusinessService.saveStudentMark({
+					updatedMark,
+					studentId,
+					classId,
+					date
+				}, transaction);
+				res.json({
+					markId: mark.id
+				});
 			}
 
 			await transaction.commit();

@@ -1,4 +1,5 @@
 import { Transaction } from 'sequelize';
+import { marks } from '../../../models/marks';
 import { ApiError } from '../../errors/api.error';
 import { GroupService } from '../group-services/group.service';
 import { StudentService } from '../student-services/student.service';
@@ -38,8 +39,8 @@ export class TeacherBusinessService {
 		await TeacherService.deleteStudentMark(markId, transaction);
 	}
 
-	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction): Promise<void> {
-		await TeacherService.saveStudentMark(options, transaction);
+	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction): Promise<marks> {
+		return await TeacherService.saveStudentMark(options, transaction);
 	}
 
 	static async getAllowedGroups(userId: number) {

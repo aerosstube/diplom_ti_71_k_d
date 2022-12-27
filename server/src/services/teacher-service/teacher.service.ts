@@ -53,8 +53,8 @@ export class TeacherService {
 		});
 	}
 
-	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction) {
-		await MarkDatabaseService.saveMark({
+	static async saveStudentMark(options: { updatedMark: string, studentId: number, classId: number, date: string }, transaction: Transaction): Promise<marks> {
+		return await MarkDatabaseService.saveMark({
 			updatedMark: options.updatedMark,
 			studentId: options.studentId,
 			classId: options.classId,
