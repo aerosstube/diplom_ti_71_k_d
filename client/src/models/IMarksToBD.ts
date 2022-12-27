@@ -1,6 +1,7 @@
 export interface IMarksToBD {
-    updatedMark: number;
+    updatedMark: string;
     studentId: number;
     classId: number;
     date: string;
+    markId?: number;
 }
